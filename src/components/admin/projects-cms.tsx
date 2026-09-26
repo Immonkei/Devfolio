@@ -13,6 +13,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+const PROJECT_COVER_PRESETS = [
+  { label: "Default Blueprint", url: "/projects/default-project.svg" },
+  { label: "Backend & API", url: "/projects/job-portal-api.svg" },
+  { label: "Blood Donation (Full-Stack)", url: "/projects/borejak.svg" },
+  { label: "Academic LMS", url: "/projects/reanhub.svg" },
+  { label: "AI Recommender", url: "/projects/thrive-ai.svg" },
+  { label: "Cryptography Visualizer", url: "/projects/cipherverse.svg" },
+  { label: "Mobile Companion", url: "/projects/campus-mobile-companion.svg" },
+];
+
 export function ProjectsCMS({
   initialProjects,
   allTechnologies,
@@ -343,8 +353,8 @@ export function ProjectsCMS({
               />
             </div>
 
-            {/* Links and flags */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 pt-2 border-t border-border">
+            {/* Links */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 pt-2 border-t border-border">
               <div className="space-y-1">
                 <label className="text-foreground font-semibold">GitHub Repo URL</label>
                 <Input
@@ -362,14 +372,81 @@ export function ProjectsCMS({
                   onChange={(e) => setForm({ ...form, live_url: e.target.value })}
                 />
               </div>
+            </div>
 
-              <div className="space-y-1">
-                <label className="text-foreground font-semibold">Cover Image URL</label>
-                <Input
-                  placeholder="https://images.unsplash.com/..."
-                  value={form.cover_image_url}
-                  onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })}
-                />
+            {/* Cover Image Thumbnail Section */}
+            <div className="space-y-3 pt-2 border-t border-border">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-foreground font-semibold">Cover Image (Thumbnail)</label>
+                  <p className="text-[11px] text-muted-foreground font-mono">
+                    Paste an image URL or choose one of the preset visual covers. If left blank, the fallback thumbnail will be automatically applied.
+                  </p>
+                </div>
+                {form.cover_image_url && (
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, cover_image_url: "" })}
+                    className="text-xs text-primary hover:underline font-mono cursor-pointer shrink-0"
+                  >
+                    Reset to Fallback
+                  </button>
+                )}
+              </div>
+
+              <Input
+                placeholder="/projects/default-project.svg or https://images.unsplash.com/..."
+                value={form.cover_image_url}
+                onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })}
+              />
+
+              {/* Quick Presets */}
+              <div className="space-y-1.5">
+                <span className="text-xs text-muted-foreground font-mono">Quick Preset Thumbnails:</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {PROJECT_COVER_PRESETS.map((preset) => {
+                    const isSelected = form.cover_image_url === preset.url;
+                    return (
+                      <button
+                        type="button"
+                        key={preset.url}
+                        onClick={() => setForm({ ...form, cover_image_url: preset.url })}
+                        className={`px-2.5 py-1 rounded text-xs font-mono border transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-primary/20 text-primary border-primary font-bold shadow-sm"
+                            : "bg-secondary/40 text-muted-foreground border-border hover:bg-secondary hover:text-foreground"
+                        }`}
+                      >
+                        {preset.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Live Preview Box */}
+              <div className="rounded-lg border border-border/80 bg-secondary/20 p-3.5 flex flex-col sm:flex-row items-center gap-4">
+                <div className="relative aspect-[16/9] w-48 shrink-0 overflow-hidden rounded-md border border-border/70 bg-card shadow-sm">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={form.cover_image_url || "/projects/default-project.svg"}
+                    alt="Project Cover Preview"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="text-xs font-mono space-y-1 text-muted-foreground">
+                  <div className="flex items-center gap-1.5">
+                    <span className={`inline-block h-2 w-2 rounded-full ${form.cover_image_url ? "bg-emerald-400" : "bg-cyan-400 animate-pulse"}`} />
+                    <span className="font-semibold text-foreground">
+                      {form.cover_image_url ? "Cover Image Configured" : "Default Fallback Thumbnail Active"}
+                    </span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed">
+                    {form.cover_image_url
+                      ? `Active: ${form.cover_image_url}`
+                      : "No custom image specified. The system will automatically use the default architecture blueprint (/projects/default-project.svg)."}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -461,7 +538,22 @@ export function ProjectsCMS({
               ) : (
                 projects.map((p) => (
                   <tr key={p.id} className="hover:bg-secondary/20 transition-colors">
-                    <td className="p-4 font-semibold text-foreground">{p.title}</td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative h-10 w-16 shrink-0 overflow-hidden rounded border border-border/70 bg-secondary/40 shadow-xs">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={p.cover_image_url || "/projects/default-project.svg"}
+                            alt=""
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-semibold text-foreground truncate max-w-xs">{p.title}</div>
+                          <div className="text-[10px] text-muted-foreground line-clamp-1">{p.short_description}</div>
+                        </div>
+                      </div>
+                    </td>
                     <td className="p-4 text-muted-foreground">/{p.slug}</td>
                     <td className="p-4">
                       <button

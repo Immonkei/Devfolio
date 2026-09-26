@@ -1,0 +1,124 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="defproj-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060913" />
+      <stop offset="50%" stop-color="#0c1322" />
+      <stop offset="100%" stop-color="#031d28" />
+    </linearGradient>
+    <linearGradient id="card-defproj" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c33" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#080e1c" stop-opacity="0.95" />
+    </linearGradient>
+    <pattern id="grid-defproj" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#00ddb3" stroke-opacity="0.04" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#defproj-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-defproj)" />
+
+  <!-- Ambient Glow -->
+  <circle cx="280" cy="180" r="260" fill="#00ddb3" fill-opacity="0.1" filter="blur(70px)" />
+  <circle cx="950" cy="460" r="260" fill="#38bdf8" fill-opacity="0.08" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1e293b" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#060b17" stroke="#1e293b" stroke-width="1.5" />
+
+    <!-- Terminal Header -->
+    <rect width="1080" height="48" rx="14" fill="#0f172a" />
+    <path d="M0 48h1080" stroke="#1e293b" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#060b17" stroke="#1e293b" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">system://projects/active-deployment</text>
+
+    <rect x="900" y="12" width="154" height="24" rx="12" fill="#00ddb3" fill-opacity="0.15" stroke="#00ddb3" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="914" cy="24" r="3.5" fill="#00ddb3" />
+    <text x="926" y="28" fill="#5eead4" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">PROJECT SHOWCASE</text>
+
+    <!-- Center Blueprint Stage -->
+    <g transform="translate(36, 76)">
+      <rect width="1008" height="290" rx="10" fill="url(#card-defproj)" stroke="#1e293b" stroke-width="1" />
+
+      <text x="28" y="32" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">SYSTEM ARCHITECTURE MATRIX</text>
+
+      <!-- Architecture Nodes -->
+      <g transform="translate(48, 64)">
+        <!-- Node 1: Edge Gateway -->
+        <rect width="240" height="150" rx="10" fill="#070c18" stroke="#00ddb3" stroke-width="1.5" />
+        <rect width="240" height="30" rx="10" fill="#042f2e" />
+        <text x="120" y="20" text-anchor="middle" fill="#5eead4" font-family="monospace" font-size="11" font-weight="700">01. CLIENT &amp; EDGE</text>
+        <text x="20" y="58" fill="#e2e8f0" font-family="monospace" font-size="12">• Next.js / React UI</text>
+        <text x="20" y="82" fill="#94a3b8" font-family="monospace" font-size="11">• Edge Routing &amp; SSR</text>
+        <text x="20" y="106" fill="#94a3b8" font-family="monospace" font-size="11">• Responsive Layouts</text>
+        <text x="20" y="130" fill="#00ddb3" font-family="monospace" font-size="11">• Sub-100ms Hydration</text>
+
+        <!-- Link 1-2 -->
+        <path d="M 240 75 L 336 75" stroke="#00ddb3" stroke-width="2" stroke-dasharray="4 4" />
+        <polygon points="334,70 342,75 334,80" fill="#00ddb3" />
+
+        <!-- Node 2: Core Microservices -->
+        <g transform="translate(336, 0)">
+          <rect width="240" height="150" rx="10" fill="#070c18" stroke="#38bdf8" stroke-width="1.5" />
+          <rect width="240" height="30" rx="10" fill="#082f49" />
+          <text x="120" y="20" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="11" font-weight="700">02. BACKEND SERVICES</text>
+          <text x="20" y="58" fill="#e2e8f0" font-family="monospace" font-size="12">• RESTful API Gateways</text>
+          <text x="20" y="82" fill="#94a3b8" font-family="monospace" font-size="11">• JWT Role Authorization</text>
+          <text x="20" y="106" fill="#94a3b8" font-family="monospace" font-size="11">• Event Orchestration</text>
+          <text x="20" y="130" fill="#38bdf8" font-family="monospace" font-size="11">• P99 Latency &lt; 50ms</text>
+        </g>
+
+        <!-- Link 2-3 -->
+        <path d="M 576 75 L 672 75" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4" />
+        <polygon points="670,70 678,75 670,80" fill="#38bdf8" />
+
+        <!-- Node 3: Persistence Layer -->
+        <g transform="translate(672, 0)">
+          <rect width="240" height="150" rx="10" fill="#070c18" stroke="#f59e0b" stroke-width="1.5" />
+          <rect width="240" height="30" rx="10" fill="#451a03" />
+          <text x="120" y="20" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="11" font-weight="700">03. STORAGE &amp; STATE</text>
+          <text x="20" y="58" fill="#e2e8f0" font-family="monospace" font-size="12">• PostgreSQL / MySQL</text>
+          <text x="20" y="82" fill="#94a3b8" font-family="monospace" font-size="11">• Document Data Stores</text>
+          <text x="20" y="106" fill="#94a3b8" font-family="monospace" font-size="11">• ACID Transaction Safety</text>
+          <text x="20" y="130" fill="#f59e0b" font-family="monospace" font-size="11">• Real-time Replication</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 388)">
+      <rect width="1008" height="142" rx="12" fill="#0b1120" stroke="#1e293b" stroke-width="1" />
+      
+      <g transform="translate(30, 28)">
+        <text x="0" y="26" fill="#f8fafc" font-family="sans-serif" font-size="26" font-weight="800">Production Engineering Project</text>
+        <text x="0" y="52" fill="#94a3b8" font-family="sans-serif" font-size="13">Architectural blueprint, empirical benchmarks, modular design patterns, and robust software implementation.</text>
+        
+        <g transform="translate(0, 68)">
+          <rect x="0" y="0" width="120" height="24" rx="4" fill="#1e293b" />
+          <text x="60" y="16" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="600">FULL-STACK</text>
+
+          <rect x="130" y="0" width="130" height="24" rx="4" fill="#1e293b" />
+          <text x="195" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">CLOUD ARCH</text>
+
+          <rect x="270" y="0" width="120" height="24" rx="4" fill="#1e293b" />
+          <text x="330" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">DATABASE</text>
+
+          <rect x="400" y="0" width="140" height="24" rx="4" fill="#1e293b" />
+          <text x="470" y="16" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="11" font-weight="600">PRODUCTION READY</text>
+        </g>
+      </g>
+
+      <!-- Terminal Emblem -->
+      <g transform="translate(900, 22)">
+        <circle cx="48" cy="48" r="44" fill="#00ddb3" fill-opacity="0.1" stroke="#00ddb3" stroke-opacity="0.3" stroke-width="1.5" />
+        <path d="M38 40 L48 48 L38 56" stroke="#00ddb3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <line x1="54" y1="56" x2="64" y2="56" stroke="#00ddb3" stroke-width="3" stroke-linecap="round" />
+      </g>
+    </g>
+  </g>
+</svg>

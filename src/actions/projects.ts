@@ -61,7 +61,10 @@ export async function createProject(input: ProjectInput) {
     .insert([
       {
         ...projectData,
-        cover_image_url: projectData.cover_image_url || null,
+        cover_image_url:
+          projectData.cover_image_url && projectData.cover_image_url.trim().length > 0
+            ? projectData.cover_image_url.trim()
+            : "/projects/default-project.svg",
         github_url: projectData.github_url || null,
         live_url: projectData.live_url || null,
       },
@@ -110,7 +113,10 @@ export async function updateProject(id: string, input: ProjectInput) {
     .from("projects")
     .update({
       ...projectData,
-      cover_image_url: projectData.cover_image_url || null,
+      cover_image_url:
+        projectData.cover_image_url && projectData.cover_image_url.trim().length > 0
+          ? projectData.cover_image_url.trim()
+          : "/projects/default-project.svg",
       github_url: projectData.github_url || null,
       live_url: projectData.live_url || null,
       updated_at: new Date().toISOString(),

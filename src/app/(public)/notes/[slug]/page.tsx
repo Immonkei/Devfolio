@@ -100,20 +100,18 @@ export default async function NoteDetailPage({
         )}
       </header>
 
-      {/* Featured Cover Banner */}
-      {post.cover_image_url && (
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/70 bg-secondary/20 shadow-2xl shadow-primary/5">
-          <Image
-            src={post.cover_image_url}
-            alt={post.title}
-            fill
-            preload={true}
-            sizes="(max-width: 1024px) 100vw, 768px"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
-        </div>
-      )}
+      {/* Featured Cover Banner with Fallback */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/70 bg-secondary/20 shadow-2xl shadow-primary/5">
+        <Image
+          src={post.cover_image_url || "/notes/default-note.svg"}
+          alt={post.title}
+          fill
+          preload={true}
+          sizes="(max-width: 1024px) 100vw, 768px"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
+      </div>
 
       {/* Article Content */}
       <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed text-base space-y-6">

@@ -15,8 +15,19 @@ export const projectSchema = z.object({
   implementation: z.string().optional().default(""),
   challenges: z.string().optional().default(""),
   tradeoffs: z.string().optional().default(""),
-  results: z.string().optional().default(""),
-  cover_image_url: z.string().url("Must be a valid URL").optional().nullable().or(z.literal("")),
+  cover_image_url: z
+    .string()
+    .refine(
+      (val) =>
+        val === "" ||
+        val.startsWith("/") ||
+        val.startsWith("http://") ||
+        val.startsWith("https://"),
+      { message: "Must be a valid URL or path starting with /" }
+    )
+    .optional()
+    .nullable()
+    .or(z.literal("")),
   github_url: z.string().url("Must be a valid URL").optional().nullable().or(z.literal("")),
   live_url: z.string().url("Must be a valid URL").optional().nullable().or(z.literal("")),
   featured: z.boolean().default(false),
