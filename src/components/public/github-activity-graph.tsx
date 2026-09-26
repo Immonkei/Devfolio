@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { GitHubActivityData, ContributionDay } from "@/types";
-import { GitCommit, Flame, Trophy, Calendar, ExternalLink } from "lucide-react";
+import { GitCommit, Flame, Trophy, Calendar, ExternalLink, RotateCw } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
@@ -24,8 +24,53 @@ const LEVEL_CLASSES: Record<number, string> = {
   4: "bg-cyan-300 border-cyan-100 shadow-[0_0_12px_rgba(56,189,248,0.85)] hover:bg-cyan-200",
 };
 
-export function GitHubActivityGraph({ activity, username }: GitHubActivityGraphProps) {
+export function GitHubActivityGraph({ activity: initialActivity, username }: GitHubActivityGraphProps) {
+  const [liveActivity, setLiveActivity] = useState<GitHubActivityData | null>(null);
   const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [lastSynced, setLastSynced] = useState<string>("just now");
+
+  const activity = liveActivity ?? initialActivity;
+
+  // Background sync on mount
+  useEffect(() => {
+    if (typeof window === "undefined" || process.env.NODE_ENV === "test") return;
+    let isMounted = true;
+    fetch(`/api/github`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (isMounted && data?.activity) {
+          setLiveActivity(data.activity);
+          setLastSynced(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+        }
+      })
+      .catch((err) => {
+        console.debug("Silent background activity sync fallback:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [username]);
+
+  // Manual refresh trigger
+  const handleManualSync = useCallback(async () => {
+    if (typeof window === "undefined" || process.env.NODE_ENV === "test") return;
+    setIsSyncing(true);
+    try {
+      const res = await fetch(`/api/github`, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data?.activity) {
+        setLiveActivity(data.activity);
+        setLastSynced(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+      }
+    } catch (err) {
+      console.debug("Manual activity sync error:", err);
+    } finally {
+      setIsSyncing(false);
+    }
+  }, []);
 
   const { weeks, monthLabels } = useMemo(() => {
     if (!activity || !activity.contributions || activity.contributions.length === 0) {
@@ -59,12 +104,10 @@ export function GitHubActivityGraph({ activity, username }: GitHubActivityGraphP
       computedWeeks.push(currentWeek);
     }
 
-    // Determine month label positions based on the first occurrence of each month
     const labels: { name: string; weekIndex: number }[] = [];
     let lastMonth = -1;
 
     computedWeeks.forEach((week, weekIndex) => {
-      // Find the first valid day in this week
       const firstValidDay = week.find((d) => d !== null);
       if (firstValidDay) {
         const month = new Date(firstValidDay.date).getMonth();
@@ -108,24 +151,41 @@ export function GitHubActivityGraph({ activity, username }: GitHubActivityGraphP
       {/* Top Header & Stat Badges */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-border/60 pb-6">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase tracking-wider">
+          <div className="flex items-center gap-2.5 text-xs font-mono text-primary uppercase tracking-wider">
             <GithubIcon className="h-4 w-4" />
             <span>GitHub Contribution Heatmap</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-mono text-emerald-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Live Sync</span>
+            </span>
           </div>
           <h3 className="mt-1 text-lg sm:text-xl font-bold text-foreground">
             Year-Round Commit Telemetry
           </h3>
         </div>
 
-        <a
-          href={`https://github.com/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/30 px-3 py-1.5 font-mono text-xs text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-all w-fit"
-        >
-          <span>@{username}</span>
-          <ExternalLink className="h-3 w-3" />
-        </a>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleManualSync}
+            disabled={isSyncing}
+            title="Force refresh live commit metrics"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/30 px-3 py-1.5 font-mono text-xs text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-all disabled:opacity-50"
+          >
+            <RotateCw className={cn("h-3 w-3", isSyncing && "animate-spin text-primary")} />
+            <span>{isSyncing ? "Syncing..." : "Sync"}</span>
+          </button>
+
+          <a
+            href={`https://github.com/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/30 px-3 py-1.5 font-mono text-xs text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-all"
+          >
+            <span>@{username}</span>
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
       </div>
 
       {/* 4 Stat Highlights */}
@@ -248,7 +308,10 @@ export function GitHubActivityGraph({ activity, username }: GitHubActivityGraphP
 
         {/* Legend */}
         <div className="mt-4 pt-3 border-t border-border/40 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
-          <span>Live telemetry synced from GitHub</span>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Auto-synced with GitHub API (last check: {lastSynced})</span>
+          </div>
           <div className="flex items-center gap-1.5">
             <span>Less</span>
             <div className={cn("h-2.5 w-2.5 rounded-xs border", LEVEL_CLASSES[0])} />

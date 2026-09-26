@@ -15,7 +15,7 @@ export async function fetchGitHubRepositories(username: string): Promise<GitHubR
       `https://api.github.com/users/${username}/repos?sort=pushed&per_page=6&type=owner`,
       {
         headers,
-        next: { revalidate: 3600 }, // Cache for 1 hour
+        next: { revalidate: 60 }, // Revalidate every 60s for near real-time updates
       }
     );
 
@@ -67,7 +67,7 @@ export async function fetchGitHubRepositories(username: string): Promise<GitHubR
 export async function fetchGitHubActivity(username: string): Promise<GitHubActivityData | null> {
   try {
     const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      next: { revalidate: 60 }, // Revalidate every 60s for near real-time updates
     });
 
     if (!res.ok) {
