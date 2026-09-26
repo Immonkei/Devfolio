@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   authors: [{ name: "Min Phanith", url: "https://github.com/Immonkei" }],
   creator: "Min Phanith",
   icons: {
-    icon: "/avatar-sm.jpg",
-    shortcut: "/avatar-sm.jpg",
+    icon: "/avatar.png",
+    shortcut: "/avatar.png",
     apple: "/avatar.png",
   },
   openGraph: {
