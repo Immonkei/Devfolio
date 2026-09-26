@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://devforge.minphanith.dev";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const [{ data: projects }, { data: posts }] = await Promise.all([
       supabase.from("projects").select("slug, updated_at").eq("status", "PUBLISHED"),
       supabase.from("posts").select("slug, updated_at").eq("status", "PUBLISHED"),

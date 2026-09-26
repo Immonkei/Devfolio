@@ -6,7 +6,7 @@ import { Experience, Education } from "@/types";
 
 export const metadata = {
   title: "Experience & Track Record",
-  description: "Career milestones, software engineering roles, and system architecture leadership.",
+  description: "Professional experience, internships, and academic background in software engineering.",
 };
 
 export const revalidate = 60;
@@ -37,10 +37,10 @@ export default async function ExperiencePage() {
           <span>Professional History</span>
         </div>
         <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Engineering Experience & Roles
+          Work Experience & Roles
         </h1>
         <p className="mt-2 text-muted-foreground text-sm max-w-2xl">
-          A track record of shipping resilient production platforms, leading infrastructure transitions, and driving technical excellence.
+          Professional roles, internships, and hands-on engineering work building web applications and backend systems.
         </p>
       </div>
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Terminal, Menu, X, Shield } from "lucide-react";
+import { Terminal, Menu, X, FileText } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
@@ -31,9 +31,9 @@ export function PublicNavbar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-secondary group-hover:border-primary/50">
             <Terminal className="h-4 w-4 text-primary" />
           </div>
-          <span className="flex items-center gap-1.5">
-            <span>devforge</span>
-            <span className="text-primary font-bold">.sys</span>
+          <span className="flex items-center gap-1">
+            <span>minphanith</span>
+            <span className="text-primary font-bold">.dev</span>
           </span>
         </Link>
 
@@ -62,10 +62,10 @@ export function PublicNavbar() {
           })}
         </nav>
 
-        {/* Right CTA / Admin / GitHub */}
+        {/* Right CTA / GitHub / Resume */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="https://github.com"
+            href="https://github.com/Immonkei"
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
@@ -73,25 +73,28 @@ export function PublicNavbar() {
           >
             <GithubIcon className="h-4 w-4" />
           </a>
-          <Link
-            href="/admin/login"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
-            title="Admin Console"
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
           >
-            <Shield className="h-3 w-3" />
-            <span>sys:admin</span>
-          </Link>
+            <FileText className="h-3.5 w-3.5" />
+            <span>Resume (PDF)</span>
+          </a>
         </div>
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 md:hidden">
-          <Link
-            href="/admin/login"
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground"
-            aria-label="Admin Login"
+          <a
+            href="https://github.com/Immonkei"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground"
+            aria-label="GitHub Profile"
           >
-            <Shield className="h-3.5 w-3.5" />
-          </Link>
+            <GithubIcon className="h-4 w-4" />
+          </a>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -129,6 +132,15 @@ export function PublicNavbar() {
                 </Link>
               );
             })}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-md border border-border/80 bg-secondary/40 px-3 py-2 text-sm font-medium text-primary mt-2"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Download Resume (PDF)</span>
+            </a>
           </nav>
         </div>
       )}
