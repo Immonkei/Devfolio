@@ -1,7 +1,7 @@
 import { ContactForm } from "@/components/public/contact-form";
 import { Mail, MapPin, Clock } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 
 export const metadata = {
   title: "Contact & Consultation",
@@ -12,7 +12,7 @@ export default async function ContactPage() {
   let profile = null;
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data } = await supabase.from("profiles").select("*").limit(1).single();
     profile = data;
   } catch (err) {

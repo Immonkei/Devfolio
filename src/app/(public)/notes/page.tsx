@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 import { NoteCard } from "@/components/public/note-card";
 import { FileText, BookOpen } from "lucide-react";
 import { PostWithCategories, Category } from "@/types";
@@ -14,7 +14,7 @@ export default async function NotesPage() {
   let posts: PostWithCategories[] = [];
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data } = await supabase
       .from("posts")
       .select("*, post_categories(category_id, categories(*))")
