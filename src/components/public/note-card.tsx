@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { formatFullDate } from "@/lib/utils";
 import { PostWithCategories } from "@/types";
 import { ArrowRight, BookOpen, Clock } from "lucide-react";
@@ -10,7 +11,24 @@ export function NoteCard({ post }: { post: PostWithCategories }) {
 
   return (
     <article className="group flex flex-col justify-between rounded-xl border border-border bg-card/60 p-6 transition-all hover:border-primary/50 hover:bg-card">
-      <div className="space-y-3">
+      <div className="space-y-4">
+        {/* Visual Cover Banner */}
+        {post.cover_image_url && (
+          <Link
+            href={`/notes/${post.slug}`}
+            className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/60 bg-secondary/30 block group/img"
+          >
+            <Image
+              src={post.cover_image_url}
+              alt={post.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-40 transition-opacity group-hover:opacity-20" />
+          </Link>
+        )}
+
         {/* Metadata Bar */}
         <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
           <div className="flex items-center gap-2">

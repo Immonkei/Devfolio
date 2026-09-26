@@ -1,0 +1,141 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="note2-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080718" />
+      <stop offset="50%" stop-color="#120e29" />
+      <stop offset="100%" stop-color="#071b28" />
+    </linearGradient>
+    <linearGradient id="card-note2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1c3b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0c0e24" stop-opacity="0.9" />
+    </linearGradient>
+    <pattern id="grid-note2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#818cf8" stroke-opacity="0.05" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#note2-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-note2)" />
+
+  <circle cx="260" cy="180" r="260" fill="#818cf8" fill-opacity="0.12" filter="blur(70px)" />
+  <circle cx="980" cy="450" r="260" fill="#00ddb3" fill-opacity="0.08" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#312e81" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#0b0f1d" stroke="#1e293b" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0f172a" />
+    <path d="M0 48h1080" stroke="#1e293b" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#0b0f1d" stroke="#1e293b" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">engineering-notes/software-design/02.md</text>
+
+    <rect x="900" y="12" width="154" height="24" rx="12" fill="#818cf8" fill-opacity="0.2" stroke="#818cf8" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="914" cy="24" r="3.5" fill="#818cf8" />
+    <text x="926" y="28" fill="#c7d2fe" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">FIELD REPORT #02</text>
+
+    <!-- OOAD Domain & Class Diagram -->
+    <g transform="translate(36, 76)">
+      <rect width="1008" height="300" rx="10" fill="url(#card-note2)" stroke="#312e81" stroke-width="1" />
+
+      <text x="28" y="32" fill="#c7d2fe" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">OBJECT-ORIENTED ANALYSIS &amp; DOMAIN ENCAPSULATION</text>
+      
+      <!-- UML Cards Layout -->
+      <g transform="translate(28, 56)">
+        <!-- Entity 1: User / Role -->
+        <rect width="210" height="110" rx="8" fill="#0b1120" stroke="#818cf8" stroke-width="1" />
+        <rect width="210" height="26" rx="8" fill="#1e1b4b" />
+        <text x="105" y="18" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Abstract&gt;&gt; User</text>
+        <text x="14" y="46" fill="#94a3b8" font-family="monospace" font-size="10">+ id: UUID</text>
+        <text x="14" y="64" fill="#94a3b8" font-family="monospace" font-size="10">+ email: String</text>
+        <text x="14" y="86" fill="#818cf8" font-family="monospace" font-size="10">+ hasPermission(perm)</text>
+
+        <!-- Arrow -->
+        <path d="M 210 55 L 260 55" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="3 3" />
+
+        <!-- Entity 2: Course -->
+        <g transform="translate(260, 0)">
+          <rect width="210" height="110" rx="8" fill="#0b1120" stroke="#a855f7" stroke-width="1" />
+          <rect width="210" height="26" rx="8" fill="#2e1065" />
+          <text x="105" y="18" text-anchor="middle" fill="#e9d5ff" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Entity&gt;&gt; Course</text>
+          <text x="14" y="46" fill="#94a3b8" font-family="monospace" font-size="10">+ instructorId: UUID</text>
+          <text x="14" y="64" fill="#94a3b8" font-family="monospace" font-size="10">+ modules: Module[]</text>
+          <text x="14" y="86" fill="#c084fc" font-family="monospace" font-size="10">+ publishSyllabus()</text>
+        </g>
+
+        <!-- Arrow -->
+        <path d="M 470 55 L 520 55" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" />
+
+        <!-- Entity 3: Assignment -->
+        <g transform="translate(520, 0)">
+          <rect width="210" height="110" rx="8" fill="#0b1120" stroke="#00ddb3" stroke-width="1" />
+          <rect width="210" height="26" rx="8" fill="#042f2e" />
+          <text x="105" y="18" text-anchor="middle" fill="#a7f3d0" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Entity&gt;&gt; Assignment</text>
+          <text x="14" y="46" fill="#94a3b8" font-family="monospace" font-size="10">+ deadline: Date</text>
+          <text x="14" y="64" fill="#94a3b8" font-family="monospace" font-size="10">+ submissions: Sub[]</text>
+          <text x="14" y="86" fill="#34d399" font-family="monospace" font-size="10">+ isPastDeadline()</text>
+        </g>
+
+        <!-- Arrow -->
+        <path d="M 730 55 L 780 55" stroke="#00ddb3" stroke-width="1.5" stroke-dasharray="3 3" />
+
+        <!-- Entity 4: Submission -->
+        <g transform="translate(780, 0)">
+          <rect width="170" height="110" rx="8" fill="#0b1120" stroke="#f59e0b" stroke-width="1" />
+          <rect width="170" height="26" rx="8" fill="#451a03" />
+          <text x="85" y="18" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Entity&gt;&gt; Grade</text>
+          <text x="14" y="46" fill="#94a3b8" font-family="monospace" font-size="10">+ score: Float</text>
+          <text x="14" y="64" fill="#94a3b8" font-family="monospace" font-size="10">+ feedback: String</text>
+          <text x="14" y="86" fill="#fbbf24" font-family="monospace" font-size="10">+ isPassingGrade()</text>
+        </g>
+      </g>
+
+      <!-- SOLID Principles Callout -->
+      <g transform="translate(28, 185)">
+        <rect width="950" height="90" rx="8" fill="#080c18" stroke="#1e293b" stroke-width="1" />
+        <text x="20" y="28" fill="#818cf8" font-family="monospace" font-size="11" font-weight="700">SOLID PRINCIPLES IN ACTION:</text>
+        <text x="20" y="52" fill="#e2e8f0" font-family="sans-serif" font-size="13">• <tspan fill="#00ddb3" font-weight="600">Single Responsibility</tspan>: Domain entities enforce business validations; route controllers never calculate rules.</text>
+        <text x="20" y="72" fill="#e2e8f0" font-family="sans-serif" font-size="13">• <tspan fill="#38bdf8" font-weight="600">Interface Segregation</tspan>: Specific repository contracts prevent tight coupling with database ORMs.</text>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 396)">
+      <rect width="1008" height="134" rx="12" fill="#0b1120" stroke="#1e293b" stroke-width="1" />
+      
+      <g transform="translate(30, 24)">
+        <text x="0" y="26" fill="#f8fafc" font-family="sans-serif" font-size="24" font-weight="800">Applying Object-Oriented Analysis &amp; Design (OOAD)</text>
+        <text x="0" y="50" fill="#94a3b8" font-family="sans-serif" font-size="13">Conceptual class modeling, domain boundary encapsulation &amp; SOLID practices in full-stack web applications.</text>
+        
+        <g transform="translate(0, 64)">
+          <rect x="0" y="0" width="130" height="24" rx="4" fill="#1e293b" />
+          <text x="65" y="16" text-anchor="middle" fill="#818cf8" font-family="monospace" font-size="11" font-weight="600">#software-design</text>
+
+          <rect x="140" y="0" width="120" height="24" rx="4" fill="#1e293b" />
+          <text x="200" y="16" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="11" font-weight="600">OOAD Modeling</text>
+
+          <rect x="270" y="0" width="110" height="24" rx="4" fill="#1e293b" />
+          <text x="325" y="16" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="600">Encapsulation</text>
+
+          <rect x="390" y="0" width="120" height="24" rx="4" fill="#1e293b" />
+          <text x="450" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">SOLID Practices</text>
+        </g>
+      </g>
+
+      <!-- Compass / Cube Emblem -->
+      <g transform="translate(900, 20)">
+        <circle cx="48" cy="48" r="44" fill="#818cf8" fill-opacity="0.1" stroke="#818cf8" stroke-opacity="0.3" stroke-width="1.5" />
+        <rect x="36" y="36" width="24" height="24" rx="4" fill="none" stroke="#818cf8" stroke-width="2" />
+        <line x1="36" y1="36" x2="48" y2="48" stroke="#818cf8" stroke-width="1.5" />
+        <line x1="60" y1="36" x2="48" y2="48" stroke="#818cf8" stroke-width="1.5" />
+        <line x1="36" y1="60" x2="48" y2="48" stroke="#818cf8" stroke-width="1.5" />
+        <line x1="60" y1="60" x2="48" y2="48" stroke="#818cf8" stroke-width="1.5" />
+      </g>
+    </g>
+  </g>
+</svg>

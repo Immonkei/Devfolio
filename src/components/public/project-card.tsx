@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import { ProjectWithTechnologies } from "@/types";
@@ -8,6 +9,23 @@ export function ProjectCard({ project }: { project: ProjectWithTechnologies }) {
   return (
     <article className="group relative flex flex-col justify-between rounded-xl border border-border bg-card/70 p-6 transition-all duration-200 hover:border-primary/50 hover:bg-card hover:shadow-lg">
       <div className="space-y-4">
+        {/* Visual Cover Banner */}
+        {project.cover_image_url && (
+          <Link
+            href={`/projects/${project.slug}`}
+            className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/60 bg-secondary/30 block group/img"
+          >
+            <Image
+              src={project.cover_image_url}
+              alt={project.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-40 transition-opacity group-hover:opacity-20" />
+          </Link>
+        )}
+
         {/* Header Badges */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">

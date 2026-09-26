@@ -1,0 +1,158 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="api-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050a14" />
+      <stop offset="50%" stop-color="#090f1d" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+    <linearGradient id="card-api" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0.95" />
+    </linearGradient>
+    <pattern id="grid-api" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#10b981" stroke-opacity="0.04" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#api-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-api)" />
+
+  <!-- Ambient Glow -->
+  <circle cx="300" cy="180" r="260" fill="#10b981" fill-opacity="0.1" filter="blur(70px)" />
+  <circle cx="950" cy="450" r="280" fill="#06b6d4" fill-opacity="0.08" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1f2937" stroke-width="1.5" />
+
+  <!-- Main Terminal & API Console -->
+  <g transform="translate(60, 56)">
+    <!-- Terminal Window -->
+    <rect width="1080" height="562" rx="14" fill="#030712" stroke="#1f2937" stroke-width="1.5" />
+
+    <!-- Terminal Header -->
+    <rect width="1080" height="48" rx="14" fill="#0b0f19" />
+    <path d="M0 48h1080" stroke="#1f2937" stroke-width="1" />
+
+    <!-- Window Dots -->
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <text x="96" y="29" fill="#9ca3af" font-family="monospace" font-size="12">node server.js — job-portal-api:v1.4.2 [PORT: 5000]</text>
+
+    <!-- Status badge -->
+    <rect x="920" y="12" width="134" height="24" rx="12" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="934" cy="24" r="3.5" fill="#10b981" />
+    <text x="946" y="28" fill="#6ee7b7" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">API HEALTHY</text>
+
+    <!-- Left Column: REST Route Explorer & Payloads -->
+    <g transform="translate(36, 76)">
+      <rect width="580" height="290" rx="10" fill="url(#card-api)" stroke="#1f2937" stroke-width="1" />
+
+      <!-- Route 1 -->
+      <g transform="translate(20, 24)">
+        <rect width="52" height="22" rx="4" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-opacity="0.5" />
+        <text x="26" y="16" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="10" font-weight="700">POST</text>
+        <text x="64" y="16" fill="#f3f4f6" font-family="monospace" font-size="13" font-weight="600">/api/v1/auth/login</text>
+        <text x="540" y="16" text-anchor="end" fill="#10b981" font-family="monospace" font-size="11">200 OK • 18ms</text>
+      </g>
+
+      <!-- JSON Payload Snippet -->
+      <g transform="translate(20, 60)">
+        <rect width="540" height="80" rx="6" fill="#080c14" stroke="#1f2937" stroke-width="1" />
+        <text x="14" y="22" fill="#6b7280" font-family="monospace" font-size="11">/* Request Body &amp; Response Claims */</text>
+        <text x="14" y="42" fill="#93c5fd" font-family="monospace" font-size="11">{"role": <tspan fill="#34d399">"RECRUITER"</tspan>, "token": <tspan fill="#f59e0b">"eyJhbGciOiJIUzI1NiIsIn..."</tspan>}</text>
+        <text x="14" y="62" fill="#6b7280" font-family="monospace" font-size="11">Authorization: Bearer [JWT Verified • Claims: id, email, role]</text>
+      </g>
+
+      <!-- Route 2 -->
+      <g transform="translate(20, 160)">
+        <rect width="52" height="22" rx="4" fill="#06b6d4" fill-opacity="0.2" stroke="#06b6d4" stroke-opacity="0.5" />
+        <text x="26" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="700">GET</text>
+        <text x="64" y="16" fill="#f3f4f6" font-family="monospace" font-size="13" font-weight="600">/api/v1/jobs?category=backend&amp;page=1</text>
+        <text x="540" y="16" text-anchor="end" fill="#10b981" font-family="monospace" font-size="11">200 OK • 24ms</text>
+      </g>
+
+      <!-- Route 3 -->
+      <g transform="translate(20, 200)">
+        <rect width="52" height="22" rx="4" fill="#a855f7" fill-opacity="0.2" stroke="#a855f7" stroke-opacity="0.5" />
+        <text x="26" y="16" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="10" font-weight="700">POST</text>
+        <text x="64" y="16" fill="#f3f4f6" font-family="monospace" font-size="13" font-weight="600">/api/v1/applications/upload-resume</text>
+        <text x="540" y="16" text-anchor="end" fill="#10b981" font-family="monospace" font-size="11">201 CREATED • 42ms</text>
+      </g>
+
+      <!-- Rate Limit bar -->
+      <g transform="translate(20, 246)">
+        <text x="0" y="14" fill="#9ca3af" font-family="monospace" font-size="11">Rate Limit: <tspan fill="#34d399">96/100 req/min remaining</tspan></text>
+        <rect x="250" y="4" width="290" height="12" rx="6" fill="#1f2937" />
+        <rect x="250" y="4" width="278" height="12" rx="6" fill="#10b981" />
+      </g>
+    </g>
+
+    <!-- Right Column: Performance Telemetry -->
+    <g transform="translate(640, 76)">
+      <rect width="404" height="290" rx="10" fill="url(#card-api)" stroke="#1f2937" stroke-width="1" />
+      <text x="24" y="32" fill="#9ca3af" font-family="sans-serif" font-size="12" font-weight="600" letter-spacing="1">API THROUGHPUT &amp; LATENCY</text>
+      <text x="24" y="64" fill="#f9fafb" font-family="sans-serif" font-size="28" font-weight="800">22.4 ms <tspan fill="#10b981" font-size="14" font-weight="600">p95 Latency</tspan></text>
+
+      <!-- Latency Sparkline Graph -->
+      <g transform="translate(24, 90)">
+        <rect width="356" height="110" rx="6" fill="#080c14" stroke="#1f2937" stroke-width="1" />
+        <!-- Graph lines -->
+        <line x1="10" y1="25" x2="346" y2="25" stroke="#1f2937" stroke-dasharray="3 3" />
+        <line x1="10" y1="55" x2="346" y2="55" stroke="#1f2937" stroke-dasharray="3 3" />
+        <line x1="10" y1="85" x2="346" y2="85" stroke="#1f2937" stroke-dasharray="3 3" />
+        
+        <!-- Latency curve -->
+        <path d="M 10 70 Q 50 65, 80 50 T 150 45 T 220 58 T 290 35 T 346 38" fill="none" stroke="#10b981" stroke-width="2.5" />
+        <path d="M 10 70 Q 50 65, 80 50 T 150 45 T 220 58 T 290 35 T 346 38 L 346 100 L 10 100 Z" fill="#10b981" fill-opacity="0.08" />
+      </g>
+
+      <!-- Stats Grid -->
+      <g transform="translate(24, 225)">
+        <text x="0" y="16" fill="#6b7280" font-family="monospace" font-size="11">Total Requests</text>
+        <text x="0" y="38" fill="#f9fafb" font-family="monospace" font-size="16" font-weight="700">142,850</text>
+
+        <text x="130" y="16" fill="#6b7280" font-family="monospace" font-size="11">Success Rate</text>
+        <text x="130" y="38" fill="#34d399" font-family="monospace" font-size="16" font-weight="700">99.98%</text>
+
+        <text x="250" y="16" fill="#6b7280" font-family="monospace" font-size="11">Uptime</text>
+        <text x="250" y="38" fill="#38bdf8" font-family="monospace" font-size="16" font-weight="700">99.9%</text>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 388)">
+      <rect width="1008" height="142" rx="12" fill="#0b0f19" stroke="#1f2937" stroke-width="1" />
+      
+      <g transform="translate(30, 28)">
+        <text x="0" y="26" fill="#f9fafb" font-family="sans-serif" font-size="26" font-weight="800">Job Portal REST API Service</text>
+        <text x="0" y="52" fill="#9ca3af" font-family="sans-serif" font-size="13">High-concurrency job listings, resume upload processing, JWT role authentication &amp; Firestore integration.</text>
+        
+        <!-- Tech Stack Tags -->
+        <g transform="translate(0, 68)">
+          <rect x="0" y="0" width="80" height="24" rx="4" fill="#1f2937" />
+          <text x="40" y="16" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="11" font-weight="600">Node.js</text>
+
+          <rect x="90" y="0" width="90" height="24" rx="4" fill="#1f2937" />
+          <text x="135" y="16" text-anchor="middle" fill="#f3f4f6" font-family="monospace" font-size="11" font-weight="600">Express.js</text>
+
+          <rect x="190" y="0" width="80" height="24" rx="4" fill="#1f2937" />
+          <text x="230" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">JWT Auth</text>
+
+          <rect x="280" y="0" width="130" height="24" rx="4" fill="#1f2937" />
+          <text x="345" y="16" text-anchor="middle" fill="#f97316" font-family="monospace" font-size="11" font-weight="600">Cloud Firestore</text>
+
+          <rect x="420" y="0" width="80" height="24" rx="4" fill="#1f2937" />
+          <text x="460" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">REST API</text>
+        </g>
+      </g>
+
+      <!-- Server / Shield Emblem -->
+      <g transform="translate(900, 22)">
+        <circle cx="48" cy="48" r="44" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.5" />
+        <path d="M48 26 L66 34 V52 C66 64 58 73 48 76 C38 73 30 64 30 52 V34 L48 26 Z" fill="#10b981" fill-opacity="0.8" />
+        <path d="M42 50 L46 54 L54 44" stroke="#030712" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+    </g>
+  </g>
+</svg>

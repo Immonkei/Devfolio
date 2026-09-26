@@ -1,0 +1,132 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cipher-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#04060c" />
+      <stop offset="50%" stop-color="#0a0e1c" />
+      <stop offset="100%" stop-color="#021a1f" />
+    </linearGradient>
+    <linearGradient id="card-cipher" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111827" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0.9" />
+    </linearGradient>
+    <pattern id="grid-cipher" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ddb3" stroke-opacity="0.05" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#cipher-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-cipher)" />
+
+  <circle cx="280" cy="180" r="260" fill="#00ddb3" fill-opacity="0.1" filter="blur(70px)" />
+  <circle cx="950" cy="460" r="260" fill="#3b82f6" fill-opacity="0.08" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1f2937" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#030712" stroke="#1f2937" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0b0f19" />
+    <path d="M0 48h1080" stroke="#1f2937" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#030712" stroke="#1f2937" stroke-width="1" />
+    <text x="116" y="28" fill="#9ca3af" font-family="monospace" font-size="12">https://cipherverse.lab/rsa-visualizer</text>
+
+    <rect x="900" y="12" width="154" height="24" rx="12" fill="#00ddb3" fill-opacity="0.15" stroke="#00ddb3" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="914" cy="24" r="3.5" fill="#00ddb3" />
+    <text x="926" y="28" fill="#5eead4" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">ASYMMETRIC RSA-2048</text>
+
+    <!-- Left Box: RSA Mathematical Decomposition -->
+    <g transform="translate(36, 76)">
+      <rect width="580" height="290" rx="10" fill="url(#card-cipher)" stroke="#1f2937" stroke-width="1" />
+
+      <text x="24" y="32" fill="#9ca3af" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">RSA KEY PAIR MATHEMATICS</text>
+      
+      <!-- Key Gen Steps -->
+      <g transform="translate(24, 52)">
+        <!-- Step 1 -->
+        <rect width="532" height="44" rx="6" fill="#080c14" stroke="#1f2937" stroke-width="1" />
+        <text x="16" y="27" fill="#60a5fa" font-family="monospace" font-size="12">1. Primes: p = 61, q = 53  →  n = p × q = 3233</text>
+
+        <!-- Step 2 -->
+        <g transform="translate(0, 54)">
+          <rect width="532" height="44" rx="6" fill="#080c14" stroke="#1f2937" stroke-width="1" />
+          <text x="16" y="27" fill="#34d399" font-family="monospace" font-size="12">2. Totient: φ(n) = (p-1)(q-1) = 60 × 52 = 3120</text>
+        </g>
+
+        <!-- Step 3 -->
+        <g transform="translate(0, 108)">
+          <rect width="532" height="44" rx="6" fill="#080c14" stroke="#1f2937" stroke-width="1" />
+          <text x="16" y="27" fill="#f59e0b" font-family="monospace" font-size="12">3. Exponents: e = 17 (gcd=1)  →  d ≡ e⁻¹ mod φ(n) = 2753</text>
+        </g>
+
+        <!-- Formula Callout -->
+        <g transform="translate(0, 162)">
+          <rect width="532" height="52" rx="6" fill="#030712" stroke="#00ddb3" stroke-opacity="0.3" stroke-width="1" />
+          <text x="16" y="22" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="700">ENCRYPTION / DECRYPTION FUNCTIONS:</text>
+          <text x="16" y="40" fill="#f3f4f6" font-family="monospace" font-size="12">c = (m^e) mod n  |  m = (c^d) mod n   [Arbitrary BigInt]</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Right Box: Interactive Plaintext -> Ciphertext Box -->
+    <g transform="translate(640, 76)">
+      <rect width="404" height="290" rx="10" fill="url(#card-cipher)" stroke="#1f2937" stroke-width="1" />
+
+      <text x="24" y="32" fill="#9ca3af" font-family="sans-serif" font-size="12" font-weight="600" letter-spacing="1">PAYLOAD TRANSFORMATION</text>
+      <text x="24" y="64" fill="#f9fafb" font-family="sans-serif" font-size="20" font-weight="700">Plaintext to Cipher Stream</text>
+
+      <g transform="translate(24, 85)">
+        <text x="0" y="14" fill="#6b7280" font-family="monospace" font-size="10">INPUT PLAINTEXT (ASCII)</text>
+        <rect x="0" y="22" width="356" height="36" rx="6" fill="#080c14" stroke="#1f2937" stroke-width="1" />
+        <text x="14" y="45" fill="#f3f4f6" font-family="monospace" font-size="13">"HELLO CYPHER WORLD"</text>
+      </g>
+
+      <g transform="translate(24, 160)">
+        <text x="0" y="14" fill="#6b7280" font-family="monospace" font-size="10">OUTPUT CIPHER BLOCKS (HEX)</text>
+        <rect x="0" y="22" width="356" height="54" rx="6" fill="#080c14" stroke="#00ddb3" stroke-opacity="0.4" stroke-width="1" />
+        <text x="14" y="44" fill="#00ddb3" font-family="monospace" font-size="12">0x3F9A 0x1B82 0x7E01 0x4C91</text>
+        <text x="14" y="62" fill="#5eead4" font-family="monospace" font-size="10">Entropy: 7.98 bits/byte (High)</text>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 388)">
+      <rect width="1008" height="142" rx="12" fill="#0b0f19" stroke="#1f2937" stroke-width="1" />
+      
+      <g transform="translate(30, 28)">
+        <text x="0" y="26" fill="#f9fafb" font-family="sans-serif" font-size="26" font-weight="800">CipherVerse — Cryptography Visualizer</text>
+        <text x="0" y="52" fill="#9ca3af" font-family="sans-serif" font-size="13">Interactive RSA key pair generation, modular exponentiation, prime decomposition &amp; BigInt client math.</text>
+        
+        <g transform="translate(0, 68)">
+          <rect x="0" y="0" width="80" height="24" rx="4" fill="#1f2937" />
+          <text x="40" y="16" text-anchor="middle" fill="#61dafb" font-family="monospace" font-size="11" font-weight="600">React</text>
+
+          <rect x="90" y="0" width="100" height="24" rx="4" fill="#1f2937" />
+          <text x="140" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">TypeScript</text>
+
+          <rect x="200" y="0" width="100" height="24" rx="4" fill="#1f2937" />
+          <text x="250" y="16" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="600">BigInt Math</text>
+
+          <rect x="310" y="0" width="120" height="24" rx="4" fill="#1f2937" />
+          <text x="370" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">RSA Cryptography</text>
+
+          <rect x="440" y="0" width="100" height="24" rx="4" fill="#1f2937" />
+          <text x="490" y="16" text-anchor="middle" fill="#9ca3af" font-family="monospace" font-size="11" font-weight="600">Tailwind CSS</text>
+        </g>
+      </g>
+
+      <!-- Key Lock Emblem -->
+      <g transform="translate(900, 22)">
+        <circle cx="48" cy="48" r="44" fill="#00ddb3" fill-opacity="0.1" stroke="#00ddb3" stroke-opacity="0.3" stroke-width="1.5" />
+        <rect x="36" y="44" width="24" height="20" rx="3" fill="#00ddb3" />
+        <path d="M41 44 V36 C41 32 44 29 48 29 C52 29 55 32 55 36 V44" fill="none" stroke="#00ddb3" stroke-width="2.5" />
+        <circle cx="48" cy="52" r="2" fill="#030712" />
+        <path d="M48 54 V58" stroke="#030712" stroke-width="1.5" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -76,6 +76,13 @@ describe('Public UI Components', () => {
       const ghLink = screen.getByTitle('Inspect Repository Source');
       expect(ghLink).toHaveAttribute('href', 'https://github.com/developer/devforge');
     });
+
+    it('renders project cover image when cover_image_url is provided', () => {
+      render(<ProjectCard project={{ ...mockProject, cover_image_url: '/projects/borejak.svg' }} />);
+      const img = screen.getByRole('img', { name: 'DevForge Engine' });
+      expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('src', expect.stringContaining('borejak.svg'));
+    });
   });
 
   describe('ExperienceCard', () => {
@@ -141,6 +148,13 @@ describe('Public UI Components', () => {
       render(<NoteCard post={mockNote} />);
       const link = screen.getByRole('link', { name: /Architecting Resilient Multi-Region Microservices/i });
       expect(link).toHaveAttribute('href', '/notes/architecting-resilient-multi-region-microservices');
+    });
+
+    it('renders note cover image when cover_image_url is provided', () => {
+      render(<NoteCard post={{ ...mockNote, cover_image_url: '/notes/modular-rest-apis.svg' }} />);
+      const img = screen.getByRole('img', { name: 'Architecting Resilient Multi-Region Microservices' });
+      expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('src', expect.stringContaining('modular-rest-apis.svg'));
     });
   });
 

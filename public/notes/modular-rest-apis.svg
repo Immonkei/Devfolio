@@ -1,0 +1,145 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="note1-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050a18" />
+      <stop offset="50%" stop-color="#0b1329" />
+      <stop offset="100%" stop-color="#031b26" />
+    </linearGradient>
+    <linearGradient id="card-note1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c38" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#080e1e" stop-opacity="0.9" />
+    </linearGradient>
+    <pattern id="grid-note1" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ddb3" stroke-opacity="0.04" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#note1-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-note1)" />
+
+  <circle cx="260" cy="180" r="260" fill="#00ddb3" fill-opacity="0.1" filter="blur(70px)" />
+  <circle cx="980" cy="450" r="260" fill="#0284c7" fill-opacity="0.09" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1e293b" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#070c18" stroke="#1e293b" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0f172a" />
+    <path d="M0 48h1080" stroke="#1e293b" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#070c18" stroke="#1e293b" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">engineering-notes/backend-architecture/01.md</text>
+
+    <rect x="900" y="12" width="154" height="24" rx="12" fill="#00ddb3" fill-opacity="0.15" stroke="#00ddb3" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="914" cy="24" r="3.5" fill="#00ddb3" />
+    <text x="926" y="28" fill="#5eead4" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">FIELD REPORT #01</text>
+
+    <!-- Architecture Blueprint Diagram -->
+    <g transform="translate(36, 76)">
+      <rect width="1008" height="300" rx="10" fill="url(#card-note1)" stroke="#1e293b" stroke-width="1" />
+
+      <text x="28" y="32" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">REQUEST LIFECYCLE &amp; MIDDLEWARE PIPELINE</text>
+      
+      <!-- Flow Blocks -->
+      <g transform="translate(28, 60)">
+        <!-- Step 1: HTTP Client Request -->
+        <rect width="160" height="90" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="1" />
+        <text x="80" y="30" text-anchor="middle" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="700">1. Client Request</text>
+        <text x="80" y="52" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">HTTP POST / PUT</text>
+        <text x="80" y="70" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Header: Bearer Token</text>
+
+        <!-- Arrow -->
+        <path d="M 160 45 L 200 45" stroke="#00ddb3" stroke-width="2" />
+        <polygon points="198,40 206,45 198,50" fill="#00ddb3" />
+
+        <!-- Step 2: Express Router -->
+        <g transform="translate(206, 0)">
+          <rect width="160" height="90" rx="8" fill="#0f172a" stroke="#00ddb3" stroke-width="1" />
+          <text x="80" y="30" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="12" font-weight="700">2. Route Matcher</text>
+          <text x="80" y="52" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">Express.Router()</text>
+          <text x="80" y="70" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Endpoint Resolution</text>
+        </g>
+
+        <!-- Arrow -->
+        <path d="M 366 45 L 406 45" stroke="#00ddb3" stroke-width="2" />
+        <polygon points="404,40 412,45 404,50" fill="#00ddb3" />
+
+        <!-- Step 3: Auth Middleware -->
+        <g transform="translate(412, 0)">
+          <rect width="170" height="90" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1" />
+          <text x="85" y="30" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="12" font-weight="700">3. Auth Middleware</text>
+          <text x="85" y="52" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="10">jwt.verify(token)</text>
+          <text x="85" y="70" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Role Authorization</text>
+        </g>
+
+        <!-- Arrow -->
+        <path d="M 582 45 L 622 45" stroke="#00ddb3" stroke-width="2" />
+        <polygon points="620,40 628,45 620,50" fill="#00ddb3" />
+
+        <!-- Step 4: Controller -->
+        <g transform="translate(628, 0)">
+          <rect width="160" height="90" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
+          <text x="80" y="30" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="700">4. Controller</text>
+          <text x="80" y="52" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">Payload Validation</text>
+          <text x="80" y="70" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Service Invocation</text>
+        </g>
+
+        <!-- Arrow -->
+        <path d="M 788 45 L 828 45" stroke="#00ddb3" stroke-width="2" />
+        <polygon points="826,40 834,45 826,50" fill="#00ddb3" />
+
+        <!-- Step 5: Database Persistence -->
+        <g transform="translate(834, 0)">
+          <rect width="144" height="90" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1" />
+          <text x="72" y="30" text-anchor="middle" fill="#10b981" font-family="monospace" font-size="12" font-weight="700">5. Persistence</text>
+          <text x="72" y="52" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">Postgres / Mongo</text>
+          <text x="72" y="70" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">ACID Transaction</text>
+        </g>
+      </g>
+
+      <!-- Key Insights Summary -->
+      <g transform="translate(28, 185)">
+        <rect width="950" height="90" rx="8" fill="#070c18" stroke="#1e293b" stroke-width="1" />
+        <text x="20" y="28" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="700">CORE ARCHITECTURAL TAKEAWAYS:</text>
+        <text x="20" y="52" fill="#e2e8f0" font-family="sans-serif" font-size="13">• Decouple routing definitions from business logic with explicit controller boundaries.</text>
+        <text x="20" y="72" fill="#e2e8f0" font-family="sans-serif" font-size="13">• Issue signed JWT claims to keep servers fully stateless and horizontally scalable.</text>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 396)">
+      <rect width="1008" height="134" rx="12" fill="#0b1120" stroke="#1e293b" stroke-width="1" />
+      
+      <g transform="translate(30, 24)">
+        <text x="0" y="26" fill="#f8fafc" font-family="sans-serif" font-size="24" font-weight="800">Architecting Modular REST APIs with Express &amp; JWT</text>
+        <text x="0" y="50" fill="#94a3b8" font-family="sans-serif" font-size="13">Structured controller separation, role-based authorization middleware, and stateless authentication.</text>
+        
+        <g transform="translate(0, 64)">
+          <rect x="0" y="0" width="160" height="24" rx="4" fill="#1e293b" />
+          <text x="80" y="16" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="600">#backend-architecture</text>
+
+          <rect x="170" y="0" width="130" height="24" rx="4" fill="#1e293b" />
+          <text x="235" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">Express.js Patterns</text>
+
+          <rect x="310" y="0" width="100" height="24" rx="4" fill="#1e293b" />
+          <text x="360" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">Stateless JWT</text>
+
+          <rect x="420" y="0" width="110" height="24" rx="4" fill="#1e293b" />
+          <text x="475" y="16" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="11" font-weight="600">REST Security</text>
+        </g>
+      </g>
+
+      <!-- Book / Code Emblem -->
+      <g transform="translate(900, 20)">
+        <circle cx="48" cy="48" r="44" fill="#00ddb3" fill-opacity="0.1" stroke="#00ddb3" stroke-opacity="0.3" stroke-width="1.5" />
+        <path d="M34 38 L48 30 L62 38 V62 L48 54 L34 62 Z" fill="#00ddb3" />
+        <line x1="48" y1="30" x2="48" y2="54" stroke="#050a18" stroke-width="2" />
+      </g>
+    </g>
+  </g>
+</svg>

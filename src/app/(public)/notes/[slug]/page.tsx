@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getPostBySlug } from "@/actions/posts";
 import { ArrowLeft, Calendar, Clock, BookOpen } from "lucide-react";
 import { formatFullDate } from "@/lib/utils";
@@ -98,6 +99,21 @@ export default async function NoteDetailPage({
           </div>
         )}
       </header>
+
+      {/* Featured Cover Banner */}
+      {post.cover_image_url && (
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/70 bg-secondary/20 shadow-2xl shadow-primary/5">
+          <Image
+            src={post.cover_image_url}
+            alt={post.title}
+            fill
+            preload={true}
+            sizes="(max-width: 1024px) 100vw, 768px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
+        </div>
+      )}
 
       {/* Article Content */}
       <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed text-base space-y-6">

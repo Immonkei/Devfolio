@@ -1,4 +1,5 @@
 import { createPublicClient } from "@/lib/supabase/server";
+import Image from "next/image";
 import { GraduationCap, Compass, Terminal, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -58,20 +59,37 @@ export default async function AboutPage() {
   return (
     <div className="container mx-auto max-w-4xl px-4 py-16 sm:px-6 space-y-16">
       {/* Intro */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider">
-          <Terminal className="h-4 w-4" />
-          <span>About Engineering Identity</span>
+      <section className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
+        <div className="space-y-4 flex-1">
+          <div className="flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider">
+            <Terminal className="h-4 w-4" />
+            <span>About Engineering Identity</span>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            {name}
+          </h1>
+          <p className="font-mono text-base text-primary">
+            {profile?.headline || "Junior Full-Stack Developer"}
+          </p>
+          <p className="text-base text-muted-foreground leading-relaxed pt-2">
+            {bio}
+          </p>
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          {name}
-        </h1>
-        <p className="font-mono text-base text-primary">
-          {profile?.headline || "Junior Full-Stack Developer"}
-        </p>
-        <p className="text-base text-muted-foreground leading-relaxed pt-2">
-          {bio}
-        </p>
+
+        {/* Avatar Portrait Card */}
+        <div className="relative shrink-0 flex items-center justify-center">
+          <div className="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-primary/20 via-cyan-400/10 to-blue-600/20 blur-xl opacity-75 pointer-events-none" />
+          <div className="relative rounded-2xl border border-border/80 bg-card/80 p-2 shadow-xl">
+            <Image
+              src={profile?.avatar_url || "/avatar.png"}
+              alt={name}
+              width={220}
+              height={220}
+              preload={true}
+              className="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-contain drop-shadow-[0_10px_25px_rgba(56,189,248,0.25)]"
+            />
+          </div>
+        </div>
       </section>
 
       {/* Engineering Philosophy */}
