@@ -47,3 +47,17 @@ export interface DashboardMetrics {
   totalPageViews: number;
   totalDownloads: number;
 }
+
+export interface ContributionDay {
+  date: string;
+  count: number;
+  level: number;
+}
+
+export interface GitHubActivityData {
+  totalContributions: number;
+  activeDays: number;
+  currentStreak: number;
+  longestStreak: number;
+  contributions: ContributionDay[];
+}

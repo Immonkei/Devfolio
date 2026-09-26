@@ -1,4 +1,4 @@
-import { GitHubRepo } from "@/types";
+import { GitHubRepo, GitHubActivityData, ContributionDay } from "@/types";
 
 export async function fetchGitHubRepositories(username: string): Promise<GitHubRepo[]> {
   try {
@@ -63,3 +63,64 @@ export async function fetchGitHubRepositories(username: string): Promise<GitHubR
     return [];
   }
 }
+
+export async function fetchGitHubActivity(username: string): Promise<GitHubActivityData | null> {
+  try {
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    });
+
+    if (!res.ok) {
+      console.warn(`GitHub contributions API request failed with status: ${res.status}`);
+      return null;
+    }
+
+    const data = await res.json();
+    const contributions: ContributionDay[] = data.contributions || [];
+    const totalContributions =
+      typeof data.total?.lastYear === "number"
+        ? data.total.lastYear
+        : contributions.reduce((acc: number, d: ContributionDay) => acc + (d.count || 0), 0);
+
+    let activeDays = 0;
+    let longestStreak = 0;
+    let tempStreak = 0;
+
+    for (const d of contributions) {
+      if (d.count > 0) {
+        activeDays++;
+        tempStreak++;
+        if (tempStreak > longestStreak) {
+          longestStreak = tempStreak;
+        }
+      } else {
+        tempStreak = 0;
+      }
+    }
+
+    let currentStreak = 0;
+    for (let i = contributions.length - 1; i >= 0; i--) {
+      const d = contributions[i];
+      if (d.count > 0) {
+        currentStreak++;
+      } else if (i === contributions.length - 1) {
+        // If today has 0 commits yet, don't break streak if yesterday had commits
+        continue;
+      } else {
+        break;
+      }
+    }
+
+    return {
+      totalContributions,
+      activeDays,
+      currentStreak,
+      longestStreak,
+      contributions,
+    };
+  } catch (error) {
+    console.error("Error fetching GitHub activity:", error);
+    return null;
+  }
+}
+

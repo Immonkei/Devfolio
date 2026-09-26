@@ -5,7 +5,8 @@ import { TechBadge } from '../tech-badge';
 import { ProjectCard } from '../project-card';
 import { ExperienceCard } from '../experience-card';
 import { NoteCard } from '../note-card';
-import { ProjectWithTechnologies, Experience, PostWithCategories, Technology } from '@/types';
+import { GitHubActivityGraph } from '../github-activity-graph';
+import { ProjectWithTechnologies, Experience, PostWithCategories, Technology, GitHubActivityData } from '@/types';
 
 describe('Public UI Components', () => {
   describe('TechBadge', () => {
@@ -142,4 +143,33 @@ describe('Public UI Components', () => {
       expect(link).toHaveAttribute('href', '/notes/architecting-resilient-multi-region-microservices');
     });
   });
+
+  describe('GitHubActivityGraph', () => {
+    const mockActivity: GitHubActivityData = {
+      totalContributions: 264,
+      activeDays: 64,
+      currentStreak: 3,
+      longestStreak: 6,
+      contributions: [
+        { date: '2026-09-24', count: 4, level: 2 },
+        { date: '2026-09-25', count: 1, level: 1 },
+        { date: '2026-09-26', count: 34, level: 4 },
+      ],
+    };
+
+    it('renders fallback state when activity is null', () => {
+      render(<GitHubActivityGraph activity={null} username="Immonkei" />);
+      expect(screen.getByText(/Live GitHub activity stream currently offline/i)).toBeInTheDocument();
+    });
+
+    it('renders stats and user link when activity data is provided', () => {
+      render(<GitHubActivityGraph activity={mockActivity} username="Immonkei" />);
+      expect(screen.getByText('264')).toBeInTheDocument();
+      expect(screen.getByText('64')).toBeInTheDocument();
+      expect(screen.getByText(/3 days/i)).toBeInTheDocument();
+      expect(screen.getByText(/6 days/i)).toBeInTheDocument();
+      expect(screen.getByText('@Immonkei')).toBeInTheDocument();
+    });
+  });
 });
+
