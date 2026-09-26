@@ -1,70 +1,79 @@
 import Link from "next/link";
-import { Terminal } from "lucide-react";
+import { Mail, Compass } from "lucide-react";
+import { GithubIcon, LinkedinIcon, TelegramIcon } from "@/components/ui/icons";
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-border/80 bg-background/60 py-8 text-xs font-mono">
+    <footer className="w-full border-t border-border/80 bg-background/80 py-8 text-xs font-mono">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          {/* Brand & Status */}
-          <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-foreground font-semibold hover:text-primary transition-colors"
-            >
-              <Terminal className="h-3.5 w-3.5 text-primary" />
-              <span>minphanith.dev</span>
-            </Link>
-            <span className="text-border/60">•</span>
-            <div className="inline-flex items-center gap-1.5 text-muted-foreground text-[11px]">
+        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+          {/* Left: Non-duplicated identity + live availability */}
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
+            <span className="font-semibold text-foreground tracking-tight">
+              © {currentYear} Min Phanith
+            </span>
+            <span className="hidden sm:inline text-border/60">•</span>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] text-emerald-400">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>Available for opportunities</span>
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-4 text-muted-foreground">
+          {/* Right: Social Media & Contact Icon Dock */}
+          <div className="flex items-center gap-2.5">
             <a
               href="https://github.com/Immonkei"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all"
+              aria-label="GitHub Profile"
+              title="GitHub"
             >
-              GitHub
+              <GithubIcon className="h-4 w-4" />
             </a>
-            <span className="text-border/60">•</span>
+
             <a
               href="https://www.linkedin.com/in/min-phanith-5a57ba33b/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all"
+              aria-label="LinkedIn Profile"
+              title="LinkedIn"
             >
-              LinkedIn
+              <LinkedinIcon className="h-4 w-4" />
             </a>
-            <span className="text-border/60">•</span>
+
             <a
               href="https://t.me/minphanith"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all"
+              aria-label="Telegram"
+              title="Telegram"
             >
-              Telegram
+              <TelegramIcon className="h-4 w-4" />
             </a>
-            <span className="text-border/60">•</span>
-            <Link href="/sitemap.xml" className="hover:text-foreground transition-colors">
-              Sitemap
+
+            <Link
+              href="/contact"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all"
+              aria-label="Contact"
+              title="Contact / Email"
+            >
+              <Mail className="h-4 w-4" />
+            </Link>
+
+            <Link
+              href="/sitemap.xml"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all"
+              aria-label="Sitemap"
+              title="Sitemap"
+            >
+              <Compass className="h-4 w-4" />
             </Link>
           </div>
-        </div>
-
-        {/* Minimal Copyright */}
-        <div className="mt-4 pt-4 border-t border-border/40 flex flex-col items-center justify-between gap-2 text-[11px] text-muted-foreground sm:flex-row">
-          <p>© {currentYear} Min Phanith. All rights reserved.</p>
-          <p className="text-[10px] text-muted-foreground/60">
-            Engineered with Next.js, TypeScript &amp; Supabase
-          </p>
         </div>
       </div>
     </footer>
