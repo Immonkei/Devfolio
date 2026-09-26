@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createPublicClient } from "@/lib/supabase/server";
 import { fetchGitHubRepositories } from "@/lib/github/client";
 import { ProjectCard } from "@/components/public/project-card";
@@ -102,13 +103,69 @@ export default async function HomePage() {
     "I build responsive, accessible web applications and reliable backend services. Bridging engineering fundamentals with modern React, TypeScript, Node.js, and database systems.";
   const resumeUrl = profile?.resume_url || "/resume.pdf";
 
+  const fallbackTechnologies: Technology[] = [
+    { id: "fb-1", name: "JavaScript", category: "LANGUAGE", icon: "javascript", created_at: "" },
+    { id: "fb-2", name: "TypeScript", category: "LANGUAGE", icon: "typescript", created_at: "" },
+    { id: "fb-3", name: "PHP", category: "LANGUAGE", icon: "php", created_at: "" },
+    { id: "fb-4", name: "Python", category: "LANGUAGE", icon: "python", created_at: "" },
+    { id: "fb-5", name: "Java", category: "LANGUAGE", icon: "java", created_at: "" },
+    { id: "fb-6", name: "C/C++", category: "LANGUAGE", icon: "cplusplus", created_at: "" },
+    { id: "fb-7", name: "React", category: "FRAMEWORK", icon: "react", created_at: "" },
+    { id: "fb-8", name: "Next.js", category: "FRAMEWORK", icon: "nextjs", created_at: "" },
+    { id: "fb-9", name: "Node.js", category: "FRAMEWORK", icon: "nodejs", created_at: "" },
+    { id: "fb-10", name: "Express.js", category: "FRAMEWORK", icon: "express", created_at: "" },
+    { id: "fb-11", name: "Laravel", category: "FRAMEWORK", icon: "laravel", created_at: "" },
+    { id: "fb-12", name: "FastAPI", category: "FRAMEWORK", icon: "fastapi", created_at: "" },
+    { id: "fb-13", name: "Flutter", category: "FRAMEWORK", icon: "flutter", created_at: "" },
+    { id: "fb-14", name: "PostgreSQL", category: "DATABASE", icon: "postgresql", created_at: "" },
+    { id: "fb-15", name: "MongoDB", category: "DATABASE", icon: "mongodb", created_at: "" },
+    { id: "fb-16", name: "MySQL", category: "DATABASE", icon: "mysql", created_at: "" },
+    { id: "fb-17", name: "Firebase", category: "DATABASE", icon: "firebase", created_at: "" },
+    { id: "fb-18", name: "DynamoDB", category: "DATABASE", icon: "dynamodb", created_at: "" },
+    { id: "fb-19", name: "Docker", category: "DEVOPS", icon: "docker", created_at: "" },
+    { id: "fb-20", name: "AWS Lambda", category: "DEVOPS", icon: "aws", created_at: "" },
+    { id: "fb-21", name: "Git", category: "TOOL", icon: "git", created_at: "" },
+    { id: "fb-22", name: "Tailwind CSS", category: "TOOL", icon: "tailwindcss", created_at: "" },
+  ];
+
+  const activeTechnologies = technologies.length > 0 ? technologies : fallbackTechnologies;
+
+  const categoryMeta: Record<string, string> = {
+    LANGUAGE: "Programming Languages",
+    FRAMEWORK: "Frameworks & Libraries",
+    DATABASE: "Databases & Storage",
+    DEVOPS: "DevOps & Cloud Infrastructure",
+    TOOL: "Developer Tools & Environment",
+    OTHER: "Other Technologies",
+  };
+
+  const categoryOrder = ["LANGUAGE", "FRAMEWORK", "DATABASE", "DEVOPS", "TOOL", "OTHER"];
+  const groupedTechnologies = categoryOrder
+    .map((cat) => ({
+      category: cat,
+      label: categoryMeta[cat] || cat,
+      items: activeTechnologies.filter((t) => t.category === cat),
+    }))
+    .filter((g) => g.items.length > 0);
+
+  const customCategoryItems = activeTechnologies.filter(
+    (t) => !categoryOrder.includes(t.category)
+  );
+  if (customCategoryItems.length > 0) {
+    groupedTechnologies.push({
+      category: "OTHER_CUSTOM",
+      label: "Specialized Stack",
+      items: customCategoryItems,
+    });
+  }
+
   return (
     <div className="space-y-24 py-12 md:py-16">
       {/* 1. HERO SECTION */}
       <section className="container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative overflow-hidden rounded-2xl border border-border bg-card/40 p-8 sm:p-12 md:p-16 tech-grid-bg">
-          <div className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-12">
-            <div className="max-w-2xl space-y-6">
+          <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-14">
+            <div className="flex-1 max-w-2xl space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-xs text-primary">
                 <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                 <span>FULL-STACK DEVELOPER // IT ENGINEERING @ RUPP</span>
@@ -154,12 +211,20 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="shrink-0">
-              <img
-                src="/avatar.png"
-                alt={engineerName}
-                className="h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 rounded-2xl border-2 border-primary/30 object-cover shadow-2xl bg-secondary"
-              />
+            {/* Prominent High-Tech Avatar Container */}
+            <div className="relative shrink-0 flex items-center justify-center">
+              {/* Radial ambient cyber glow behind avatar */}
+              <div className="absolute -inset-4 sm:-inset-6 rounded-3xl bg-gradient-to-tr from-primary/30 via-cyan-400/20 to-blue-600/30 blur-2xl opacity-75 pointer-events-none" />
+              <div className="relative group">
+                <Image
+                  src="/avatar.png"
+                  alt={engineerName}
+                  width={400}
+                  height={400}
+                  priority
+                  className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-[0_15px_35px_rgba(56,189,248,0.3)] transition-all duration-300 group-hover:scale-[1.02] group-hover:drop-shadow-[0_20px_45px_rgba(56,189,248,0.45)]"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -235,23 +300,45 @@ export default async function HomePage() {
 
       {/* 4. TECHNOLOGIES */}
       <section className="container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="rounded-2xl border border-border bg-card/50 p-8 sm:p-10">
-          <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase tracking-wider mb-2">
-            <Cpu className="h-3.5 w-3.5" />
-            <span>Technical Capabilities</span>
+        <div className="rounded-2xl border border-border bg-card/50 p-8 sm:p-10 space-y-8">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase tracking-wider mb-2">
+              <Cpu className="h-3.5 w-3.5" />
+              <span>Technical Capabilities</span>
+            </div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Production Tech Stack & Tooling
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground font-mono">
+              Categorized by technical layer: programming languages, modern frameworks, databases, and cloud tooling.
+            </p>
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground mb-6">
-            Production Tech Stack & Tooling
-          </h2>
 
-          {technologies.length === 0 ? (
+          {groupedTechnologies.length === 0 ? (
             <div className="text-xs font-mono text-muted-foreground">
               Technologies coming soon.
             </div>
           ) : (
-            <div className="flex flex-wrap gap-2.5">
-              {technologies.map((tech) => (
-                <TechBadge key={tech.id} tech={tech} />
+            <div className="space-y-6">
+              {groupedTechnologies.map((group) => (
+                <div
+                  key={group.category}
+                  className="rounded-xl border border-border/70 bg-card/60 p-5 space-y-3.5"
+                >
+                  <div className="flex items-center justify-between border-b border-border/50 pb-2.5">
+                    <span className="font-mono text-xs font-semibold text-primary uppercase tracking-wider">
+                      {`// ${group.label}`}
+                    </span>
+                    <span className="font-mono text-[11px] text-muted-foreground">
+                      {group.items.length} {group.items.length === 1 ? "technology" : "technologies"}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2.5">
+                    {group.items.map((tech) => (
+                      <TechBadge key={tech.id} tech={tech} />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           )}
