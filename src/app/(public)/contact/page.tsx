@@ -1,0 +1,98 @@
+import { ContactForm } from "@/components/public/contact-form";
+import { Mail, MapPin, Clock } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
+import { createClient } from "@/lib/supabase/server";
+
+export const metadata = {
+  title: "Contact & Consultation",
+  description: "Get in touch for system architecture consulting, full-stack engineering, and technical leadership.",
+};
+
+export default async function ContactPage() {
+  let profile = null;
+
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.from("profiles").select("*").limit(1).single();
+    profile = data;
+  } catch (err) {
+    console.error("Contact page query error:", err);
+  }
+
+  const location = profile?.location || "San Francisco, CA & Remote";
+  const github = profile?.github_url || "https://github.com";
+  const linkedin = profile?.linkedin_url || "https://linkedin.com";
+
+  return (
+    <div className="container mx-auto max-w-5xl px-4 py-16 sm:px-6 space-y-12">
+      {/* Header */}
+      <div>
+        <div className="flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider">
+          <Mail className="h-4 w-4" />
+          <span>Direct Inquiries</span>
+        </div>
+        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          Initiate Engineering Communication
+        </h1>
+        <p className="mt-2 text-muted-foreground text-sm max-w-xl">
+          Whether discussing complex backend architectures, full-stack platform development, or technical leadership roles, send a direct payload below.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        {/* Left Information */}
+        <div className="space-y-6 lg:col-span-5">
+          <div className="rounded-xl border border-border bg-card/60 p-6 space-y-4">
+            <h3 className="font-mono text-sm font-bold text-foreground">
+              Direct Coordinates
+            </h3>
+
+            <div className="space-y-3 text-xs text-muted-foreground">
+              <div className="flex items-center gap-3">
+                <MapPin className="h-4 w-4 text-primary shrink-0" />
+                <span>{location}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Clock className="h-4 w-4 text-primary shrink-0" />
+                <span>Response turnaround: &lt; 24 business hours</span>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-border flex items-center gap-3">
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+              >
+                <GithubIcon className="h-3.5 w-3.5" />
+                <span>GitHub</span>
+              </a>
+              <a
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+              >
+                <LinkedinIcon className="h-3.5 w-3.5" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-secondary/30 p-6 text-xs text-muted-foreground font-mono space-y-2">
+            <div className="text-foreground font-semibold">Security Note:</div>
+            <p>
+              Inbound communications are validated with runtime Zod schemas and stored with PostgreSQL Row-Level Security.
+            </p>
+          </div>
+        </div>
+
+        {/* Right Form */}
+        <div className="lg:col-span-7">
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  );
+}
