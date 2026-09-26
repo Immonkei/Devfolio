@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { createPublicClient } from "@/lib/supabase/server";
-import { fetchGitHubRepositories } from "@/lib/github/client";
+import { fetchGitHubRepositories, fetchGitHubActivity } from "@/lib/github/client";
 import { ProjectCard } from "@/components/public/project-card";
 import { ExperienceCard } from "@/components/public/experience-card";
 import { NoteCard } from "@/components/public/note-card";
 import { GitHubFeed } from "@/components/public/github-feed";
+import { GitHubActivityGraph } from "@/components/public/github-activity-graph";
 import { TechBadge } from "@/components/public/tech-badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,7 @@ import {
   Profile,
   Category,
   GitHubRepo,
+  GitHubActivityData,
 } from "@/types";
 
 export const revalidate = 60; // Incremental static regeneration every 60s
@@ -37,6 +39,8 @@ export default async function HomePage() {
   let technologies: Technology[] = [];
   let posts: PostWithCategories[] = [];
   let repos: GitHubRepo[] = [];
+  let activity: GitHubActivityData | null = null;
+  const githubUser = process.env.GITHUB_USERNAME || "Immonkei";
 
   try {
     const supabase = createPublicClient();
@@ -88,8 +92,12 @@ export default async function HomePage() {
       }));
     }
 
-    const githubUser = process.env.GITHUB_USERNAME || "Immonkei";
-    repos = await fetchGitHubRepositories(githubUser);
+    const [fetchedRepos, fetchedActivity] = await Promise.all([
+      fetchGitHubRepositories(githubUser),
+      fetchGitHubActivity(githubUser),
+    ]);
+    repos = fetchedRepos;
+    activity = fetchedActivity;
   } catch (err) {
     console.error("Home page query error:", err);
   }
@@ -379,21 +387,42 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* 6. GITHUB REPOSITORIES */}
-      <section className="container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase tracking-wider">
-              <GithubIcon className="h-3.5 w-3.5" />
-              <span>Real-Time Code Activity</span>
-            </div>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Open Source Repositories
-            </h2>
+      {/* 6. GITHUB REPOSITORIES & REAL-TIME ACTIVITY */}
+      <section className="container mx-auto max-w-6xl px-4 sm:px-6 space-y-8">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase tracking-wider">
+            <GithubIcon className="h-3.5 w-3.5" />
+            <span>Real-Time Code Activity</span>
           </div>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+            Open Source &amp; Commit Telemetry
+          </h2>
+          <p className="mt-1 text-xs text-muted-foreground font-mono">
+            Live engineering activity stream and production repositories synced directly from GitHub.
+          </p>
         </div>
 
-        <GitHubFeed repos={repos} />
+        {/* Live Contribution Heatmap */}
+        <GitHubActivityGraph activity={activity} username={githubUser} />
+
+        {/* Featured Repositories Grid */}
+        <div className="space-y-4 pt-2">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-primary uppercase tracking-wider">
+              {`// Featured Repositories`}
+            </span>
+            <a
+              href={`https://github.com/${githubUser}?tab=repositories`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-primary hover:underline flex items-center gap-1"
+            >
+              <span>Explore all repositories</span>
+              <ArrowRight className="h-3 w-3" />
+            </a>
+          </div>
+          <GitHubFeed repos={repos} />
+        </div>
       </section>
 
       {/* 7. CONTACT CTA */}
