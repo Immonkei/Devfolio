@@ -38,7 +38,7 @@ export function PublicNavbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-1.5 font-mono text-xs">
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.href === "/"
@@ -50,13 +50,13 @@ export function PublicNavbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-1.5 transition-colors",
+                  "relative flex items-center rounded-lg px-3 py-1.5 transition-all duration-200 border",
                   isActive
-                    ? "bg-secondary text-primary font-semibold"
-                    : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                    ? "border-primary/40 bg-primary/10 text-primary font-semibold shadow-[0_0_12px_rgba(56,189,248,0.15)]"
+                    : "border-transparent text-muted-foreground hover:border-border/70 hover:bg-secondary/60 hover:text-foreground"
                 )}
               >
-                {item.name}
+                <span>{item.name}</span>
               </Link>
             );
           })}
@@ -68,7 +68,7 @@ export function PublicNavbar() {
             href="https://github.com/Immonkei"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground transition-all duration-200 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_10px_rgba(56,189,248,0.15)]"
             aria-label="GitHub Profile"
           >
             <GithubIcon className="h-4 w-4" />
@@ -77,7 +77,7 @@ export function PublicNavbar() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-xs text-primary transition-all duration-200 hover:border-primary/60 hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)]"
           >
             <FileText className="h-3.5 w-3.5" />
             <span>Resume (PDF)</span>
@@ -121,14 +121,13 @@ export function PublicNavbar() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    "flex items-center justify-between rounded-lg px-3.5 py-2 font-mono text-xs transition-all duration-200 border",
                     isActive
-                      ? "bg-secondary text-primary font-semibold"
-                      : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                      ? "border-primary/40 bg-primary/10 text-primary font-semibold shadow-[0_0_10px_rgba(56,189,248,0.12)]"
+                      : "border-transparent text-muted-foreground hover:border-border/60 hover:bg-secondary/60 hover:text-foreground"
                   )}
                 >
                   <span>{item.name}</span>
-                  {isActive && <span className="h-1.5 w-1.5 rounded-full bg-primary" />}
                 </Link>
               );
             })}
@@ -136,7 +135,7 @@ export function PublicNavbar() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-md border border-border/80 bg-secondary/40 px-3 py-2 text-sm font-medium text-primary mt-2"
+              className="flex items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/10 px-3.5 py-2.5 font-mono text-xs font-medium text-primary mt-2 transition-all hover:bg-primary/20 hover:border-primary/50"
             >
               <FileText className="h-4 w-4" />
               <span>Download Resume (PDF)</span>
