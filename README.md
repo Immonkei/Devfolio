@@ -1,6 +1,6 @@
 # DevForge — Dynamic Full-Stack Software Engineer Portfolio & CMS
 
-[![CI Pipeline](https://github.com/phanith-dev/devfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/phanith-dev/devfolio/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/Immonkei/Devfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/Immonkei/Devfolio/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev/)
@@ -111,8 +111,8 @@
 
 ### 2. Installation
 ```bash
-git clone https://github.com/phanith-dev/devfolio.git
-cd devfolio
+git clone https://github.com/Immonkei/Devfolio.git
+cd Devfolio
 npm install --legacy-peer-deps
 ```
 
