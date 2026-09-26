@@ -15,15 +15,18 @@ export const projectSchema = z.object({
   implementation: z.string().optional().default(""),
   challenges: z.string().optional().default(""),
   tradeoffs: z.string().optional().default(""),
+  results: z.string().optional().default(""),
   cover_image_url: z
     .string()
+    .trim()
     .refine(
       (val) =>
         val === "" ||
         val.startsWith("/") ||
         val.startsWith("http://") ||
-        val.startsWith("https://"),
-      { message: "Must be a valid URL or path starting with /" }
+        val.startsWith("https://") ||
+        val.startsWith("data:image/"),
+      { message: "Must be a valid URL, path starting with /, or image data URL" }
     )
     .optional()
     .nullable()
@@ -33,7 +36,7 @@ export const projectSchema = z.object({
   featured: z.boolean().default(false),
   status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).default("DRAFT"),
   display_order: z.number().int().default(0),
-  technology_ids: z.array(z.string().uuid()).optional().default([]),
+  technology_ids: z.array(z.string()).optional().default([]),
 });
 
 export type ProjectInput = z.infer<typeof projectSchema>;

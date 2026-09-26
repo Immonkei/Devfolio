@@ -125,6 +125,18 @@ describe('Validation Schemas (Zod)', () => {
         cover_image_url: '',
       };
       expect(projectSchema.safeParse(empty).success).toBe(true);
+
+      const dataUri = {
+        ...relative,
+        slug: 'project-with-data-uri-cover',
+        cover_image_url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+        results: 'Reduced query latency by 45%',
+      };
+      const parsedDataUri = projectSchema.safeParse(dataUri);
+      expect(parsedDataUri.success).toBe(true);
+      if (parsedDataUri.success) {
+        expect(parsedDataUri.data.results).toBe('Reduced query latency by 45%');
+      }
     });
   });
 
