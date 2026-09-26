@@ -53,7 +53,7 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
     };
   }, [username]);
 
-  // Manual refresh trigger
+  // Manual or programmatic refresh trigger
   const handleManualSync = useCallback(async () => {
     if (typeof window === "undefined" || process.env.NODE_ENV === "test") return;
     setIsSyncing(true);
@@ -71,6 +71,28 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
       setIsSyncing(false);
     }
   }, []);
+
+  // Auto-sync periodically every 60s and immediately when returning to tab
+  useEffect(() => {
+    if (typeof window === "undefined" || process.env.NODE_ENV === "test") return;
+
+    const interval = setInterval(() => {
+      handleManualSync();
+    }, 60000);
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        handleManualSync();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [handleManualSync]);
 
   const { weeks, monthLabels } = useMemo(() => {
     if (!activity || !activity.contributions || activity.contributions.length === 0) {
