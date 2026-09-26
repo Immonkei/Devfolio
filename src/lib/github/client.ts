@@ -64,10 +64,20 @@ export async function fetchGitHubRepositories(username: string): Promise<GitHubR
   }
 }
 
-export async function fetchGitHubActivity(username: string): Promise<GitHubActivityData | null> {
+export async function fetchGitHubActivity(
+  username: string,
+  options?: { forceFresh?: boolean }
+): Promise<GitHubActivityData | null> {
   try {
-    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`, {
-      next: { revalidate: 60 }, // Revalidate every 60s for near real-time updates
+    const timestamp = Date.now();
+    const url = options?.forceFresh
+      ? `https://github-contributions-api.jogruber.de/v4/${username}?y=last&_t=${timestamp}`
+      : `https://github-contributions-api.jogruber.de/v4/${username}?y=last`;
+
+    const res = await fetch(url, {
+      ...(options?.forceFresh
+        ? { cache: "no-store" as RequestCache }
+        : { next: { revalidate: 60 } }),
     });
 
     if (!res.ok) {
