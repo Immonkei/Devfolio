@@ -62,7 +62,10 @@ export async function createPost(input: PostInput) {
     .insert([
       {
         ...postData,
-        cover_image_url: postData.cover_image_url || null,
+        cover_image_url:
+          postData.cover_image_url && postData.cover_image_url.trim().length > 0
+            ? postData.cover_image_url.trim()
+            : "/notes/default-note.svg",
         published_at: publishedAt,
       },
     ])
@@ -109,7 +112,10 @@ export async function updatePost(id: string, input: PostInput) {
     .from("posts")
     .update({
       ...postData,
-      cover_image_url: postData.cover_image_url || null,
+      cover_image_url:
+        postData.cover_image_url && postData.cover_image_url.trim().length > 0
+          ? postData.cover_image_url.trim()
+          : "/notes/default-note.svg",
       updated_at: new Date().toISOString(),
     })
     .eq("id", id)

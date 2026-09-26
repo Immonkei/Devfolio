@@ -8,26 +8,25 @@ export function NoteCard({ post }: { post: PostWithCategories }) {
   // Approximate reading time
   const wordCount = post.content ? post.content.split(/\s+/).length : 200;
   const readTimeMin = Math.max(1, Math.ceil(wordCount / 200));
+  const coverUrl = post.cover_image_url || "/notes/default-note.svg";
 
   return (
     <article className="group flex flex-col justify-between rounded-xl border border-border bg-card/60 p-6 transition-all hover:border-primary/50 hover:bg-card">
       <div className="space-y-4">
-        {/* Visual Cover Banner */}
-        {post.cover_image_url && (
-          <Link
-            href={`/notes/${post.slug}`}
-            className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/60 bg-secondary/30 block group/img"
-          >
-            <Image
-              src={post.cover_image_url}
-              alt={post.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-40 transition-opacity group-hover:opacity-20" />
-          </Link>
-        )}
+        {/* Visual Cover Banner with Fallback */}
+        <Link
+          href={`/notes/${post.slug}`}
+          className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/60 bg-secondary/30 block group/img"
+        >
+          <Image
+            src={coverUrl}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-40 transition-opacity group-hover:opacity-20" />
+        </Link>
 
         {/* Metadata Bar */}
         <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">

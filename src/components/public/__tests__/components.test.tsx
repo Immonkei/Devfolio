@@ -146,8 +146,9 @@ describe('Public UI Components', () => {
 
     it('links to the note detail route', () => {
       render(<NoteCard post={mockNote} />);
-      const link = screen.getByRole('link', { name: /Architecting Resilient Multi-Region Microservices/i });
-      expect(link).toHaveAttribute('href', '/notes/architecting-resilient-multi-region-microservices');
+      const links = screen.getAllByRole('link', { name: /Architecting Resilient Multi-Region Microservices/i });
+      expect(links.length).toBeGreaterThanOrEqual(1);
+      expect(links[0]).toHaveAttribute('href', '/notes/architecting-resilient-multi-region-microservices');
     });
 
     it('renders note cover image when cover_image_url is provided', () => {

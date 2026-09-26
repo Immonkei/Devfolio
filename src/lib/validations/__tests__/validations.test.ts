@@ -101,6 +101,31 @@ describe('Validation Schemas (Zod)', () => {
       const result = projectSchema.safeParse(invalid);
       expect(result.success).toBe(false);
     });
+
+    it('accepts both relative paths and full URLs for cover_image_url', () => {
+      const relative = {
+        title: 'Project With Relative Cover',
+        slug: 'project-with-relative-cover',
+        short_description: 'Valid short description for relative cover test.',
+        description: 'Valid long description for testing cover image url validation.',
+        cover_image_url: '/projects/default-project.svg',
+      };
+      expect(projectSchema.safeParse(relative).success).toBe(true);
+
+      const absolute = {
+        ...relative,
+        slug: 'project-with-absolute-cover',
+        cover_image_url: 'https://images.unsplash.com/photo-1',
+      };
+      expect(projectSchema.safeParse(absolute).success).toBe(true);
+
+      const empty = {
+        ...relative,
+        slug: 'project-with-empty-cover',
+        cover_image_url: '',
+      };
+      expect(projectSchema.safeParse(empty).success).toBe(true);
+    });
   });
 
   describe('experienceSchema', () => {
