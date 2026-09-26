@@ -1,0 +1,145 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ai-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050814" />
+      <stop offset="50%" stop-color="#0c1228" />
+      <stop offset="100%" stop-color="#021f2d" />
+    </linearGradient>
+    <linearGradient id="card-ai" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c38" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#080e1e" stop-opacity="0.9" />
+    </linearGradient>
+    <pattern id="grid-ai" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ddb3" stroke-opacity="0.04" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#ai-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-ai)" />
+
+  <circle cx="280" cy="200" r="260" fill="#00ddb3" fill-opacity="0.1" filter="blur(70px)" />
+  <circle cx="950" cy="450" r="260" fill="#3b82f6" fill-opacity="0.1" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1e293b" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#060b17" stroke="#1e293b" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0b1120" />
+    <path d="M0 48h1080" stroke="#1e293b" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#060b17" stroke="#1e293b" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">https://thrive-ai.dev/engine/match?candidate=2024CS08</text>
+
+    <rect x="900" y="12" width="154" height="24" rx="12" fill="#00ddb3" fill-opacity="0.15" stroke="#00ddb3" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="914" cy="24" r="3.5" fill="#00ddb3" />
+    <text x="926" y="28" fill="#5eead4" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">SIMILARITY: 94.8%</text>
+
+    <!-- Left Box: Compatibility Engine & Skill Alignments -->
+    <g transform="translate(36, 76)">
+      <rect width="580" height="290" rx="10" fill="url(#card-ai)" stroke="#1e293b" stroke-width="1" />
+
+      <text x="24" y="32" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">SKILL VECTOR SIMILARITY ANALYSIS</text>
+      
+      <!-- Candidate Vector Progress -->
+      <g transform="translate(24, 56)">
+        <!-- Skill 1 -->
+        <g transform="translate(0, 0)">
+          <text x="0" y="14" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">Python / FastAPI Backend</text>
+          <text x="532" y="14" text-anchor="end" fill="#00ddb3" font-family="monospace" font-size="12" font-weight="700">98.2% Match</text>
+          <rect x="0" y="22" width="532" height="8" rx="4" fill="#0f172a" />
+          <rect x="0" y="22" width="522" height="8" rx="4" fill="#00ddb3" />
+        </g>
+
+        <!-- Skill 2 -->
+        <g transform="translate(0, 52)">
+          <text x="0" y="14" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">SQL Schema Optimization (MySQL)</text>
+          <text x="532" y="14" text-anchor="end" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="700">94.5% Match</text>
+          <rect x="0" y="22" width="532" height="8" rx="4" fill="#0f172a" />
+          <rect x="0" y="22" width="502" height="8" rx="4" fill="#38bdf8" />
+        </g>
+
+        <!-- Skill 3 -->
+        <g transform="translate(0, 104)">
+          <text x="0" y="14" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">RESTful Contract Architecture</text>
+          <text x="532" y="14" text-anchor="end" fill="#818cf8" font-family="monospace" font-size="12" font-weight="700">91.0% Match</text>
+          <rect x="0" y="22" width="532" height="8" rx="4" fill="#0f172a" />
+          <rect x="0" y="22" width="484" height="8" rx="4" fill="#818cf8" />
+        </g>
+
+        <!-- Skill 4 -->
+        <g transform="translate(0, 156)">
+          <text x="0" y="14" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">React Frontend Integration</text>
+          <text x="532" y="14" text-anchor="end" fill="#a78bfa" font-family="monospace" font-size="12" font-weight="700">89.4% Match</text>
+          <rect x="0" y="22" width="532" height="8" rx="4" fill="#0f172a" />
+          <rect x="0" y="22" width="475" height="8" rx="4" fill="#a78bfa" />
+        </g>
+      </g>
+    </g>
+
+    <!-- Right Box: Recommendation Output Card -->
+    <g transform="translate(640, 76)">
+      <rect width="404" height="290" rx="10" fill="url(#card-ai)" stroke="#1e293b" stroke-width="1" />
+
+      <text x="24" y="32" fill="#94a3b8" font-family="sans-serif" font-size="12" font-weight="600" letter-spacing="1">TOP RECOMMENDED POSITION</text>
+      <text x="24" y="64" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="700">Junior Python Backend</text>
+      <text x="24" y="86" fill="#38bdf8" font-family="sans-serif" font-size="13">Fintech Innovations Ltd • Full-time</text>
+
+      <g transform="translate(24, 110)">
+        <rect width="356" height="70" rx="6" fill="#060b17" stroke="#1e293b" stroke-width="1" />
+        <text x="16" y="26" fill="#94a3b8" font-family="monospace" font-size="11">FastAPI async routes, MySQL joins, JWT token verification.</text>
+        <text x="16" y="50" fill="#34d399" font-family="monospace" font-size="11">✓ Perfect alignment with candidate course curriculum</text>
+      </g>
+
+      <g transform="translate(24, 200)">
+        <text x="0" y="16" fill="#64748b" font-family="monospace" font-size="11">Similarity Algo</text>
+        <text x="0" y="38" fill="#f8fafc" font-family="monospace" font-size="15" font-weight="700">Cosine Distance</text>
+
+        <text x="140" y="16" fill="#64748b" font-family="monospace" font-size="11">Inference Speed</text>
+        <text x="140" y="38" fill="#00ddb3" font-family="monospace" font-size="15" font-weight="700">&lt; 14ms</text>
+
+        <text x="260" y="16" fill="#64748b" font-family="monospace" font-size="11">Index State</text>
+        <text x="260" y="38" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="700">Synchronized</text>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 388)">
+      <rect width="1008" height="142" rx="12" fill="#0b1120" stroke="#1e293b" stroke-width="1" />
+      
+      <g transform="translate(30, 28)">
+        <text x="0" y="26" fill="#f8fafc" font-family="sans-serif" font-size="26" font-weight="800">Thrive — AI Job Recommendation Engine</text>
+        <text x="0" y="52" fill="#94a3b8" font-family="sans-serif" font-size="13">High-speed skill vector matching, FastAPI asynchronous backend, MySQL relational storage &amp; React dashboard.</text>
+        
+        <g transform="translate(0, 68)">
+          <rect x="0" y="0" width="86" height="24" rx="4" fill="#1e293b" />
+          <text x="43" y="16" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="600">FastAPI</text>
+
+          <rect x="96" y="0" width="76" height="24" rx="4" fill="#1e293b" />
+          <text x="134" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">Python</text>
+
+          <rect x="182" y="0" width="76" height="24" rx="4" fill="#1e293b" />
+          <text x="220" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">MySQL</text>
+
+          <rect x="268" y="0" width="76" height="24" rx="4" fill="#1e293b" />
+          <text x="306" y="16" text-anchor="middle" fill="#61dafb" font-family="monospace" font-size="11" font-weight="600">React</text>
+
+          <rect x="354" y="0" width="130" height="24" rx="4" fill="#1e293b" />
+          <text x="419" y="16" text-anchor="middle" fill="#a78bfa" font-family="monospace" font-size="11" font-weight="600">Vector Scoring</text>
+        </g>
+      </g>
+
+      <!-- Brain / AI Sparkle Emblem -->
+      <g transform="translate(900, 22)">
+        <circle cx="48" cy="48" r="44" fill="#00ddb3" fill-opacity="0.1" stroke="#00ddb3" stroke-opacity="0.3" stroke-width="1.5" />
+        <path d="M48 26 L52 40 L66 44 L52 48 L48 62 L44 48 L30 44 L44 40 Z" fill="#00ddb3" />
+        <circle cx="62" cy="30" r="3" fill="#38bdf8" />
+        <circle cx="34" cy="58" r="2.5" fill="#38bdf8" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getProjectBySlug } from "@/actions/projects";
 import {
   ArrowLeft,
@@ -166,6 +167,21 @@ export default async function ProjectDetailPage({
           )}
         </div>
       </header>
+
+      {/* Featured Cover Banner */}
+      {project.cover_image_url && (
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/70 bg-secondary/20 shadow-2xl shadow-primary/5">
+          <Image
+            src={project.cover_image_url}
+            alt={project.title}
+            fill
+            preload={true}
+            sizes="(max-width: 1024px) 100vw, 896px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
+        </div>
+      )}
 
       {/* Main Narrative Sections */}
       <div className="space-y-10 border-t border-border pt-10">

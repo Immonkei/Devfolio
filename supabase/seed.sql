@@ -167,7 +167,7 @@ INSERT INTO public.projects (
     'Handling edge cases in medical questionnaire expiration and ensuring patient data confidentiality across public and administrative views.',
     'Selected relational PostgreSQL over NoSQL to maintain strict ACID compliance on critical blood inventory records and hospital request queues.',
     'Successfully validated donor flows, decreased pre-screening friction, and established structured emergency request protocols.',
-    '/avatar.png',
+    '/projects/borejak.svg',
     'https://github.com/Immonkei/Borejak',
     NULL,
     TRUE,
@@ -187,7 +187,7 @@ INSERT INTO public.projects (
     'Ensuring zero unauthorized file access for candidate resumes while maintaining fast response latencies across heavy query filtering.',
     'Employed stateless JWT authentication to facilitate horizontal backend scalability without distributed session storage.',
     'Delivered consistent sub-50ms API response times across core job search and candidate application endpoints.',
-    NULL,
+    '/projects/job-portal-api.svg',
     'https://github.com/Immonkei',
     NULL,
     TRUE,
@@ -207,7 +207,7 @@ INSERT INTO public.projects (
     'Enforcing strict submission deadline locks across differing client timezones.',
     'Opted for document-oriented MongoDB schema design to easily store heterogeneous assignment questions and variable course metadata.',
     'Delivered clean modular codebase with high reusability across student and instructor modules.',
-    NULL,
+    '/projects/reanhub.svg',
     'https://github.com/Immonkei/OOAD-Project-ReanHub-.git',
     NULL,
     TRUE,
@@ -227,7 +227,7 @@ INSERT INTO public.projects (
     'Optimizing similarity calculation throughput without introducing heavy machine learning dependency overhead.',
     'FastAPI was chosen over Flask for native async request handling and automatic OpenAPI specification documentation.',
     'Enabled instant student profile matching with sub-second recommendation feedback.',
-    NULL,
+    '/projects/thrive-ai.svg',
     'https://github.com/immonkei/ProjectPracticumYear2',
     NULL,
     TRUE,
@@ -247,7 +247,7 @@ INSERT INTO public.projects (
     'Precision handling of large prime calculations and modular math within the browser JavaScript runtime.',
     'Executed all calculations on the client side using native BigInt to eliminate backend latency.',
     'Created a comprehensive visual teaching tool for computer network security and cryptography students.',
-    NULL,
+    '/projects/cipherverse.svg',
     'https://github.com/Immonkei',
     NULL,
     FALSE,
@@ -267,7 +267,7 @@ INSERT INTO public.projects (
     'Managing offline state transitions when students navigate campus areas with intermittent network coverage.',
     'Flutter enabled a single codebase deployment across both Android and iOS devices.',
     'Streamlined campus timetable accessibility with full offline availability.',
-    NULL,
+    '/projects/campus-mobile-companion.svg',
     'https://github.com/Immonkei',
     NULL,
     FALSE,
@@ -370,7 +370,7 @@ function authorizeRoles(...allowedRoles) {
 - Always validate incoming payload bodies using schemas before touching the database.
 - Centralize error handling middleware to avoid inconsistent error response formats.
 - Never store sensitive credentials or long-lived secrets inside JWT claims.',
-    NULL,
+    '/notes/modular-rest-apis.svg',
     'PUBLISHED',
     NOW() - INTERVAL '10 days'
   ),
@@ -392,7 +392,7 @@ Without prior design modeling, web developers often jump straight into writing c
 3. **Single Responsibility**: Route controllers only parse HTTP input and invoke domain service methods.
 
 Applying these concepts ensures that as application requirements grow, individual modules can be tested and updated without unintended side effects.',
-    NULL,
+    '/notes/ooad-web-apps.svg',
     'PUBLISHED',
     NOW() - INTERVAL '5 days'
   )

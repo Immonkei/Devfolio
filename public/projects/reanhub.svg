@@ -1,0 +1,153 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lms-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d1e" />
+      <stop offset="50%" stop-color="#0b132b" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="card-lms" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+    </linearGradient>
+    <pattern id="grid-lms" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6366f1" stroke-opacity="0.05" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#lms-bg)" />
+  <rect width="1200" height="675" fill="url(#grid-lms)" />
+
+  <circle cx="250" cy="180" r="260" fill="#6366f1" fill-opacity="0.12" filter="blur(70px)" />
+  <circle cx="980" cy="480" r="250" fill="#a855f7" fill-opacity="0.1" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#312e81" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#0b1120" stroke="#1e293b" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0f172a" />
+    <path d="M0 48h1080" stroke="#1e293b" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#0b1120" stroke="#1e293b" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">https://reanhub.edu/instructor/courses/CS304</text>
+
+    <rect x="910" y="12" width="144" height="24" rx="12" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="924" cy="24" r="3.5" fill="#818cf8" />
+    <text x="936" y="28" fill="#c7d2fe" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">OOAD MODEL ACTIVE</text>
+
+    <!-- Left Box: OOAD Domain Hierarchy Blueprint -->
+    <g transform="translate(36, 76)">
+      <rect width="580" height="290" rx="10" fill="url(#card-lms)" stroke="#334155" stroke-width="1" />
+
+      <text x="24" y="32" fill="#94a3b8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">OBJECT-ORIENTED DOMAIN MODEL</text>
+      
+      <!-- UML Class 1: Course -->
+      <g transform="translate(24, 52)">
+        <rect width="250" height="100" rx="6" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+        <rect width="250" height="24" rx="6" fill="#1e1b4b" />
+        <text x="125" y="16" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Entity&gt;&gt; Course</text>
+        <text x="14" y="44" fill="#94a3b8" font-family="monospace" font-size="10">+ id: UUID</text>
+        <text x="14" y="60" fill="#94a3b8" font-family="monospace" font-size="10">+ title: String</text>
+        <text x="14" y="80" fill="#818cf8" font-family="monospace" font-size="10">+ getSyllabus(): Module[]</text>
+      </g>
+
+      <!-- UML Class 2: Assignment -->
+      <g transform="translate(306, 52)">
+        <rect width="250" height="100" rx="6" fill="#0f172a" stroke="#a855f7" stroke-width="1" />
+        <rect width="250" height="24" rx="6" fill="#2e1065" />
+        <text x="125" y="16" text-anchor="middle" fill="#e9d5ff" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Entity&gt;&gt; Assignment</text>
+        <text x="14" y="44" fill="#94a3b8" font-family="monospace" font-size="10">+ dueDate: Timestamp</text>
+        <text x="14" y="60" fill="#94a3b8" font-family="monospace" font-size="10">+ maxScore: Int = 100</text>
+        <text x="14" y="80" fill="#c084fc" font-family="monospace" font-size="10">+ isPastDeadline(): Boolean</text>
+      </g>
+
+      <!-- UML Class 3: StudentSubmission -->
+      <g transform="translate(165, 172)">
+        <rect width="250" height="96" rx="6" fill="#0f172a" stroke="#00ddb3" stroke-width="1" />
+        <rect width="250" height="24" rx="6" fill="#042f2e" />
+        <text x="125" y="16" text-anchor="middle" fill="#a7f3d0" font-family="monospace" font-size="11" font-weight="700">&lt;&lt;Entity&gt;&gt; Submission</text>
+        <text x="14" y="44" fill="#94a3b8" font-family="monospace" font-size="10">+ studentId: UUID</text>
+        <text x="14" y="60" fill="#94a3b8" font-family="monospace" font-size="10">+ grade: Optional&lt;Float&gt;</text>
+        <text x="14" y="80" fill="#34d399" font-family="monospace" font-size="10">+ evaluateGrade(score)</text>
+      </g>
+
+      <!-- Connection Lines -->
+      <path d="M 149 152 L 149 162 L 290 162 L 290 172" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3 3" fill="none" />
+      <path d="M 431 152 L 431 162 L 290 162" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" fill="none" />
+    </g>
+
+    <!-- Right Box: LMS Classroom Metrics -->
+    <g transform="translate(640, 76)">
+      <rect width="404" height="290" rx="10" fill="url(#card-lms)" stroke="#334155" stroke-width="1" />
+
+      <text x="24" y="32" fill="#94a3b8" font-family="sans-serif" font-size="12" font-weight="600" letter-spacing="1">SEMESTER PROGRESS</text>
+      <text x="24" y="64" fill="#f8fafc" font-family="sans-serif" font-size="24" font-weight="700">OOP &amp; Data Structures</text>
+
+      <!-- Assignment Rows -->
+      <g transform="translate(24, 90)">
+        <!-- Row 1 -->
+        <g transform="translate(0, 0)">
+          <text x="0" y="16" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">Lab 04: Polymorphism &amp; Generics</text>
+          <text x="356" y="16" text-anchor="end" fill="#34d399" font-family="monospace" font-size="11">42/45 Graded</text>
+          <rect x="0" y="24" width="356" height="6" rx="3" fill="#1e293b" />
+          <rect x="0" y="24" width="330" height="6" rx="3" fill="#6366f1" />
+        </g>
+
+        <!-- Row 2 -->
+        <g transform="translate(0, 52)">
+          <text x="0" y="16" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">Project: Inventory Management System</text>
+          <text x="356" y="16" text-anchor="end" fill="#818cf8" font-family="monospace" font-size="11">38/45 Submitted</text>
+          <rect x="0" y="24" width="356" height="6" rx="3" fill="#1e293b" />
+          <rect x="0" y="24" width="300" height="6" rx="3" fill="#a855f7" />
+        </g>
+
+        <!-- Row 3 -->
+        <g transform="translate(0, 104)">
+          <text x="0" y="16" fill="#f8fafc" font-family="monospace" font-size="12" font-weight="600">Final Case Study Review</text>
+          <text x="356" y="16" text-anchor="end" fill="#f59e0b" font-family="monospace" font-size="11">Due in 3 Days</text>
+          <rect x="0" y="24" width="356" height="6" rx="3" fill="#1e293b" />
+          <rect x="0" y="24" width="180" height="6" rx="3" fill="#f59e0b" />
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Feature Bar -->
+    <g transform="translate(36, 388)">
+      <rect width="1008" height="142" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
+      
+      <g transform="translate(30, 28)">
+        <text x="0" y="26" fill="#f8fafc" font-family="sans-serif" font-size="26" font-weight="800">ReanHub — Learning Management System</text>
+        <text x="0" y="52" fill="#94a3b8" font-family="sans-serif" font-size="13">Architected with OOAD domain modeling, course assignment lifecycles, role-based workflows &amp; MongoDB.</text>
+        
+        <g transform="translate(0, 68)">
+          <rect x="0" y="0" width="76" height="24" rx="4" fill="#1e293b" />
+          <text x="38" y="16" text-anchor="middle" fill="#00ddb3" font-family="monospace" font-size="11" font-weight="600">React</text>
+
+          <rect x="86" y="0" width="80" height="24" rx="4" fill="#1e293b" />
+          <text x="126" y="16" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">Node.js</text>
+
+          <rect x="176" y="0" width="88" height="24" rx="4" fill="#1e293b" />
+          <text x="220" y="16" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="11" font-weight="600">Express.js</text>
+
+          <rect x="274" y="0" width="86" height="24" rx="4" fill="#1e293b" />
+          <text x="317" y="16" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="11" font-weight="600">MongoDB</text>
+
+          <rect x="370" y="0" width="130" height="24" rx="4" fill="#1e293b" />
+          <text x="435" y="16" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="600">OOAD Principles</text>
+        </g>
+      </g>
+
+      <!-- Graduation Cap / Book Emblem -->
+      <g transform="translate(900, 22)">
+        <circle cx="48" cy="48" r="44" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-opacity="0.3" stroke-width="1.5" />
+        <path d="M48 30 L68 40 L48 50 L28 40 Z" fill="#818cf8" />
+        <path d="M35 45 V58 C35 64 61 64 61 58 V45" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round" />
+        <path d="M68 40 V55" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
+      </g>
+    </g>
+  </g>
+</svg>

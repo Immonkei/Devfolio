@@ -225,11 +225,11 @@ export default async function HomePage() {
               <div className="absolute -inset-4 sm:-inset-6 rounded-3xl bg-gradient-to-tr from-primary/30 via-cyan-400/20 to-blue-600/30 blur-2xl opacity-75 pointer-events-none" />
               <div className="relative group">
                 <Image
-                  src="/avatar.png"
+                  src={profile?.avatar_url || "/avatar.png"}
                   alt={engineerName}
                   width={400}
                   height={400}
-                  priority
+                  preload={true}
                   className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-[0_15px_35px_rgba(56,189,248,0.3)] transition-all duration-300 group-hover:scale-[1.02] group-hover:drop-shadow-[0_20px_45px_rgba(56,189,248,0.45)]"
                 />
               </div>
