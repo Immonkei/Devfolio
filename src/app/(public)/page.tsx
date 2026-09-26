@@ -94,12 +94,13 @@ export default async function HomePage() {
   }
 
   // Fallback defaults if database tables are being newly seeded
-  const engineerName = profile?.name || "Senior Systems Engineer";
+  const engineerName = profile?.name || "Min Phanith";
   const engineerHeadline =
-    profile?.headline || "Staff Systems & Full-Stack Platform Engineer";
+    profile?.headline || "Junior Full-Stack Developer · IT Engineering @ RUPP";
   const engineerBio =
     profile?.bio ||
-    "Specializing in high-throughput distributed systems, modern Next.js/Supabase architectures, and resilient cloud infrastructure. Portfolio content is 100% data-driven.";
+    "I build responsive, accessible web applications and reliable backend services. Bridging engineering fundamentals with modern React, TypeScript, Node.js, and database systems.";
+  const resumeUrl = profile?.resume_url || "/resume.pdf";
 
   return (
     <div className="space-y-24 py-12 md:py-16">
@@ -138,9 +139,9 @@ export default async function HomePage() {
                   <span>Direct Inquiry</span>
                 </Button>
               </Link>
-              {profile?.resume_url && (
+              {resumeUrl && (
                 <a
-                  href={profile.resume_url}
+                  href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"

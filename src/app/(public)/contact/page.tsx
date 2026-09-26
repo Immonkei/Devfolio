@@ -19,9 +19,9 @@ export default async function ContactPage() {
     console.error("Contact page query error:", err);
   }
 
-  const location = profile?.location || "San Francisco, CA & Remote";
-  const github = profile?.github_url || "https://github.com";
-  const linkedin = profile?.linkedin_url || "https://linkedin.com";
+  const location = profile?.location || "Phnom Penh, Cambodia";
+  const github = profile?.github_url || "https://github.com/Immonkei";
+  const linkedin = profile?.linkedin_url || "https://www.linkedin.com/in/min-phanith-5a57ba33b/";
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-16 sm:px-6 space-y-12">

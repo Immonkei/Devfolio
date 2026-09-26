@@ -27,8 +27,10 @@ export default async function AboutPage() {
     console.error("About page query error:", err);
   }
 
-  const name = profile?.name || "Senior Systems Engineer";
-  const bio = profile?.bio || "Architecting high-throughput distributed systems, modern web platforms, and resilient cloud infrastructure.";
+  const name = profile?.name || "Min Phanith";
+  const bio =
+    profile?.bio ||
+    "I am a dedicated IT Engineering student at the Royal University of Phnom Penh (RUPP) with hands-on experience as a junior developer. My practice centers on building clean REST APIs, structured database schemas, reliable authentication flows, and seamless frontend integrations.";
 
   const principles = [
     {
