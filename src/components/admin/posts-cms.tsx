@@ -7,8 +7,9 @@ import {
   deletePost,
   togglePostPublish,
 } from "@/actions/posts";
+import { uploadMediaFile } from "@/actions/media";
 import { PostWithCategories, Category, PostStatus } from "@/types";
-import { Plus, Edit2, Trash2, X, Eye, EyeOff } from "lucide-react";
+import { Plus, Edit2, Trash2, X, Eye, EyeOff, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -31,6 +32,8 @@ export function PostsCMS({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [deviceFileName, setDeviceFileName] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     title: "",
@@ -55,6 +58,8 @@ export function PostsCMS({
     setEditingId(null);
     setIsEditing(false);
     setError(null);
+    setDeviceFileName(null);
+    setUploadingImage(false);
   };
 
   const handleEdit = (p: PostWithCategories) => {
@@ -68,7 +73,61 @@ export function PostsCMS({
       status: p.status,
       category_ids: (p.categories || []).map((c) => c.id),
     });
+    setDeviceFileName(null);
+    setUploadingImage(false);
     setIsEditing(true);
+  };
+
+  const handleDeviceImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError("Device image exceeds 10MB limit.");
+      return;
+    }
+
+    setUploadingImage(true);
+    setDeviceFileName(file.name);
+    setError(null);
+
+    // Immediate client-side preview
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        setForm((prev) => ({ ...prev, cover_image_url: result }));
+      }
+    };
+    reader.readAsDataURL(file);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await uploadMediaFile(formData);
+
+      if (res.success && res.data?.url) {
+        setForm((prev) => ({ ...prev, cover_image_url: res.data.url }));
+      } else {
+        console.warn("Media storage upload notice:", res.error);
+      }
+    } catch (err: unknown) {
+      console.warn("Device upload error:", err);
+    } finally {
+      setUploadingImage(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleResetCover = () => {
+    setForm((prev) => ({ ...prev, cover_image_url: "/notes/default-note.svg" }));
+    setDeviceFileName(null);
+  };
+
+  const handleClearCover = () => {
+    setForm((prev) => ({ ...prev, cover_image_url: "" }));
+    setDeviceFileName(null);
   };
 
   const handleTogglePublish = async (id: string, currentStatus: string) => {
@@ -101,12 +160,13 @@ export function PostsCMS({
         if (!res.success) {
           setError(res.error || "Update failed.");
         } else {
+          const updatedRecord = res.data;
           setPosts(
             posts.map((p) =>
               p.id === editingId
                 ? {
                     ...p,
-                    ...form,
+                    ...(updatedRecord || form),
                     categories: allCategories.filter((c) =>
                       form.category_ids.includes(c.id)
                     ),
@@ -230,29 +290,80 @@ export function PostsCMS({
 
             {/* Cover Image Thumbnail Section */}
             <div className="space-y-3 pt-2 border-t border-border">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div>
-                  <label className="text-foreground font-semibold">Cover Image (Thumbnail)</label>
+                  <label className="text-foreground font-semibold flex items-center gap-2">
+                    <span>Cover Image (Thumbnail)</span>
+                    {uploadingImage && (
+                      <span className="text-[11px] text-primary animate-pulse font-normal">
+                        (Uploading file...)
+                      </span>
+                    )}
+                  </label>
                   <p className="text-[11px] text-muted-foreground font-mono">
-                    Optional. Paste an image URL or choose one of the preset visual covers. If left blank, the fallback thumbnail will be automatically applied.
+                    Attach directly from device, paste an image URL, or pick a preset thumbnail.
                   </p>
                 </div>
-                {form.cover_image_url && (
+                <div className="flex items-center gap-2 shrink-0">
                   <button
                     type="button"
-                    onClick={() => setForm({ ...form, cover_image_url: "" })}
-                    className="text-xs text-primary hover:underline font-mono cursor-pointer shrink-0"
+                    onClick={handleResetCover}
+                    className="text-xs text-primary hover:underline font-mono cursor-pointer"
+                    title="Reset cover to default field report SVG"
                   >
                     Reset to Fallback
                   </button>
-                )}
+                  {form.cover_image_url && (
+                    <>
+                      <span className="text-muted-foreground/40">•</span>
+                      <button
+                        type="button"
+                        onClick={handleClearCover}
+                        className="text-xs text-muted-foreground hover:text-destructive font-mono cursor-pointer"
+                        title="Clear cover field"
+                      >
+                        Clear
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
 
-              <Input
-                placeholder="/notes/default-note.svg or https://images.unsplash.com/..."
-                value={form.cover_image_url}
-                onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })}
-              />
+              {/* Attach from Device + URL Input */}
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="relative shrink-0">
+                  <input
+                    type="file"
+                    id="post-device-image-input"
+                    accept="image/*"
+                    onChange={handleDeviceImageUpload}
+                    disabled={uploadingImage}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="post-device-image-input"
+                    className={`inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md border text-xs font-mono font-medium transition-colors cursor-pointer w-full sm:w-auto shadow-xs ${
+                      uploadingImage
+                        ? "bg-secondary/50 text-muted-foreground border-border cursor-not-allowed"
+                        : "bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50"
+                    }`}
+                  >
+                    <Upload className="h-3.5 w-3.5" />
+                    <span>{uploadingImage ? "Uploading Image..." : "Attach from Device"}</span>
+                  </label>
+                </div>
+
+                <div className="flex-1">
+                  <Input
+                    placeholder="/notes/default-note.svg or https://images.unsplash.com/..."
+                    value={form.cover_image_url}
+                    onChange={(e) => {
+                      setForm({ ...form, cover_image_url: e.target.value });
+                      setDeviceFileName(null);
+                    }}
+                  />
+                </div>
+              </div>
 
               {/* Quick Presets */}
               <div className="space-y-1.5">
@@ -264,7 +375,10 @@ export function PostsCMS({
                       <button
                         type="button"
                         key={preset.url}
-                        onClick={() => setForm({ ...form, cover_image_url: preset.url })}
+                        onClick={() => {
+                          setForm({ ...form, cover_image_url: preset.url });
+                          setDeviceFileName(null);
+                        }}
                         className={`px-2.5 py-1 rounded text-xs font-mono border transition-all cursor-pointer ${
                           isSelected
                             ? "bg-primary/20 text-primary border-primary font-bold shadow-sm"
@@ -288,16 +402,26 @@ export function PostsCMS({
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <div className="text-xs font-mono space-y-1 text-muted-foreground">
+                <div className="text-xs font-mono space-y-1 text-muted-foreground min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
-                    <span className={`inline-block h-2 w-2 rounded-full ${form.cover_image_url ? "bg-emerald-400" : "bg-cyan-400 animate-pulse"}`} />
+                    <span
+                      className={`inline-block h-2 w-2 rounded-full ${
+                        form.cover_image_url && form.cover_image_url !== "/notes/default-note.svg"
+                          ? "bg-emerald-400"
+                          : "bg-cyan-400 animate-pulse"
+                      }`}
+                    />
                     <span className="font-semibold text-foreground">
-                      {form.cover_image_url ? "Cover Image Configured" : "Default Fallback Thumbnail Active"}
+                      {form.cover_image_url && form.cover_image_url !== "/notes/default-note.svg"
+                        ? deviceFileName
+                          ? `Device File Attached (${deviceFileName})`
+                          : "Custom Cover Image Configured"
+                        : "Default Fallback Field Report Active"}
                     </span>
                   </div>
-                  <p className="text-[11px] leading-relaxed">
+                  <p className="text-[11px] leading-relaxed break-all">
                     {form.cover_image_url
-                      ? `Active: ${form.cover_image_url}`
+                      ? `Active: ${form.cover_image_url.startsWith("data:") ? "Local File (base64 Data URL)" : form.cover_image_url}`
                       : "No custom image specified. The system will automatically use the default field report blueprint (/notes/default-note.svg)."}
                   </p>
                 </div>

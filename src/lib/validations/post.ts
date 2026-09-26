@@ -11,19 +11,21 @@ export const postSchema = z.object({
   content: z.string().min(20, "Content must be at least 20 characters"),
   cover_image_url: z
     .string()
+    .trim()
     .refine(
       (val) =>
         val === "" ||
         val.startsWith("/") ||
         val.startsWith("http://") ||
-        val.startsWith("https://"),
-      { message: "Must be a valid URL or path starting with /" }
+        val.startsWith("https://") ||
+        val.startsWith("data:image/"),
+      { message: "Must be a valid URL, path starting with /, or image data URL" }
     )
     .optional()
     .nullable()
     .or(z.literal("")),
   status: z.enum(["DRAFT", "PUBLISHED"]).default("DRAFT"),
-  category_ids: z.array(z.string().uuid()).optional().default([]),
+  category_ids: z.array(z.string()).optional().default([]),
 });
 
 export type PostInput = z.infer<typeof postSchema>;
