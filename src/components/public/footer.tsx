@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Terminal, Shield } from "lucide-react";
+import { Terminal } from "lucide-react";
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
@@ -12,29 +12,25 @@ export function PublicFooter() {
           <div className="space-y-2">
             <div className="flex items-center gap-2 font-mono text-sm font-semibold text-foreground">
               <Terminal className="h-4 w-4 text-primary" />
-              <span>devforge // dynamic portfolio platform</span>
+              <span>Min Phanith // Developer Portfolio</span>
             </div>
             <p className="max-w-md text-xs text-muted-foreground">
-              Architected with Next.js App Router, Supabase PostgreSQL, Row-Level Security,
-              and full-stack content-as-data principles.
+              Junior Full-Stack Developer & IT Engineering student at the Royal University of Phnom Penh (RUPP).
+              Building clean REST APIs, structured database schemas, and modern web applications.
             </p>
           </div>
 
-          {/* Quick links & Tech Specs */}
+          {/* Status & Availability */}
           <div className="flex flex-wrap items-center gap-6 text-xs text-muted-foreground">
             <div className="flex items-center gap-2 font-mono">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>status: operational</span>
+              <span>Available for Junior Engineering & Internships</span>
             </div>
-            <Link href="/admin/login" className="hover:text-primary transition-colors flex items-center gap-1 font-mono">
-              <Shield className="h-3 w-3" />
-              <span>admin console</span>
-            </Link>
           </div>
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border/50 pt-6 text-xs text-muted-foreground md:flex-row">
-          <p>© {currentYear} DevForge. Source code licensed under MIT.</p>
+          <p>© {currentYear} Min Phanith. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/Immonkei"
@@ -45,12 +41,26 @@ export function PublicFooter() {
               GitHub
             </a>
             <span className="text-border">•</span>
+            <a
+              href="https://www.linkedin.com/in/min-phanith-5a57ba33b/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              LinkedIn
+            </a>
+            <span className="text-border">•</span>
+            <a
+              href="https://t.me/minphanith"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              Telegram
+            </a>
+            <span className="text-border">•</span>
             <Link href="/sitemap.xml" className="hover:text-foreground transition-colors">
               Sitemap
-            </Link>
-            <span className="text-border">•</span>
-            <Link href="/robots.txt" className="hover:text-foreground transition-colors">
-              Robots
             </Link>
           </div>
         </div>

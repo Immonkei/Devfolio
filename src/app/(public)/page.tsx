@@ -107,49 +107,59 @@ export default async function HomePage() {
       {/* 1. HERO SECTION */}
       <section className="container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative overflow-hidden rounded-2xl border border-border bg-card/40 p-8 sm:p-12 md:p-16 tech-grid-bg">
-          <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-xs text-primary">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span>PRODUCTION PLATFORM // ARCHITECTURE ACTIVE</span>
+          <div className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-8 md:gap-12">
+            <div className="max-w-2xl space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-xs text-primary">
+                <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                <span>FULL-STACK DEVELOPER // IT ENGINEERING @ RUPP</span>
+              </div>
+
+              <h1 className="font-mono text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+                {engineerName}
+              </h1>
+
+              <p className="font-mono text-lg text-primary sm:text-xl font-medium">
+                {engineerHeadline}
+              </p>
+
+              <p className="text-base text-muted-foreground leading-relaxed sm:text-lg">
+                {engineerBio}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-4">
+                <Link href="/projects">
+                  <Button className="gap-2 font-mono text-xs">
+                    <FolderGit2 className="h-4 w-4" />
+                    <span>Explore Projects</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button variant="secondary" className="gap-2 font-mono text-xs">
+                    <Mail className="h-4 w-4" />
+                    <span>Get In Touch</span>
+                  </Button>
+                </Link>
+                {resumeUrl && (
+                  <a
+                    href={resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    <span>Download CV</span>
+                  </a>
+                )}
+              </div>
             </div>
 
-            <h1 className="font-mono text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
-              {engineerName}
-            </h1>
-
-            <p className="font-mono text-lg text-primary sm:text-xl font-medium">
-              {engineerHeadline}
-            </p>
-
-            <p className="text-base text-muted-foreground leading-relaxed sm:text-lg">
-              {engineerBio}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link href="/projects">
-                <Button className="gap-2 font-mono text-xs">
-                  <FolderGit2 className="h-4 w-4" />
-                  <span>Inspect Projects</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="secondary" className="gap-2 font-mono text-xs">
-                  <Mail className="h-4 w-4" />
-                  <span>Direct Inquiry</span>
-                </Button>
-              </Link>
-              {resumeUrl && (
-                <a
-                  href={resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  <span>Curriculum Vitae</span>
-                </a>
-              )}
+            <div className="shrink-0">
+              <img
+                src="/avatar.png"
+                alt={engineerName}
+                className="h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 rounded-2xl border-2 border-primary/30 object-cover shadow-2xl bg-secondary"
+              />
             </div>
           </div>
         </div>
@@ -178,7 +188,7 @@ export default async function HomePage() {
 
         {projects.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border p-12 text-center text-xs font-mono text-muted-foreground">
-            No published projects found. Log into the admin console to publish projects.
+            No published projects yet. Check back soon!
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -212,7 +222,7 @@ export default async function HomePage() {
 
         {experiences.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border p-12 text-center text-xs font-mono text-muted-foreground">
-            No career milestones recorded yet. Add experience entries in the control plane.
+            No experience records available yet.
           </div>
         ) : (
           <div className="space-y-6">
@@ -236,7 +246,7 @@ export default async function HomePage() {
 
           {technologies.length === 0 ? (
             <div className="text-xs font-mono text-muted-foreground">
-              Technologies will populate automatically from Supabase.
+              Technologies coming soon.
             </div>
           ) : (
             <div className="flex flex-wrap gap-2.5">
@@ -271,7 +281,7 @@ export default async function HomePage() {
 
         {posts.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border p-12 text-center text-xs font-mono text-muted-foreground">
-            No published notes found. Publish technical writeups in the control plane.
+            No published notes yet. Check back soon!
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -303,19 +313,19 @@ export default async function HomePage() {
       <section className="container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 sm:p-12 text-center flex flex-col items-center">
           <span className="font-mono text-xs uppercase tracking-widest text-primary">
-            Initiate Consultation
+            Open to Opportunities
           </span>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-foreground">
-            Interested in Collaboration or Engineering Leadership?
+            Let&apos;s Build Something Together
           </h2>
           <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-            Available for principal architecture advisory, technical leadership roles, and high-impact distributed systems engineering.
+            Available for junior engineering positions, internships, freelance projects, and open-source collaborations.
           </p>
           <div className="mt-6 flex items-center gap-4">
             <Link href="/contact">
               <Button className="gap-2 font-mono text-xs">
                 <Mail className="h-3.5 w-3.5" />
-                <span>Contact Engineering Desk</span>
+                <span>Get In Touch</span>
               </Button>
             </Link>
           </div>

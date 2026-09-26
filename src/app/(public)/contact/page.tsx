@@ -4,8 +4,8 @@ import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import { createPublicClient } from "@/lib/supabase/server";
 
 export const metadata = {
-  title: "Contact & Consultation",
-  description: "Get in touch for system architecture consulting, full-stack engineering, and technical leadership.",
+  title: "Contact",
+  description: "Get in touch for collaboration, freelance work, or job opportunities.",
 };
 
 export default async function ContactPage() {
@@ -32,10 +32,10 @@ export default async function ContactPage() {
           <span>Direct Inquiries</span>
         </div>
         <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Initiate Engineering Communication
+          Get In Touch
         </h1>
         <p className="mt-2 text-muted-foreground text-sm max-w-xl">
-          Whether discussing complex backend architectures, full-stack platform development, or technical leadership roles, send a direct payload below.
+          Whether you have a project idea, a job opportunity, or just want to connect — feel free to reach out using the form below.
         </p>
       </div>
 

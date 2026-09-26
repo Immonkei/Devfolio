@@ -13,32 +13,62 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://devforge.minphanith.dev"),
   title: {
-    default: "DevForge | Senior Software Engineer Portfolio",
-    template: "%s | DevForge",
+    default: "Min Phanith | Junior Full-Stack Developer · IT Engineering @ RUPP",
+    template: "%s | Min Phanith",
   },
   description:
-    "Production-quality Software Engineer Portfolio showcasing architectural case studies, deep technical writeups, and full-stack systems engineering.",
+    "Portfolio of Min Phanith (Immonkei) — Junior Full-Stack Developer & IT Engineering student at RUPP. Building clean REST APIs, structured database schemas, and responsive modern web platforms.",
   keywords: [
-    "Software Engineer",
-    "Full Stack Developer",
-    "Systems Architect",
-    "TypeScript",
+    "Min Phanith",
+    "Immonkei",
+    "Full-Stack Developer",
+    "Junior Web Developer",
+    "IT Engineering",
+    "Royal University of Phnom Penh",
+    "RUPP",
+    "React",
     "Next.js",
-    "Supabase",
+    "TypeScript",
+    "Node.js",
+    "Express.js",
     "PostgreSQL",
-    "Distributed Systems",
+    "MongoDB",
+    "FastAPI",
+    "Cambodia Developer",
   ],
-  authors: [{ name: "Software Engineer" }],
-  creator: "DevForge",
+  authors: [{ name: "Min Phanith", url: "https://github.com/Immonkei" }],
+  creator: "Min Phanith",
+  icons: {
+    icon: "/avatar-sm.jpg",
+    shortcut: "/avatar-sm.jpg",
+    apple: "/avatar.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "/",
-    siteName: "DevForge",
-    title: "DevForge | Senior Software Engineer Portfolio",
-    description: "Production-grade portfolio, technical deep dives, and system architecture.",
+    siteName: "Min Phanith Portfolio",
+    title: "Min Phanith | Junior Full-Stack Developer · IT Engineering @ RUPP",
+    description:
+      "Junior Full-Stack Developer & IT Engineering student at RUPP. Explore interactive case studies, REST APIs, and modern web applications.",
+    images: [
+      {
+        url: "/avatar.png",
+        width: 800,
+        height: 800,
+        alt: "Min Phanith - Full-Stack Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Min Phanith | Junior Full-Stack Developer · IT Engineering @ RUPP",
+    description:
+      "Junior Full-Stack Developer & IT Engineering student at RUPP. Building clean REST APIs, structured database schemas, and responsive web platforms.",
+    images: ["/avatar.png"],
+    creator: "@minphanith",
   },
   robots: {
     index: true,

@@ -1,11 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 import { ProjectCard } from "@/components/public/project-card";
 import { FolderGit2 } from "lucide-react";
 import { ProjectWithTechnologies, Technology } from "@/types";
 
 export const metadata = {
-  title: "Engineering Projects",
-  description: "Production projects, distributed systems architectures, and software engineering case studies.",
+  title: "Projects",
+  description: "Web applications, APIs, and software projects built with modern technologies.",
 };
 
 export const revalidate = 60;
@@ -19,7 +19,7 @@ export default async function ProjectsPage({
   let projects: ProjectWithTechnologies[] = [];
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const queryBuilder = supabase
       .from("projects")
       .select("*, project_technologies(technology_id, technologies(*))")
@@ -64,13 +64,13 @@ export default async function ProjectsPage({
       <div>
         <div className="flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider">
           <FolderGit2 className="h-4 w-4" />
-          <span>Case Studies & Implementations</span>
+          <span>Projects & Implementations</span>
         </div>
         <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Engineered Systems & Projects
+          My Projects
         </h1>
         <p className="mt-2 text-muted-foreground text-sm max-w-2xl">
-          Detailed technical writeups of production systems, architecture trade-offs, scalability bottlenecks solved, and concrete results.
+          A collection of web applications, APIs, and tools I&apos;ve built using modern frameworks and technologies.
         </p>
       </div>
 

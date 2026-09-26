@@ -34,24 +34,24 @@ export default async function AboutPage() {
 
   const principles = [
     {
-      title: "Complexity is the Enemy of Reliability",
+      title: "Write Clean, Readable Code",
       description:
-        "Every added layer of abstraction, microservice, or dependency introduces operational overhead and failure surfaces. Build with the simplest architecture that solves the concrete problem.",
+        "Prioritize clarity over cleverness. Well-named variables, consistent patterns, and clear function boundaries make codebases maintainable and collaborative.",
     },
     {
-      title: "Content as Data, Not Code",
+      title: "Learn by Building",
       description:
-        "Engineered systems separate schema and presentation from mutable business data. Changes should flow through verified relational models with RLS guarantees rather than requiring codebase commits.",
+        "The best way to understand a technology is to ship something with it. Side projects and real-world applications teach lessons that tutorials alone cannot.",
     },
     {
-      title: "Measure Before Optimizing",
+      title: "Test What Matters",
       description:
-        "Avoid premature caching or over-engineered infrastructure before empirical bottlenecks have been measured under realistic load with structured telemetry.",
+        "Write tests for critical paths and edge cases. Automated testing catches regressions early and builds confidence when refactoring or adding new features.",
     },
     {
-      title: "Zero-Trust Authorization by Default",
+      title: "Stay Curious, Stay Humble",
       description:
-        "Never rely on UI hiding as security. Enforce authorization server-side and directly inside the database through Row Level Security.",
+        "Technology evolves fast. Embrace new tools and frameworks, ask questions, seek code reviews, and treat every bug as a learning opportunity.",
     },
   ];
 
@@ -67,7 +67,7 @@ export default async function AboutPage() {
           {name}
         </h1>
         <p className="font-mono text-base text-primary">
-          {profile?.headline || "Staff Software Engineer"}
+          {profile?.headline || "Junior Full-Stack Developer"}
         </p>
         <p className="text-base text-muted-foreground leading-relaxed pt-2">
           {bio}
@@ -105,7 +105,7 @@ export default async function AboutPage() {
 
         {education.length === 0 ? (
           <div className="rounded-xl border border-border bg-card/40 p-6 text-sm text-muted-foreground">
-            B.S. in Computer Science — Focus on Distributed Systems and Relational Databases.
+            B.Sc. in IT Engineering — Royal University of Phnom Penh (RUPP), 2023–2027.
           </div>
         ) : (
           <div className="space-y-4">
@@ -140,7 +140,7 @@ export default async function AboutPage() {
       <section className="pt-6 border-t border-border">
         <div className="flex items-center justify-between">
           <span className="font-mono text-xs text-muted-foreground">
-            Looking for architectural consultation or lead engineering roles?
+            Looking for a motivated developer for your team or project?
           </span>
           <Link href="/contact">
             <Button size="sm" className="font-mono text-xs gap-1.5">
