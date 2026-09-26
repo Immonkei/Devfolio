@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Terminal, Menu, X, FileText } from "lucide-react";
+import { Terminal, Menu, X } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
@@ -62,25 +62,17 @@ export function PublicNavbar() {
           })}
         </nav>
 
-        {/* Right CTA / GitHub / Resume */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Right Action / GitHub */}
+        <div className="hidden md:flex items-center gap-2">
           <a
             href="https://github.com/Immonkei"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground transition-all duration-200 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_10px_rgba(56,189,248,0.15)]"
+            className="flex items-center gap-2 rounded-lg border border-border/80 bg-secondary/30 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-all duration-200 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_10px_rgba(56,189,248,0.15)]"
             aria-label="GitHub Profile"
           >
             <GithubIcon className="h-4 w-4" />
-          </a>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-xs text-primary transition-all duration-200 hover:border-primary/60 hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)]"
-          >
-            <FileText className="h-3.5 w-3.5" />
-            <span>Resume (PDF)</span>
+            <span>GitHub</span>
           </a>
         </div>
 
@@ -90,7 +82,7 @@ export function PublicNavbar() {
             href="https://github.com/Immonkei"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground"
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors"
             aria-label="GitHub Profile"
           >
             <GithubIcon className="h-4 w-4" />
@@ -131,15 +123,6 @@ export function PublicNavbar() {
                 </Link>
               );
             })}
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/10 px-3.5 py-2.5 font-mono text-xs font-medium text-primary mt-2 transition-all hover:bg-primary/20 hover:border-primary/50"
-            >
-              <FileText className="h-4 w-4" />
-              <span>Download Resume (PDF)</span>
-            </a>
           </nav>
         </div>
       )}

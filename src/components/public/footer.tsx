@@ -5,33 +5,27 @@ export function PublicFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-border bg-card/40 py-12 text-sm">
+    <footer className="w-full border-t border-border/80 bg-background/60 py-8 text-xs font-mono">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          {/* Left Info */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 font-mono text-sm font-semibold text-foreground">
-              <Terminal className="h-4 w-4 text-primary" />
-              <span>Min Phanith // Developer Portfolio</span>
-            </div>
-            <p className="max-w-md text-xs text-muted-foreground">
-              Junior Full-Stack Developer & IT Engineering student at the Royal University of Phnom Penh (RUPP).
-              Building clean REST APIs, structured database schemas, and modern web applications.
-            </p>
-          </div>
-
-          {/* Status & Availability */}
-          <div className="flex flex-wrap items-center gap-6 text-xs text-muted-foreground">
-            <div className="flex items-center gap-2 font-mono">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Available for Junior Engineering & Internships</span>
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          {/* Brand & Status */}
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-foreground font-semibold hover:text-primary transition-colors"
+            >
+              <Terminal className="h-3.5 w-3.5 text-primary" />
+              <span>minphanith.dev</span>
+            </Link>
+            <span className="text-border/60">•</span>
+            <div className="inline-flex items-center gap-1.5 text-muted-foreground text-[11px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Available for opportunities</span>
             </div>
           </div>
-        </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border/50 pt-6 text-xs text-muted-foreground md:flex-row">
-          <p>© {currentYear} Min Phanith. All rights reserved.</p>
-          <div className="flex items-center gap-4">
+          {/* Social Links */}
+          <div className="flex items-center gap-4 text-muted-foreground">
             <a
               href="https://github.com/Immonkei"
               target="_blank"
@@ -40,7 +34,7 @@ export function PublicFooter() {
             >
               GitHub
             </a>
-            <span className="text-border">•</span>
+            <span className="text-border/60">•</span>
             <a
               href="https://www.linkedin.com/in/min-phanith-5a57ba33b/"
               target="_blank"
@@ -49,7 +43,7 @@ export function PublicFooter() {
             >
               LinkedIn
             </a>
-            <span className="text-border">•</span>
+            <span className="text-border/60">•</span>
             <a
               href="https://t.me/minphanith"
               target="_blank"
@@ -58,11 +52,19 @@ export function PublicFooter() {
             >
               Telegram
             </a>
-            <span className="text-border">•</span>
+            <span className="text-border/60">•</span>
             <Link href="/sitemap.xml" className="hover:text-foreground transition-colors">
               Sitemap
             </Link>
           </div>
+        </div>
+
+        {/* Minimal Copyright */}
+        <div className="mt-4 pt-4 border-t border-border/40 flex flex-col items-center justify-between gap-2 text-[11px] text-muted-foreground sm:flex-row">
+          <p>© {currentYear} Min Phanith. All rights reserved.</p>
+          <p className="text-[10px] text-muted-foreground/60">
+            Engineered with Next.js, TypeScript &amp; Supabase
+          </p>
         </div>
       </div>
     </footer>
