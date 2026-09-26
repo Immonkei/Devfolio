@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 import { ExperienceCard } from "@/components/public/experience-card";
 import { Briefcase, GraduationCap } from "lucide-react";
 import { formatDate } from "@/lib/utils";
@@ -16,7 +16,7 @@ export default async function ExperiencePage() {
   let education: Education[] = [];
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const [{ data: expData }, { data: eduData }] = await Promise.all([
       supabase.from("experiences").select("*").order("display_order", { ascending: true }),
       supabase.from("education").select("*").order("display_order", { ascending: true }),
