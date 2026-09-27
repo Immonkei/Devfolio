@@ -144,13 +144,19 @@ INSERT INTO public.education (
   display_order
 ) VALUES (
   '30000000-0000-0000-0000-000000000001',
-  'Royal University of Phnom Penh (RUPP)',
-  'B.Sc. in IT Engineering',
-  'Rigorous 4-year engineering curriculum covering data structures, software architecture, database design, computer networks, algorithms, and object-oriented analysis & design (OOAD).',
+  'Faculty of Engineering, Royal University of Phnom Penh (RUPP)',
+  'Bachelor of Information Technology Engineering (ITE)',
+  'Accredited 4-year engineering program emphasizing software engineering, computer organization, and practical system development. Core curriculum and practicum include Advanced Programming, Data Structures & Algorithms, Object-Oriented Analysis & Design (OOAD), Web Technologies & Cloud Computing, Database Systems II, Operating Systems, Mobile Application Development, Information Security, and Capstone Final Project.',
   '2023-10-01',
   '2027-07-31',
   1
-) ON CONFLICT (id) DO NOTHING;
+) ON CONFLICT (id) DO UPDATE SET
+  institution = EXCLUDED.institution,
+  degree = EXCLUDED.degree,
+  description = EXCLUDED.description,
+  start_date = EXCLUDED.start_date,
+  end_date = EXCLUDED.end_date,
+  display_order = EXCLUDED.display_order;
 
 -- 5. PROJECTS
 INSERT INTO public.projects (
