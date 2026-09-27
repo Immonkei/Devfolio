@@ -42,7 +42,7 @@ export function AdminSidebar() {
           </div>
           <div className="flex flex-col">
             <span className="font-mono text-sm font-bold tracking-tight text-foreground">
-              devforge<span className="text-primary">:root</span>
+              devfolio<span className="text-primary">:root</span>
             </span>
             <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
               Control Plane

@@ -17,11 +17,6 @@ import {
   Mail,
   ArrowRight,
   Download,
-  MapPin,
-  Terminal,
-  Code2,
-  Sparkles,
-  Activity,
 } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import {
@@ -224,91 +219,33 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Prominent High-Tech Holographic Avatar Container */}
-            <div className="relative shrink-0 flex items-center justify-center group/avatar my-4 lg:my-0">
-              {/* Technical Reticle Crosshairs at four corners */}
-              <div className="absolute -top-3 -left-3 font-mono text-xs text-primary/40 select-none pointer-events-none">+</div>
-              <div className="absolute -top-3 -right-3 font-mono text-xs text-primary/40 select-none pointer-events-none">+</div>
-              <div className="absolute -bottom-3 -left-3 font-mono text-xs text-primary/40 select-none pointer-events-none">+</div>
-              <div className="absolute -bottom-3 -right-3 font-mono text-xs text-primary/40 select-none pointer-events-none">+</div>
+            {/* Clean, Prestigious Portrait Container */}
+            <div className="relative shrink-0 flex items-center justify-center my-4 lg:my-0">
+              {/* Soft, Diffused Ambient Backlight Aura */}
+              <div className="absolute -inset-4 sm:-inset-8 rounded-full bg-gradient-to-tr from-primary/25 via-cyan-400/15 to-blue-600/20 blur-3xl opacity-70 pointer-events-none" />
 
-              {/* Multi-layered Cyber Glow Aura */}
-              <div className="absolute -inset-4 sm:-inset-8 rounded-full bg-gradient-to-tr from-primary/30 via-cyan-400/25 to-blue-600/30 blur-3xl opacity-70 group-hover/avatar:opacity-95 transition-opacity duration-700 pointer-events-none animate-pulse-subtle" />
-              <div className="absolute inset-0 rounded-full bg-radial from-cyan-400/15 via-transparent to-transparent blur-xl pointer-events-none" />
-
-              {/* Concentric Technical Orbital / Telemetry Radar Rings */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                {/* Outer Dashed Orbit Ring */}
-                <div className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[380px] md:h-[380px] lg:w-[420px] lg:h-[420px] rounded-full border border-dashed border-primary/20 animate-spin-slow flex items-center justify-center">
-                  {/* Cardinal degree tick indicators */}
-                  <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-primary/50 rounded-full shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
-                  <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-primary/50 rounded-full shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
-                  <span className="absolute -left-1.5 top-1/2 -translate-y-1/2 h-3 w-1 bg-primary/50 rounded-full shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
-                  <span className="absolute -right-1.5 top-1/2 -translate-y-1/2 h-3 w-1 bg-primary/50 rounded-full shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
-                </div>
-                {/* Inner Dotted Orbit Ring */}
-                <div className="absolute w-[230px] h-[230px] sm:w-[280px] sm:h-[280px] md:w-[310px] md:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-dotted border-cyan-400/20 animate-spin-slow-reverse" />
-              </div>
-
-              {/* Top-Left Telemetry Identifier Tag */}
-              <div className="absolute top-2 -left-2 sm:top-3 sm:-left-4 z-20 hidden sm:flex items-center gap-1.5 rounded-md border border-border/80 bg-background/80 px-2 py-0.5 font-mono text-[9px] text-muted-foreground backdrop-blur-md shadow-xs pointer-events-none">
-                <Activity className="h-2.5 w-2.5 text-primary animate-pulse" />
-                <span>DEV // RUPP_ENG</span>
-              </div>
-
-              {/* Floating Glassmorphic Status Beacon (Top Right) */}
-              <div className="absolute top-4 -right-2 sm:top-6 sm:-right-4 z-20 animate-float-subtle">
-                <div className="flex items-center gap-2.5 rounded-xl border border-primary/30 bg-card/85 px-3 py-2 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-primary/60 hover:bg-card/95">
-                  <span className="relative flex h-2.5 w-2.5 shrink-0">
+              {/* Minimalist Floating Status Pill */}
+              <div className="absolute top-2 -right-1 sm:top-4 sm:-right-2 z-20">
+                <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/80 px-3 py-1 font-mono text-[11px] text-muted-foreground backdrop-blur-md shadow-sm transition-colors hover:border-primary/40 hover:text-foreground">
+                  <span className="relative flex h-2 w-2 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  <div className="text-left font-mono">
-                    <div className="text-[10px] font-bold tracking-tight text-foreground flex items-center gap-1">
-                      <span>Available for Hire</span>
-                      <Sparkles className="h-2.5 w-2.5 text-cyan-400" />
-                    </div>
-                    <div className="text-[9px] text-muted-foreground flex items-center gap-1">
-                      <MapPin className="h-2.5 w-2.5 text-primary" />
-                      <span>Phnom Penh · Remote</span>
-                    </div>
-                  </div>
+                  <span className="font-medium text-foreground">Available for hire</span>
                 </div>
               </div>
 
-              {/* Floating Developer Identity Badge (Bottom Left) */}
-              <div className="absolute bottom-6 -left-3 sm:bottom-8 sm:-left-6 z-20 animate-float-subtle [animation-delay:2s]">
-                <div className="flex items-center gap-2.5 rounded-xl border border-cyan-400/30 bg-card/85 px-3 py-2 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-cyan-400/60 hover:bg-card/95">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 border border-primary/25 text-primary shadow-xs">
-                    <Terminal className="h-3.5 w-3.5" />
-                  </div>
-                  <div className="text-left font-mono">
-                    <div className="text-[10px] font-bold tracking-tight text-foreground">
-                      Full-Stack Dev
-                    </div>
-                    <div className="text-[9px] text-cyan-400 flex items-center gap-1 font-medium">
-                      <Code2 className="h-2.5 w-2.5" />
-                      <span>Next.js · Node.js · TS</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Avatar Image Frame with Seamless Bottom Fade */}
-              <div className="relative z-10 overflow-hidden [mask-image:linear-gradient(to_bottom,black_78%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_78%,transparent_98%)]">
+              {/* Portrait with Natural, Smooth Bottom Dissolve (No Box Clipping) */}
+              <div className="relative z-10 [mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)]">
                 <Image
                   src={profile?.avatar_url || "/avatar.png"}
                   alt={engineerName}
                   width={400}
                   height={400}
                   preload={true}
-                  className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-[0_15px_35px_rgba(56,189,248,0.35)] transition-transform duration-500 ease-out group-hover/avatar:scale-[1.03]"
+                  className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-[0_15px_35px_rgba(56,189,248,0.22)] transition-transform duration-500 ease-out hover:scale-[1.02]"
                 />
               </div>
-
-              {/* Horizon / Telemetry Pedestal Beam Beneath Avatar */}
-              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-48 sm:w-64 h-[2px] bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent blur-[0.5px] opacity-80 pointer-events-none" />
-              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 sm:w-44 h-[6px] bg-gradient-to-r from-transparent via-primary/50 to-transparent blur-md pointer-events-none" />
             </div>
           </div>
         </div>

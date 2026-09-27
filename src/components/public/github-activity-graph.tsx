@@ -260,7 +260,7 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
       {/* Calendar Grid Container (scrollable on mobile) */}
       <div className="relative rounded-xl border border-border/60 bg-card/40 p-4 sm:p-5 overflow-hidden">
         {/* Hover info banner */}
-        <div className="min-h-[24px] mb-3 text-xs font-mono text-muted-foreground flex items-center justify-between">
+        <div className="min-h-6 mb-3 text-xs font-mono text-muted-foreground flex items-center justify-between">
           <div>
             {hoveredDay ? (
               <span className="text-foreground">
@@ -275,7 +275,7 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
         </div>
 
         <div className="overflow-x-auto pb-2">
-          <div className="inline-block min-w-[720px]">
+          <div className="inline-block min-w-180">
             {/* Months row */}
             <div className="flex text-[10px] font-mono text-muted-foreground mb-1.5 pl-7">
               {weeks.map((_, index) => {
@@ -291,7 +291,7 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
             {/* Grid with Day of Week indicators */}
             <div className="flex">
               {/* Day of Week Labels */}
-              <div className="flex flex-col justify-between text-[9px] font-mono text-muted-foreground pr-2 py-0.5 select-none h-[96px]">
+              <div className="flex flex-col justify-between text-[9px] font-mono text-muted-foreground pr-2 py-0.5 select-none h-24">
                 <span className="h-3 leading-3">Sun</span>
                 <span className="h-3 leading-3">Tue</span>
                 <span className="h-3 leading-3">Thu</span>
