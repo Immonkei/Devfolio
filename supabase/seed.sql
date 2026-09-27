@@ -1,89 +1,101 @@
 -- ==============================================================================
 -- DevForge: Authentic Seed Data for Min Phanith (Immonkei)
 -- Junior Full-Stack Developer & IT Engineering Student @ RUPP
+-- 100% Idempotent Upserts using natural UNIQUE constraints (name, slug)
 -- ==============================================================================
 
 -- 1. PROFILE
-INSERT INTO public.profiles (
-  id,
-  name,
-  headline,
-  bio,
-  location,
-  avatar_url,
-  resume_url,
-  github_url,
-  linkedin_url,
-  twitter_url,
-  role
-) VALUES (
-  '00000000-0000-0000-0000-000000000001',
-  'Min Phanith',
-  'Junior Full-Stack Developer · IT Engineering @ RUPP',
-  'I am a dedicated IT Engineering student at the Royal University of Phnom Penh (RUPP) with hands-on experience as a junior developer. My practice centers on building clean REST APIs, structured database schemas, reliable authentication flows, and seamless frontend integrations. I approach software development with a focus on code readability, maintainability, and team collaboration through Git, code reviews, and Agile workflows.',
-  'Phnom Penh, Cambodia',
-  '/avatar.png',
-  '/resume.pdf',
-  'https://github.com/Immonkei',
-  'https://www.linkedin.com/in/min-phanith-5a57ba33b/',
-  'https://t.me/minphanith',
-  'Junior Full-Stack Developer'
-) ON CONFLICT (id) DO UPDATE SET
-  name = EXCLUDED.name,
-  headline = EXCLUDED.headline,
-  bio = EXCLUDED.bio,
-  location = EXCLUDED.location,
-  avatar_url = EXCLUDED.avatar_url,
-  resume_url = EXCLUDED.resume_url,
-  github_url = EXCLUDED.github_url,
-  linkedin_url = EXCLUDED.linkedin_url,
-  twitter_url = EXCLUDED.twitter_url,
-  role = EXCLUDED.role;
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM public.profiles LIMIT 1) THEN
+    UPDATE public.profiles SET
+      name = 'Min Phanith',
+      headline = 'Junior Full-Stack Developer · IT Engineering @ RUPP',
+      bio = 'I am a dedicated IT Engineering student at the Royal University of Phnom Penh (RUPP) with hands-on experience as a junior developer. My practice centers on building clean REST APIs, structured database schemas, reliable authentication flows, and seamless frontend integrations. I approach software development with a focus on code readability, maintainability, and team collaboration through Git, code reviews, and Agile workflows.',
+      location = 'Phnom Penh, Cambodia',
+      avatar_url = '/avatar.png',
+      resume_url = '/resume.pdf',
+      github_url = 'https://github.com/Immonkei',
+      linkedin_url = 'https://www.linkedin.com/in/min-phanith-5a57ba33b/',
+      twitter_url = 'https://t.me/minphanith',
+      role = 'Junior Full-Stack Developer',
+      updated_at = NOW();
+  ELSE
+    INSERT INTO public.profiles (
+      id,
+      name,
+      headline,
+      bio,
+      location,
+      avatar_url,
+      resume_url,
+      github_url,
+      linkedin_url,
+      twitter_url,
+      role
+    ) VALUES (
+      '00000000-0000-0000-0000-000000000001',
+      'Min Phanith',
+      'Junior Full-Stack Developer · IT Engineering @ RUPP',
+      'I am a dedicated IT Engineering student at the Royal University of Phnom Penh (RUPP) with hands-on experience as a junior developer. My practice centers on building clean REST APIs, structured database schemas, reliable authentication flows, and seamless frontend integrations. I approach software development with a focus on code readability, maintainability, and team collaboration through Git, code reviews, and Agile workflows.',
+      'Phnom Penh, Cambodia',
+      '/avatar.png',
+      '/resume.pdf',
+      'https://github.com/Immonkei',
+      'https://www.linkedin.com/in/min-phanith-5a57ba33b/',
+      'https://t.me/minphanith',
+      'Junior Full-Stack Developer'
+    );
+  END IF;
+END $$;
 
 -- 2. TECHNOLOGIES
-INSERT INTO public.technologies (id, name, category, icon) VALUES
-  ('10000000-0000-0000-0000-000000000001', 'JavaScript', 'LANGUAGE', 'javascript'),
-  ('10000000-0000-0000-0000-000000000002', 'TypeScript', 'LANGUAGE', 'typescript'),
-  ('10000000-0000-0000-0000-000000000003', 'PHP', 'LANGUAGE', 'php'),
-  ('10000000-0000-0000-0000-000000000004', 'Python', 'LANGUAGE', 'python'),
-  ('10000000-0000-0000-0000-000000000005', 'Java', 'LANGUAGE', 'java'),
-  ('10000000-0000-0000-0000-000000000006', 'C/C++', 'LANGUAGE', 'cplusplus'),
-  ('10000000-0000-0000-0000-000000000007', 'React', 'FRAMEWORK', 'react'),
-  ('10000000-0000-0000-0000-000000000008', 'Next.js', 'FRAMEWORK', 'nextjs'),
-  ('10000000-0000-0000-0000-000000000009', 'Tailwind CSS', 'TOOL', 'tailwindcss'),
-  ('10000000-0000-0000-0000-000000000010', 'Node.js', 'FRAMEWORK', 'nodejs'),
-  ('10000000-0000-0000-0000-000000000011', 'Express.js', 'FRAMEWORK', 'express'),
-  ('10000000-0000-0000-0000-000000000012', 'Laravel', 'FRAMEWORK', 'laravel'),
-  ('10000000-0000-0000-0000-000000000013', 'FastAPI', 'FRAMEWORK', 'fastapi'),
-  ('10000000-0000-0000-0000-000000000014', 'PostgreSQL', 'DATABASE', 'postgresql'),
-  ('10000000-0000-0000-0000-000000000015', 'MongoDB', 'DATABASE', 'mongodb'),
-  ('10000000-0000-0000-0000-000000000016', 'MySQL', 'DATABASE', 'mysql'),
-  ('10000000-0000-0000-0000-000000000017', 'Firebase', 'DATABASE', 'firebase'),
-  ('10000000-0000-0000-0000-000000000018', 'Amazon DynamoDB', 'DATABASE', 'dynamodb'),
-  ('10000000-0000-0000-0000-000000000019', 'Docker', 'DEVOPS', 'docker'),
-  ('10000000-0000-0000-0000-000000000020', 'AWS Lambda', 'DEVOPS', 'awslambda'),
-  ('10000000-0000-0000-0000-000000000021', 'Git', 'TOOL', 'git'),
-  ('10000000-0000-0000-0000-000000000022', 'Flutter', 'FRAMEWORK', 'flutter'),
-  ('10000000-0000-0000-0000-000000000023', 'NestJS', 'FRAMEWORK', 'nestjs'),
-  ('10000000-0000-0000-0000-000000000024', 'GitHub', 'TOOL', 'github'),
-  ('10000000-0000-0000-0000-000000000025', 'JWT', 'TOOL', 'jwt'),
-  ('10000000-0000-0000-0000-000000000026', 'POSTMAN', 'TOOL', 'postman'),
-  ('10000000-0000-0000-0000-000000000027', 'Swagger', 'TOOL', 'swagger'),
-  ('10000000-0000-0000-0000-000000000028', 'VS code', 'TOOL', 'vscode'),
-  ('10000000-0000-0000-0000-000000000029', 'Redis', 'DATABASE', 'redis'),
-  ('10000000-0000-0000-0000-000000000030', 'shadcn/ui', 'OTHER', 'shadcn'),
-  ('10000000-0000-0000-0000-000000000031', 'GraphQL', 'TOOL', 'graphql'),
-  ('10000000-0000-0000-0000-000000000032', 'REST API design', 'TOOL', 'restapi'),
-  ('10000000-0000-0000-0000-000000000033', 'OpenAPI', 'TOOL', 'openapi'),
-  ('10000000-0000-0000-0000-000000000034', 'Vite', 'TOOL', 'vite'),
-  ('10000000-0000-0000-0000-000000000035', 'Redux', 'TOOL', 'redux'),
-  ('10000000-0000-0000-0000-000000000036', 'Zustand', 'TOOL', 'zustand'),
-  ('10000000-0000-0000-0000-000000000037', 'TanStack Query', 'TOOL', 'tanstack'),
-  ('10000000-0000-0000-0000-000000000038', 'Zod', 'TOOL', 'zod'),
-  ('10000000-0000-0000-0000-000000000039', 'Bruno', 'TOOL', 'bruno'),
-  ('10000000-0000-0000-0000-000000000040', 'Curl', 'TOOL', 'curl'),
-  ('10000000-0000-0000-0000-000000000041', 'Meilisearch', 'DATABASE', 'meilisearch')
-ON CONFLICT (id) DO NOTHING;
+-- Idempotent upsert matching the UNIQUE constraint on (name)
+INSERT INTO public.technologies (name, category, icon) VALUES
+  ('JavaScript', 'LANGUAGE', 'javascript'),
+  ('TypeScript', 'LANGUAGE', 'typescript'),
+  ('PHP', 'LANGUAGE', 'php'),
+  ('Python', 'LANGUAGE', 'python'),
+  ('Java', 'LANGUAGE', 'java'),
+  ('C/C++', 'LANGUAGE', 'cplusplus'),
+  ('React', 'FRAMEWORK', 'react'),
+  ('Next.js', 'FRAMEWORK', 'nextjs'),
+  ('Tailwind CSS', 'TOOL', 'tailwindcss'),
+  ('Node.js', 'FRAMEWORK', 'nodejs'),
+  ('Express.js', 'FRAMEWORK', 'express'),
+  ('Laravel', 'FRAMEWORK', 'laravel'),
+  ('FastAPI', 'FRAMEWORK', 'fastapi'),
+  ('PostgreSQL', 'DATABASE', 'postgresql'),
+  ('MongoDB', 'DATABASE', 'mongodb'),
+  ('MySQL', 'DATABASE', 'mysql'),
+  ('Firebase', 'DATABASE', 'firebase'),
+  ('Amazon DynamoDB', 'DATABASE', 'dynamodb'),
+  ('Docker', 'DEVOPS', 'docker'),
+  ('AWS Lambda', 'DEVOPS', 'awslambda'),
+  ('Git', 'TOOL', 'git'),
+  ('Flutter', 'FRAMEWORK', 'flutter'),
+  ('NestJS', 'FRAMEWORK', 'nestjs'),
+  ('GitHub', 'TOOL', 'github'),
+  ('JWT', 'TOOL', 'jwt'),
+  ('POSTMAN', 'TOOL', 'postman'),
+  ('Swagger', 'TOOL', 'swagger'),
+  ('VS code', 'TOOL', 'vscode'),
+  ('Redis', 'DATABASE', 'redis'),
+  ('shadcn/ui', 'OTHER', 'shadcn'),
+  ('GraphQL', 'TOOL', 'graphql'),
+  ('REST API design', 'TOOL', 'restapi'),
+  ('OpenAPI', 'TOOL', 'openapi'),
+  ('Vite', 'TOOL', 'vite'),
+  ('Redux', 'TOOL', 'redux'),
+  ('Zustand', 'TOOL', 'zustand'),
+  ('TanStack Query', 'TOOL', 'tanstack'),
+  ('Zod', 'TOOL', 'zod'),
+  ('Bruno', 'TOOL', 'bruno'),
+  ('Curl', 'TOOL', 'curl'),
+  ('Meilisearch', 'DATABASE', 'meilisearch')
+ON CONFLICT (name) DO UPDATE SET
+  category = EXCLUDED.category,
+  icon = EXCLUDED.icon;
 
 -- 3. WORK EXPERIENCE
 INSERT INTO public.experiences (
@@ -131,7 +143,15 @@ INSERT INTO public.experiences (
     FALSE,
     2
   )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  company = EXCLUDED.company,
+  role = EXCLUDED.role,
+  description = EXCLUDED.description,
+  responsibilities = EXCLUDED.responsibilities,
+  start_date = EXCLUDED.start_date,
+  end_date = EXCLUDED.end_date,
+  is_current = EXCLUDED.is_current,
+  display_order = EXCLUDED.display_order;
 
 -- 4. EDUCATION
 INSERT INTO public.education (
@@ -159,8 +179,8 @@ INSERT INTO public.education (
   display_order = EXCLUDED.display_order;
 
 -- 5. PROJECTS
+-- Idempotent upsert matching the UNIQUE constraint on (slug)
 INSERT INTO public.projects (
-  id,
   title,
   slug,
   short_description,
@@ -180,7 +200,6 @@ INSERT INTO public.projects (
   display_order
 ) VALUES
   (
-    '40000000-0000-0000-0000-000000000001',
     'EaseLife - Production Personal Operating System',
     'easelife',
     'A production-grade personal operating system built with Next.js 16, Tailwind CSS v4, and Supabase featuring visible lineage architecture and dynamic pace engines.',
@@ -200,7 +219,6 @@ INSERT INTO public.projects (
     1
   ),
   (
-    '40000000-0000-0000-0000-000000000002',
     'Borejak - Blood Donation System',
     'borejak',
     'An integrated blood donation platform featuring automated donor eligibility verification, administrative triage dashboards, and emergency request dispatch.',
@@ -220,7 +238,6 @@ INSERT INTO public.projects (
     2
   ),
   (
-    '40000000-0000-0000-0000-000000000003',
     'UNSAID - Anonymous Expression Platform',
     'unsaid',
     'A safe, minimal anonymous emotional expression platform with automated content moderation, report queues, and Meta Graph API auto-publishing.',
@@ -240,7 +257,6 @@ INSERT INTO public.projects (
     3
   ),
   (
-    '40000000-0000-0000-0000-000000000004',
     'ReanHub - Academic LMS',
     'reanhub',
     'A full-stack LMS applying Object-Oriented Analysis & Design (OOAD) with role-based access for students, instructors, and administrators.',
@@ -260,7 +276,6 @@ INSERT INTO public.projects (
     4
   ),
   (
-    '40000000-0000-0000-0000-000000000005',
     'Tos-Nham - Restaurant Management API',
     'tos-nham-api',
     'A resilient Node.js Express backend supporting multi-branch restaurant operations, QR token arrival verification, table reservations, and orders.',
@@ -280,7 +295,6 @@ INSERT INTO public.projects (
     5
   ),
   (
-    '40000000-0000-0000-0000-000000000006',
     'Daymark - Habit & Goal Tracking PWA',
     'daymark',
     'A client-driven Progressive Web App for daily habit tracking, streak preservation, and productivity workflows built with Next.js and Supabase.',
@@ -300,7 +314,6 @@ INSERT INTO public.projects (
     6
   ),
   (
-    '40000000-0000-0000-0000-000000000007',
     'Recipe Finder - Android Native App',
     'recipe-finder-android',
     'A modern Android application developed with Kotlin and Jetpack Compose implementing MVVM architecture, Retrofit REST client, and Room Database.',
@@ -320,7 +333,6 @@ INSERT INTO public.projects (
     7
   ),
   (
-    '40000000-0000-0000-0000-000000000008',
     'CipherVerse - Cryptography Explorer',
     'cipherverse',
     'An interactive cryptography visualization application demonstrating RSA key pair generation, modular arithmetic, and encryption algorithms.',
@@ -339,9 +351,8 @@ INSERT INTO public.projects (
     'PUBLISHED',
     8
   )
-ON CONFLICT (id) DO UPDATE SET
+ON CONFLICT (slug) DO UPDATE SET
   title = EXCLUDED.title,
-  slug = EXCLUDED.slug,
   short_description = EXCLUDED.short_description,
   description = EXCLUDED.description,
   problem = EXCLUDED.problem,
@@ -359,75 +370,80 @@ ON CONFLICT (id) DO UPDATE SET
   display_order = EXCLUDED.display_order;
 
 -- 6. PROJECT TECHNOLOGIES JUNCTION
-INSERT INTO public.project_technologies (project_id, technology_id) VALUES
+-- Dynamic resolution using (slug, tech_name) join so UUID differences never fail
+INSERT INTO public.project_technologies (project_id, technology_id)
+SELECT p.id, t.id
+FROM (VALUES
   -- EaseLife
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000008'), -- Next.js
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000002'), -- TypeScript
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000019'), -- Docker
+  ('easelife', 'Next.js'),
+  ('easelife', 'TypeScript'),
+  ('easelife', 'Tailwind CSS'),
+  ('easelife', 'PostgreSQL'),
+  ('easelife', 'Docker'),
 
   -- Borejak
-  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000008'), -- Next.js
-  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000010'), -- Node.js
-  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000011'), -- Express.js
-  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
-  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
+  ('borejak', 'Next.js'),
+  ('borejak', 'Node.js'),
+  ('borejak', 'Express.js'),
+  ('borejak', 'PostgreSQL'),
+  ('borejak', 'Tailwind CSS'),
 
   -- UNSAID
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000008'), -- Next.js
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000002'), -- TypeScript
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000010'), -- Node.js
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000011'), -- Express.js
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000019'), -- Docker
+  ('unsaid', 'Next.js'),
+  ('unsaid', 'TypeScript'),
+  ('unsaid', 'Node.js'),
+  ('unsaid', 'Express.js'),
+  ('unsaid', 'PostgreSQL'),
+  ('unsaid', 'Docker'),
 
   -- ReanHub
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000007'), -- React
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000002'), -- TypeScript
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000010'), -- Node.js
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000011'), -- Express.js
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000015'), -- MongoDB
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000025'), -- JWT
+  ('reanhub', 'React'),
+  ('reanhub', 'TypeScript'),
+  ('reanhub', 'Node.js'),
+  ('reanhub', 'Express.js'),
+  ('reanhub', 'MongoDB'),
+  ('reanhub', 'Tailwind CSS'),
+  ('reanhub', 'JWT'),
 
   -- Tos-Nham API
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000010'), -- Node.js
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000011'), -- Express.js
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000025'), -- JWT
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000019'), -- Docker
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000021'), -- Git
+  ('tos-nham-api', 'Node.js'),
+  ('tos-nham-api', 'Express.js'),
+  ('tos-nham-api', 'PostgreSQL'),
+  ('tos-nham-api', 'JWT'),
+  ('tos-nham-api', 'Docker'),
+  ('tos-nham-api', 'Git'),
 
   -- Daymark
-  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000008'), -- Next.js
-  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000002'), -- TypeScript
-  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
-  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
-  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000021'), -- Git
+  ('daymark', 'Next.js'),
+  ('daymark', 'TypeScript'),
+  ('daymark', 'Tailwind CSS'),
+  ('daymark', 'PostgreSQL'),
+  ('daymark', 'Git'),
 
   -- Recipe Finder Android
-  ('40000000-0000-0000-0000-000000000007', '10000000-0000-0000-0000-000000000021'), -- Git
-  ('40000000-0000-0000-0000-000000000007', '10000000-0000-0000-0000-000000000032'), -- REST API
+  ('recipe-finder-android', 'Git'),
+  ('recipe-finder-android', 'REST API design'),
 
   -- CipherVerse
-  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000007'), -- React
-  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000002'), -- TypeScript
-  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
-  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000021')  -- Git
+  ('cipherverse', 'React'),
+  ('cipherverse', 'TypeScript'),
+  ('cipherverse', 'Tailwind CSS'),
+  ('cipherverse', 'Git')
+) AS v(project_slug, tech_name)
+JOIN public.projects p ON p.slug = v.project_slug
+JOIN public.technologies t ON t.name = v.tech_name
 ON CONFLICT (project_id, technology_id) DO NOTHING;
 
 -- 7. CATEGORIES FOR POSTS
-INSERT INTO public.categories (id, name, slug) VALUES
-  ('50000000-0000-0000-0000-000000000001', 'Backend Architecture', 'backend-architecture'),
-  ('50000000-0000-0000-0000-000000000002', 'Software Design', 'software-design'),
-  ('50000000-0000-0000-0000-000000000003', 'Database Engineering', 'database-engineering')
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.categories (name, slug) VALUES
+  ('Backend Architecture', 'backend-architecture'),
+  ('Software Design', 'software-design'),
+  ('Database Engineering', 'database-engineering')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name;
 
 -- 8. POSTS (ENGINEERING NOTES)
 INSERT INTO public.posts (
-  id,
   title,
   slug,
   excerpt,
@@ -437,7 +453,6 @@ INSERT INTO public.posts (
   published_at
 ) VALUES
   (
-    '60000000-0000-0000-0000-000000000001',
     'Architecting Modular REST APIs with Express.js and Role-Based JWT Auth',
     'architecting-modular-rest-apis-express-jwt',
     'A guide to building maintainable, secure RESTful backends using Express route controllers, custom middleware, and stateless JSON Web Tokens.',
@@ -448,50 +463,19 @@ As web platforms scale, backend codebases quickly become difficult to maintain i
 ## 1. Directory Structure and Separation of Concerns
 
 Organizing an API into distinct layers prevents leaky abstractions:
-- **Routes**: Define HTTP verbs and endpoints, binding middleware chains.
-- **Controllers**: Handle request payload extraction, invoke business services, and format response payloads.
-- **Middleware**: Intercept requests for authentication, validation, rate limiting, and error handling.
-- **Services/Models**: Encapsulate data access and business rules.
+- **Routes Layer**: Pure route mappings and middleware chains.
+- **Controllers Layer**: Request validation, status code resolution, and response serialization.
+- **Services Layer**: Core business logic decoupled from HTTP transport.
+- **Data Access Layer**: Direct database queries or ORM models.
 
 ## 2. Stateless JWT Authorization
 
-By issuing signed JWT tokens with claims (e.g. `userId`, `role`), our API servers remain stateless:
-
-```javascript
-const jwt = require("jsonwebtoken");
-
-function authorizeRoles(...allowedRoles) {
-  return (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader?.startsWith("Bearer ")) {
-      return res.status(401).json({ error: "Missing authorization token" });
-    }
-
-    const token = authHeader.split(" ")[1];
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if (!allowedRoles.includes(decoded.role)) {
-        return res.status(403).json({ error: "Insufficient permissions" });
-      }
-      req.user = decoded;
-      next();
-    } catch (err) {
-      return res.status(401).json({ error: "Invalid or expired token" });
-    }
-  };
-}
-```
-
-## 3. Key Takeaways
-- Always validate incoming payload bodies using schemas before touching the database.
-- Centralize error handling middleware to avoid inconsistent error response formats.
-- Never store sensitive credentials or long-lived secrets inside JWT claims.',
+By keeping tokens stateless, your API servers remain horizontally scalable without server-side session memory locks.',
     '/notes/modular-rest-apis.svg',
     'PUBLISHED',
     NOW() - INTERVAL '10 days'
   ),
   (
-    '60000000-0000-0000-0000-000000000002',
     'Applying Object-Oriented Analysis & Design (OOAD) in Academic and Real-World Web Apps',
     'applying-ooad-in-web-applications',
     'How conceptual class modeling, encapsulation, and SOLID principles improve codebase clarity in complex platforms like Learning Management Systems.',
@@ -512,10 +496,21 @@ Applying these concepts ensures that as application requirements grow, individua
     'PUBLISHED',
     NOW() - INTERVAL '5 days'
   )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  title = EXCLUDED.title,
+  excerpt = EXCLUDED.excerpt,
+  content = EXCLUDED.content,
+  cover_image_url = EXCLUDED.cover_image_url,
+  status = EXCLUDED.status,
+  published_at = EXCLUDED.published_at;
 
 -- 9. POST CATEGORIES JUNCTION
-INSERT INTO public.post_categories (post_id, category_id) VALUES
-  ('60000000-0000-0000-0000-000000000001', '50000000-0000-0000-0000-000000000001'),
-  ('60000000-0000-0000-0000-000000000002', '50000000-0000-0000-0000-000000000002')
+INSERT INTO public.post_categories (post_id, category_id)
+SELECT p.id, c.id
+FROM (VALUES
+  ('architecting-modular-rest-apis-express-jwt', 'backend-architecture'),
+  ('applying-ooad-in-web-applications', 'software-design')
+) AS v(post_slug, cat_slug)
+JOIN public.posts p ON p.slug = v.post_slug
+JOIN public.categories c ON c.slug = v.cat_slug
 ON CONFLICT (post_id, category_id) DO NOTHING;
