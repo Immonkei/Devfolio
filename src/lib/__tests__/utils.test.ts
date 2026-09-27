@@ -67,3 +67,46 @@ describe('Utility Functions', () => {
     });
   });
 });
+
+import {
+  getTechIconUrl,
+  suggestTechIcon,
+  suggestTechCategory,
+  STANDARD_TECHNOLOGIES,
+} from '../tech-icons';
+
+describe('Technology Icon & Category Auto-Resolution', () => {
+  it('contains exactly 41 standard technologies', () => {
+    expect(STANDARD_TECHNOLOGIES).toHaveLength(41);
+  });
+
+  it('resolves an icon URL for every one of the 41 standard technologies by name', () => {
+    for (const tech of STANDARD_TECHNOLOGIES) {
+      const url = getTechIconUrl(null, tech.name);
+      expect(url, `Expected icon URL for ${tech.name}`).toBeTruthy();
+      expect(typeof url).toBe('string');
+      expect(url!.length).toBeGreaterThan(10);
+    }
+  });
+
+  it('resolves direct URLs, known keys, and normalized aliases', () => {
+    expect(getTechIconUrl('https://example.com/icon.svg')).toBe('https://example.com/icon.svg');
+    expect(getTechIconUrl('cplusplus')).toContain('cplusplus');
+    expect(getTechIconUrl(null, 'C/C++')).toContain('cplusplus');
+    expect(getTechIconUrl(null, 'Next.js')).toContain('nextjs');
+    expect(getTechIconUrl(null, 'VS code')).toContain('vscode');
+    expect(getTechIconUrl(null, 'REST API design')).toContain('openapiinitiative');
+  });
+
+  it('auto-suggests category and icon key from name', () => {
+    expect(suggestTechCategory('TypeScript')).toBe('LANGUAGE');
+    expect(suggestTechCategory('React')).toBe('FRAMEWORK');
+    expect(suggestTechCategory('PostgreSQL')).toBe('DATABASE');
+    expect(suggestTechCategory('Docker')).toBe('DEVOPS');
+    expect(suggestTechCategory('Git')).toBe('TOOL');
+
+    expect(suggestTechIcon('TypeScript')).toBe('typescript');
+    expect(suggestTechIcon('C/C++')).toBe('cplusplus');
+  });
+});
+

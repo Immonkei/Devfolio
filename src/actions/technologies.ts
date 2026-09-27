@@ -109,3 +109,40 @@ export async function deleteTechnology(id: string) {
 
   return { success: true };
 }
+
+export async function syncStandardTechnologies() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { success: false, error: "Unauthorized: Administrator privileges required." };
+  }
+
+  const { data: current } = await supabase.from("technologies").select("name");
+  const existingNames = new Set((current || []).map((t: { name: string }) => t.name.toLowerCase().trim()));
+
+  const { STANDARD_TECHNOLOGIES } = await import("@/lib/tech-icons");
+  const toInsert = STANDARD_TECHNOLOGIES.filter(
+    (st) => !existingNames.has(st.name.toLowerCase().trim())
+  );
+
+  if (toInsert.length === 0) {
+    return { success: true, count: 0, message: "All 41 technologies are already registered in the database." };
+  }
+
+  const { error } = await supabase.from("technologies").insert(toInsert);
+  if (error) {
+    return { success: false, error: error.message };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/projects");
+  revalidatePath("/admin/technologies");
+
+  return {
+    success: true,
+    count: toInsert.length,
+    message: `Successfully populated ${toInsert.length} technologies into the database.`,
+  };
+}
+
