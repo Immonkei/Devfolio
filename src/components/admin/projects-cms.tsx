@@ -6,22 +6,25 @@ import {
   updateProject,
   deleteProject,
   toggleProjectPublish,
+  syncStandardProjects,
 } from "@/actions/projects";
 import { uploadMediaFile } from "@/actions/media";
 import { ProjectWithTechnologies, Technology, ProjectStatus } from "@/types";
-import { Plus, Edit2, Trash2, Eye, EyeOff, X, Upload } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, EyeOff, X, Upload, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 const PROJECT_COVER_PRESETS = [
   { label: "Default Blueprint", url: "/projects/default-project.svg" },
-  { label: "Backend & API", url: "/projects/job-portal-api.svg" },
-  { label: "Blood Donation (Full-Stack)", url: "/projects/borejak.svg" },
-  { label: "Academic LMS", url: "/projects/reanhub.svg" },
-  { label: "AI Recommender", url: "/projects/thrive-ai.svg" },
-  { label: "Cryptography Visualizer", url: "/projects/cipherverse.svg" },
-  { label: "Mobile Companion", url: "/projects/campus-mobile-companion.svg" },
+  { label: "EaseLife OS", url: "/projects/easelife.svg" },
+  { label: "Borejak Blood Donation", url: "/projects/borejak.svg" },
+  { label: "UNSAID Platform", url: "/projects/unsaid.svg" },
+  { label: "ReanHub Academic LMS", url: "/projects/reanhub.svg" },
+  { label: "Tos-Nham API", url: "/projects/tos-nham-api.svg" },
+  { label: "Daymark Habit PWA", url: "/projects/daymark.svg" },
+  { label: "CipherVerse Visualizer", url: "/projects/cipherverse.svg" },
+  { label: "Android Mobile Companion", url: "/projects/campus-mobile-companion.svg" },
 ];
 
 export function ProjectsCMS({
@@ -36,8 +39,31 @@ export function ProjectsCMS({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncSuccess, setSyncSuccess] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [deviceFileName, setDeviceFileName] = useState<string | null>(null);
+
+  const handleSyncProjects = async () => {
+    setSyncing(true);
+    setError(null);
+    setSyncSuccess(null);
+    try {
+      const res = await syncStandardProjects();
+      if (res.success) {
+        setSyncSuccess(res.message || "Projects synchronized successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
+      } else {
+        setError(res.error || "Failed to sync projects.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sync error occurred.");
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const [form, setForm] = useState({
     title: "",
@@ -247,7 +273,7 @@ export function ProjectsCMS({
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-mono text-2xl font-bold tracking-tight text-foreground">
             Projects CMS
@@ -258,16 +284,41 @@ export function ProjectsCMS({
         </div>
 
         {!isEditing && (
-          <Button
-            onClick={() => setIsEditing(true)}
-            size="sm"
-            className="gap-1.5 font-mono text-xs"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            <span>Create New Project</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={handleSyncProjects}
+              disabled={syncing}
+              variant="outline"
+              size="sm"
+              className="gap-1.5 font-mono text-xs"
+              title="Synchronize projects with authentic GitHub repositories"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${syncing ? "animate-spin" : ""}`} />
+              <span>{syncing ? "Syncing..." : "Sync GitHub Projects"}</span>
+            </Button>
+            <Button
+              onClick={() => setIsEditing(true)}
+              size="sm"
+              className="gap-1.5 font-mono text-xs"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Create New Project</span>
+            </Button>
+          </div>
         )}
       </div>
+
+      {syncSuccess && (
+        <div className="p-3 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+          {syncSuccess}
+        </div>
+      )}
+
+      {error && !isEditing && (
+        <div className="p-3 text-xs font-mono text-destructive bg-destructive/10 border border-destructive/30 rounded-lg">
+          {error}
+        </div>
+      )}
 
       {/* Editor Modal/Panel */}
       {isEditing && (
@@ -655,8 +706,18 @@ export function ProjectsCMS({
             <tbody className="divide-y divide-border/60">
               {projects.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-muted-foreground">
-                    No projects found in database. Create one above.
+                  <td colSpan={6} className="p-12 text-center text-muted-foreground space-y-4">
+                    <p className="text-xs">No projects found in database.</p>
+                    <Button
+                      onClick={handleSyncProjects}
+                      disabled={syncing}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 font-mono text-xs"
+                    >
+                      <RefreshCw className={`h-3.5 w-3.5 ${syncing ? "animate-spin" : ""}`} />
+                      <span>{syncing ? "Syncing Repositories..." : "Seed All 8 Authentic GitHub Projects"}</span>
+                    </Button>
                   </td>
                 </tr>
               ) : (

@@ -181,19 +181,19 @@ INSERT INTO public.projects (
 ) VALUES
   (
     '40000000-0000-0000-0000-000000000001',
-    'Borejak - Blood Donation System',
-    'borejak',
-    'An integrated blood donation management platform featuring real-time donor eligibility verification, administrative dashboards, and emergency blood request APIs.',
-    'Borejak is a comprehensive healthcare platform connecting volunteer blood donors with medical facilities in urgent need. Built using Next.js and Node.js with PostgreSQL, the platform streamlines the donor lifecycle from health screening questionnaires to appointment confirmation and administrative inventory oversight.',
-    'Blood donation initiatives frequently encounter high attrition due to confusing manual health eligibility criteria and disconnected hospital emergency queues.',
-    'Engineered an automated multi-step health evaluation questionnaire that immediately determines donor eligibility according to clinical parameters before scheduling, reducing clinic administrative triage overhead.',
-    'Next.js 16 full-stack architecture with modular RESTful API route handlers, PostgreSQL relational data persistence, and Firebase Authentication with role-based access control.',
-    'Implemented donor appointment scheduling, hospital blood request dispatch queues, health eligibility verification logic, and administrative triage interfaces.',
-    'Handling edge cases in medical questionnaire expiration and ensuring patient data confidentiality across public and administrative views.',
-    'Selected relational PostgreSQL over NoSQL to maintain strict ACID compliance on critical blood inventory records and hospital request queues.',
-    'Successfully validated donor flows, decreased pre-screening friction, and established structured emergency request protocols.',
-    '/projects/borejak.svg',
-    'https://github.com/Immonkei/Borejak',
+    'EaseLife - Production Personal Operating System',
+    'easelife',
+    'A production-grade personal operating system built with Next.js 16, Tailwind CSS v4, and Supabase featuring visible lineage architecture and dynamic pace engines.',
+    'EaseLife grounds daily concrete execution in high-level purpose via an unbroken hierarchy: Vision -> Goal -> Milestone -> Project -> Task/Habit. The application features zero-redundancy mathematically derived progress calculations, real-time pace deltas, and timezone-normalized immutable habit completion tracking.',
+    'Daily productivity systems suffer from fragmented task tracking where atomic to-dos become disconnected from long-term goals, and arbitrary streak counters fail across timezone shifts.',
+    'Engineered Visible Lineage Architecture providing an inspectable relational drawer for any task, backed by real-time mathematical progress engines and midday-normalized date logs.',
+    'Next.js 16 App Router full-stack architecture with Turbopack, Tailwind CSS v4, and Supabase PostgreSQL with strict Row Level Security (RLS) policies and Task XOR ownership constraints.',
+    'Implemented atomic weighted project progress formulas, real-time pace deltas (On Track, At Risk, Off Track), optimistic UI mutations, and immutable habit completion event logs.',
+    'Normalizing date-stamped completion logs across midnight and DST boundaries without introducing distributed lock latency.',
+    'Computing project completion percentages dynamically on request rather than storing denormalized counts to guarantee absolute data consistency.',
+    'Delivered sub-30ms client interactions with zero desynchronization across multi-device usage.',
+    '/projects/easelife.svg',
+    'https://github.com/Immonkei/EaseLife',
     NULL,
     TRUE,
     'PUBLISHED',
@@ -201,19 +201,19 @@ INSERT INTO public.projects (
   ),
   (
     '40000000-0000-0000-0000-000000000002',
-    'Job Portal REST API',
-    'job-portal-api',
-    'A resilient backend service designed for job searching, candidate application tracking, authentication security, and administrative moderation.',
-    'A high-performance backend application serving recruitment and career management workflows. Engineered with Node.js and Express, the API provides role-separated capabilities for candidates, recruiters, and platform administrators.',
-    'Online job platforms suffer from fragmented candidate tracking and insecure document upload pipelines.',
-    'Constructed a REST API architecture featuring JWT authentication, role authorization middleware, parameterized query filters, and multipart resume upload processors.',
-    'Express.js modular routing layer with middleware interceptors for JWT token validation, rate limiting, and structured error responses.',
-    'Implemented JWT token generation and refresh rotations, multipart/form-data resume upload handlers, and paginated query endpoints.',
-    'Ensuring zero unauthorized file access for candidate resumes while maintaining fast response latencies across heavy query filtering.',
-    'Employed stateless JWT authentication to facilitate horizontal backend scalability without distributed session storage.',
-    'Delivered consistent sub-50ms API response times across core job search and candidate application endpoints.',
-    '/projects/job-portal-api.svg',
-    'https://github.com/Immonkei',
+    'Borejak - Blood Donation System',
+    'borejak',
+    'An integrated blood donation platform featuring automated donor eligibility verification, administrative triage dashboards, and emergency request dispatch.',
+    'Borejak is a production-style healthcare application connecting volunteer blood donors with medical facilities in urgent need. Built using Next.js and Node.js with PostgreSQL, the platform streamlines the donor lifecycle from medical pre-screening questionnaires to appointment confirmation and hospital inventory oversight.',
+    'Blood donation initiatives encounter high attrition due to confusing manual health eligibility criteria and disconnected hospital emergency dispatch queues.',
+    'Engineered an automated multi-step clinical evaluation questionnaire that calculates donor eligibility before appointment scheduling, reducing triage overhead.',
+    'Next.js modular full-stack architecture with RESTful API handlers, PostgreSQL relational data persistence, and role-based access control.',
+    'Implemented donor appointment scheduling, hospital blood request dispatch queues, health eligibility verification logic, and administrative triage interfaces.',
+    'Handling edge cases in medical questionnaire expiration and ensuring strict patient data confidentiality.',
+    'Selected relational PostgreSQL over NoSQL to maintain strict ACID compliance on critical blood inventory records and hospital request queues.',
+    'Successfully validated donor flows, decreased pre-screening friction, and established structured emergency request protocols.',
+    '/projects/borejak.svg',
+    'https://github.com/Immonkei/Borejak',
     NULL,
     TRUE,
     'PUBLISHED',
@@ -221,9 +221,29 @@ INSERT INTO public.projects (
   ),
   (
     '40000000-0000-0000-0000-000000000003',
+    'UNSAID - Anonymous Expression Platform',
+    'unsaid',
+    'A safe, minimal anonymous emotional expression platform with automated content moderation, report queues, and Meta Graph API auto-publishing.',
+    'UNSAID provides an anonymous outlet where users can safely submit thoughts, confessions, and unspoken reflections. Features two-tier content moderation, rate-limiting security, and automated webhook publishers to social channels.',
+    'People lack safe, privacy-preserving digital spaces to voice vulnerable emotional thoughts without social algorithmic pressure or toxic feedback.',
+    'Constructed a minimal anonymous submission platform with automated sentiment checks, admin review workflows, and automated Meta Graph API publishing.',
+    'Next.js App Router frontend with React 19 coupled to an Express and TypeScript backend utilizing PostgreSQL and Prisma ORM.',
+    'Implemented Zod validation schemas, BCrypt & JWT admin authentication, spam throttling middleware, and Meta Graph API webhook dispatchers.',
+    'Filtering malicious content and automated spam while preserving absolute user anonymity with zero IP or tracking log retention.',
+    'Implemented queue-based moderation review over instant unmoderated publishing to guarantee community safety and prevent harassment.',
+    'Successfully processed anonymous submissions with zero identifiable user metadata leakage.',
+    '/projects/unsaid.svg',
+    'https://github.com/Immonkei/UNSAID',
+    NULL,
+    TRUE,
+    'PUBLISHED',
+    3
+  ),
+  (
+    '40000000-0000-0000-0000-000000000004',
     'ReanHub - Academic LMS',
     'reanhub',
-    'A scalable learning management system engineered to facilitate virtual classroom courses, student assignment submissions, and instructor assessments.',
+    'A full-stack LMS applying Object-Oriented Analysis & Design (OOAD) with role-based access for students, instructors, and administrators.',
     'ReanHub provides academic institutions with an organized digital portal for managing courses, tracking assignments, and reviewing student submissions. Designed applying Object-Oriented Analysis & Design (OOAD) principles to maximize modularity and maintainability.',
     'Educational workflows involve complex hierarchies (instructors, courses, modules, assignments, submissions) that become unmaintainable when built without strict software architecture.',
     'Applied Object-Oriented Analysis & Design (OOAD) to define clear entity boundaries, abstract data access layers, and separation of concerns.',
@@ -233,27 +253,7 @@ INSERT INTO public.projects (
     'Opted for document-oriented MongoDB schema design to easily store heterogeneous assignment questions and variable course metadata.',
     'Delivered clean modular codebase with high reusability across student and instructor modules.',
     '/projects/reanhub.svg',
-    'https://github.com/Immonkei/OOAD-Project-ReanHub-.git',
-    NULL,
-    TRUE,
-    'PUBLISHED',
-    3
-  ),
-  (
-    '40000000-0000-0000-0000-000000000004',
-    'Thrive - AI Job Recommender',
-    'thrive-ai',
-    'An intelligent job recommendation platform that analyzes student profile data and aligns them with suitable tech opportunities using matching algorithms.',
-    'Thrive bridges the gap between academic education and industry requirements by analyzing student skills and calculating compatibility indices against open job positions.',
-    'Undergraduate computer science and IT engineering students struggle to identify entry-level tech roles matching their exact coursework and technical stack.',
-    'Implemented skill-similarity calculation logic that evaluates student skill profiles against industry job specifications, producing ranked candidate matches.',
-    'FastAPI asynchronous Python backend connected to MySQL, communicating with a responsive React user interface.',
-    'Constructed asynchronous REST API endpoints in Python with Pydantic schema validation, and structured relational queries in MySQL.',
-    'Optimizing similarity calculation throughput without introducing heavy machine learning dependency overhead.',
-    'FastAPI was chosen over Flask for native async request handling and automatic OpenAPI specification documentation.',
-    'Enabled instant student profile matching with sub-second recommendation feedback.',
-    '/projects/thrive-ai.svg',
-    'https://github.com/immonkei/ProjectPracticumYear2',
+    'https://github.com/Immonkei/OOAD-Project-ReanHub-',
     NULL,
     TRUE,
     'PUBLISHED',
@@ -261,9 +261,69 @@ INSERT INTO public.projects (
   ),
   (
     '40000000-0000-0000-0000-000000000005',
+    'Tos-Nham - Restaurant Management API',
+    'tos-nham-api',
+    'A resilient Node.js Express backend supporting multi-branch restaurant operations, QR token arrival verification, table reservations, and orders.',
+    'A high-performance restaurant operations backend supporting customer, staff, and admin roles. Features multi-branch isolation, dynamic menu categorization, table booking with deposit calculations, and unique QR token generation for customer arrival verification.',
+    'Multi-branch restaurants struggle with fragmented reservation systems, inconsistent deposit tracking, and chaotic front-of-house guest check-ins.',
+    'Engineered a centralized REST API architecture featuring branch-scoped database queries, automated 50% deposit calculations, and QR arrival tokens.',
+    'Express.js modular routing layer with middleware interceptors for JWT token validation, role-based access control, Multer image upload handling, and Docker containerization.',
+    'Implemented secure JWT authentication, multi-branch query filters, automated reservation deposit computation, and QR code token verification endpoints.',
+    'Ensuring transactional consistency during peak-hour simultaneous table reservation attempts across multiple restaurant branches.',
+    'Scoped all database operations by branch_id rather than running separate microservices per branch to minimize infrastructure complexity and maintenance costs.',
+    'Achieved reliable sub-40ms response times across branch menu lookups and reservation dispatch.',
+    '/projects/tos-nham-api.svg',
+    'https://github.com/Immonkei/Tos-Nham-backend',
+    NULL,
+    FALSE,
+    'PUBLISHED',
+    5
+  ),
+  (
+    '40000000-0000-0000-0000-000000000006',
+    'Daymark - Habit & Goal Tracking PWA',
+    'daymark',
+    'A client-driven Progressive Web App for daily habit tracking, streak preservation, and productivity workflows built with Next.js and Supabase.',
+    'Daymark delivers a distraction-free habit and goal tracker designed as an offline-first Progressive Web App. Backed by Supabase and Next.js, it provides instant responsiveness, streak analysis, and visual habit heatmaps.',
+    'Habit tracker apps often feel bloated, slow to open on mobile devices, and lack reliable offline sync when habits are logged without connectivity.',
+    'Built a lightweight Progressive Web App utilizing client-side state caching, optimistic UI updates, and background synchronization.',
+    'Next.js App Router client-driven architecture with Tailwind CSS, Lucide icons, and Supabase PostgreSQL with Row Level Security.',
+    'Implemented service worker offline caching, habit completion toggle logic, streak calculation algorithms, and habit completion history graphs.',
+    'Accurate local streak reconciliation when offline client timestamps sync back to the server.',
+    'Prioritized ultra-fast client-side state transitions over heavy server-side validation during daily checkbox logging.',
+    'Instant mobile startup time and offline capability across desktop and mobile devices.',
+    '/projects/daymark.svg',
+    'https://github.com/Immonkei/Daymark',
+    NULL,
+    FALSE,
+    'PUBLISHED',
+    6
+  ),
+  (
+    '40000000-0000-0000-0000-000000000007',
+    'Recipe Finder - Android Native App',
+    'recipe-finder-android',
+    'A modern Android application developed with Kotlin and Jetpack Compose implementing MVVM architecture, Retrofit REST client, and Room Database.',
+    'A native Android application designed to discover recipes, inspect culinary instructions, and save favorite meals. Developed following modern Android architectural guidelines with Kotlin, Jetpack Compose, Retrofit, Coroutines, and Room local persistence.',
+    'Users need rapid recipe discovery with offline access to saved ingredients and preparation steps when cooking without stable internet.',
+    'Engineered a clean Android application using MVVM architecture with Room Database local cache synchronization.',
+    'Android Native application utilizing Kotlin, Jetpack Compose declarative UI, MVVM design pattern, Retrofit HTTP client, and Room SQLite database.',
+    'Built composable UI layouts, asynchronous recipe search queries with Kotlin Coroutines, and Room Database DAO repositories for favorites persistence.',
+    'Managing complex state transitions between network loading, empty search results, and local SQLite database queries.',
+    'Adopted Jetpack Compose over legacy Android XML views to accelerate UI development and ensure declarative unidirectional data flow.',
+    'Smooth 60fps UI performance and offline access to saved recipes.',
+    '/projects/campus-mobile-companion.svg',
+    'https://github.com/Immonkei/recipe-app-android-M2-MinPhanith',
+    NULL,
+    FALSE,
+    'PUBLISHED',
+    7
+  ),
+  (
+    '40000000-0000-0000-0000-000000000008',
     'CipherVerse - Cryptography Explorer',
     'cipherverse',
-    'An interactive cryptography visualization application demonstrating RSA key pair generation, modular arithmetic, padding mechanisms, and mathematical encryption.',
+    'An interactive cryptography visualization application demonstrating RSA key pair generation, modular arithmetic, and encryption algorithms.',
     'An educational web laboratory built with React and TypeScript to deconstruct asymmetric cryptography, RSA key generation, modular exponentiation, and digital signatures.',
     'Public-key cryptography concepts can feel abstract without step-by-step mathematical visualization.',
     'Engineered an interactive step-by-step visualizer breaking down prime generation, Euler totient calculation, modular inverses, and encryption/decryption mathematics.',
@@ -273,58 +333,89 @@ INSERT INTO public.projects (
     'Executed all calculations on the client side using native BigInt to eliminate backend latency.',
     'Created a comprehensive visual teaching tool for computer network security and cryptography students.',
     '/projects/cipherverse.svg',
-    'https://github.com/Immonkei',
+    'https://github.com/Immonkei/RSA-Project-Web',
     NULL,
     FALSE,
     'PUBLISHED',
-    5
-  ),
-  (
-    '40000000-0000-0000-0000-000000000006',
-    'Campus Mobile Companion',
-    'campus-mobile-companion',
-    'A cross-platform mobile application supporting college students with real-time class timetables, campus announcements, and academic resources.',
-    'Mobile student utility application engineered using Flutter and Firebase to give university students offline-capable access to campus schedules, grade tracking, and urgent announcements.',
-    'Students miss timetable updates and department notifications due to fragmented communication channels.',
-    'Centralized campus utility application with real-time Firestore synchronization and local cached offline storage.',
-    'Flutter cross-platform application utilizing BLoC state management and Firebase Cloud Firestore.',
-    'Built responsive mobile screens, notification listeners, and offline caching network adapters.',
-    'Managing offline state transitions when students navigate campus areas with intermittent network coverage.',
-    'Flutter enabled a single codebase deployment across both Android and iOS devices.',
-    'Streamlined campus timetable accessibility with full offline availability.',
-    '/projects/campus-mobile-companion.svg',
-    'https://github.com/Immonkei',
-    NULL,
-    FALSE,
-    'PUBLISHED',
-    6
+    8
   )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  slug = EXCLUDED.slug,
+  short_description = EXCLUDED.short_description,
+  description = EXCLUDED.description,
+  problem = EXCLUDED.problem,
+  solution = EXCLUDED.solution,
+  architecture = EXCLUDED.architecture,
+  implementation = EXCLUDED.implementation,
+  challenges = EXCLUDED.challenges,
+  tradeoffs = EXCLUDED.tradeoffs,
+  results = EXCLUDED.results,
+  cover_image_url = EXCLUDED.cover_image_url,
+  github_url = EXCLUDED.github_url,
+  live_url = EXCLUDED.live_url,
+  featured = EXCLUDED.featured,
+  status = EXCLUDED.status,
+  display_order = EXCLUDED.display_order;
 
 -- 6. PROJECT TECHNOLOGIES JUNCTION
 INSERT INTO public.project_technologies (project_id, technology_id) VALUES
-  -- Borejak
+  -- EaseLife
   ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000008'), -- Next.js
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000010'), -- Node.js
+  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000002'), -- TypeScript
+  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
   ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
-  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000009'), -- Tailwind
-  -- Job Portal API
+  ('40000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000019'), -- Docker
+
+  -- Borejak
+  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000008'), -- Next.js
   ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000010'), -- Node.js
   ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000011'), -- Express.js
-  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000017'), -- Firebase
-  -- ReanHub
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000007'), -- React
+  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
+  ('40000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
+
+  -- UNSAID
+  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000008'), -- Next.js
+  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000002'), -- TypeScript
   ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000010'), -- Node.js
-  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000015'), -- MongoDB
-  -- Thrive AI
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000004'), -- Python
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000013'), -- FastAPI
-  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000016'), -- MySQL
+  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000011'), -- Express.js
+  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
+  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
+  ('40000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000019'), -- Docker
+
+  -- ReanHub
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000007'), -- React
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000002'), -- TypeScript
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000010'), -- Node.js
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000011'), -- Express.js
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000015'), -- MongoDB
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
+  ('40000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000025'), -- JWT
+
+  -- Tos-Nham API
+  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000010'), -- Node.js
+  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000011'), -- Express.js
+  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
+  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000025'), -- JWT
+  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000019'), -- Docker
+  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000021'), -- Git
+
+  -- Daymark
+  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000008'), -- Next.js
+  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000002'), -- TypeScript
+  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
+  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000014'), -- PostgreSQL
+  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000021'), -- Git
+
+  -- Recipe Finder Android
+  ('40000000-0000-0000-0000-000000000007', '10000000-0000-0000-0000-000000000021'), -- Git
+  ('40000000-0000-0000-0000-000000000007', '10000000-0000-0000-0000-000000000032'), -- REST API
+
   -- CipherVerse
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000007'), -- React
-  ('40000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000002'), -- TypeScript
-  -- Campus Mobile Companion
-  ('40000000-0000-0000-0000-000000000006', '10000000-0000-0000-0000-000000000022')  -- Flutter
+  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000007'), -- React
+  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000002'), -- TypeScript
+  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000009'), -- Tailwind CSS
+  ('40000000-0000-0000-0000-000000000008', '10000000-0000-0000-0000-000000000021')  -- Git
 ON CONFLICT (project_id, technology_id) DO NOTHING;
 
 -- 7. CATEGORIES FOR POSTS

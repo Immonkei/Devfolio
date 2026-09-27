@@ -2,6 +2,7 @@ import { createPublicClient } from "@/lib/supabase/server";
 import { ProjectCard } from "@/components/public/project-card";
 import { FolderGit2 } from "lucide-react";
 import { ProjectWithTechnologies, Technology } from "@/types";
+import { STANDARD_PROJECTS } from "@/lib/constants/projects";
 
 export const metadata = {
   title: "Projects",
@@ -29,33 +30,36 @@ export default async function ProjectsPage({
 
     const { data } = await queryBuilder;
 
-    if (data) {
+    if (data && data.length > 0) {
       projects = data.map((p) => ({
         ...p,
         technologies: (p.project_technologies || []).map((pt: { technologies: Technology | null }) => pt.technologies).filter(Boolean) as Technology[],
       }));
-
-      // Filter by query if present
-      if (query) {
-        const q = query.toLowerCase();
-        projects = projects.filter(
-          (p) =>
-            p.title.toLowerCase().includes(q) ||
-            p.short_description.toLowerCase().includes(q) ||
-            p.technologies.some((t) => t.name.toLowerCase().includes(q))
-        );
-      }
-
-      // Filter by tech if present
-      if (tech) {
-        const t = tech.toLowerCase();
-        projects = projects.filter((p) =>
-          p.technologies.some((it) => it.name.toLowerCase() === t)
-        );
-      }
+    } else {
+      projects = STANDARD_PROJECTS;
     }
   } catch (err) {
     console.error("Projects query error:", err);
+    projects = STANDARD_PROJECTS;
+  }
+
+  // Filter by query if present
+  if (query) {
+    const q = query.toLowerCase();
+    projects = projects.filter(
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.short_description.toLowerCase().includes(q) ||
+        p.technologies.some((t) => t.name.toLowerCase().includes(q))
+    );
+  }
+
+  // Filter by tech if present
+  if (tech) {
+    const t = tech.toLowerCase();
+    projects = projects.filter((p) =>
+      p.technologies.some((it) => it.name.toLowerCase() === t)
+    );
   }
 
   return (

@@ -1,0 +1,120 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-easelife" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a101d" />
+      <stop offset="50%" stop-color="#060c18" />
+      <stop offset="100%" stop-color="#0d1b2a" />
+    </linearGradient>
+    <linearGradient id="cyan-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ddb3" />
+      <stop offset="50%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    <linearGradient id="card-easelife" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+    </linearGradient>
+    <pattern id="grid-easelife" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#38bdf8" stroke-opacity="0.05" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg-easelife)" />
+  <rect width="1200" height="675" fill="url(#grid-easelife)" />
+
+  <circle cx="220" cy="190" r="240" fill="#00ddb3" fill-opacity="0.12" filter="blur(75px)" />
+  <circle cx="1020" cy="460" r="260" fill="#38bdf8" fill-opacity="0.1" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1e3a5f" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#0b1120" stroke="#1e293b" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0f172a" />
+    <path d="M0 48h1080" stroke="#1e293b" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="340" height="28" rx="6" fill="#0b1120" stroke="#1e293b" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">https://easelife.os/dashboard/lineage</text>
+
+    <rect x="890" y="12" width="164" height="24" rx="12" fill="#00ddb3" fill-opacity="0.15" stroke="#00ddb3" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="904" cy="24" r="3.5" fill="#00ddb3" />
+    <text x="916" y="28" fill="#5eead4" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">VISIBLE LINEAGE OS</text>
+
+    <!-- Main Content Grid -->
+    <g transform="translate(36, 74)">
+      <!-- Lineage Flow Panel -->
+      <rect width="640" height="300" rx="10" fill="url(#card-easelife)" stroke="#334155" stroke-width="1" />
+      <text x="24" y="32" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">VISION -> GOAL -> MILESTONE -> PROJECT -> TASK</text>
+
+      <g transform="translate(24, 52)">
+        <rect width="180" height="70" rx="8" fill="#0f172a" stroke="#00ddb3" stroke-width="1" />
+        <text x="14" y="26" fill="#00ddb3" font-family="monospace" font-size="10" font-weight="700">VISION</text>
+        <text x="14" y="48" fill="#e2e8f0" font-family="sans-serif" font-size="12" font-weight="600">Senior Full-Stack</text>
+      </g>
+
+      <path d="M210 87 L 235 87" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 2" />
+
+      <g transform="translate(240, 52)">
+        <rect width="180" height="70" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
+        <text x="14" y="26" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="700">GOAL</text>
+        <text x="14" y="48" fill="#e2e8f0" font-family="sans-serif" font-size="12" font-weight="600">Ship 5 Systems</text>
+      </g>
+
+      <path d="M426 87 L 450 87" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 2" />
+
+      <g transform="translate(456, 52)">
+        <rect width="160" height="70" rx="8" fill="#0f172a" stroke="#818cf8" stroke-width="1" />
+        <text x="14" y="26" fill="#818cf8" font-family="monospace" font-size="10" font-weight="700">PACE DELTA</text>
+        <text x="14" y="48" fill="#34d399" font-family="monospace" font-size="12" font-weight="700">+14% On Track</text>
+      </g>
+
+      <!-- Derived Mathematical State -->
+      <g transform="translate(24, 144)">
+        <rect width="592" height="132" rx="8" fill="#0b1329" stroke="#1e293b" stroke-width="1" />
+        <text x="16" y="26" fill="#94a3b8" font-family="monospace" font-size="10">MATHEMATICAL STATE ENGINE (WEIGHTED PROGRESS)</text>
+        <text x="16" y="52" fill="#f8fafc" font-family="monospace" font-size="13" font-weight="600">P = Σ(w_comp) / Σ(w_tot) = 87.5%</text>
+        <rect x="16" y="70" width="560" height="10" rx="5" fill="#1e293b" />
+        <rect x="16" y="70" width="490" height="10" rx="5" fill="url(#cyan-purple)" />
+        <text x="16" y="104" fill="#00ddb3" font-family="monospace" font-size="11">Timezone Midday Normalization: Active</text>
+        <text x="360" y="104" fill="#38bdf8" font-family="monospace" font-size="11">PostgreSQL RLS: Enforced</text>
+      </g>
+
+      <!-- Right Panel: Stack & Indicators -->
+      <g transform="translate(664, 0)">
+        <rect width="344" height="300" rx="10" fill="url(#card-easelife)" stroke="#334155" stroke-width="1" />
+        <text x="24" y="32" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">SYSTEM ARCHITECTURE</text>
+
+        <g transform="translate(24, 52)">
+          <rect width="296" height="42" rx="6" fill="#0f172a" stroke="#1e293b" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Next.js 16 + Turbopack</text>
+        </g>
+        <g transform="translate(24, 104)">
+          <rect width="296" height="42" rx="6" fill="#0f172a" stroke="#1e293b" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Supabase (PostgreSQL + RLS)</text>
+        </g>
+        <g transform="translate(24, 156)">
+          <rect width="296" height="42" rx="6" fill="#0f172a" stroke="#1e293b" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Tailwind CSS v4 + Motion</text>
+        </g>
+        <g transform="translate(24, 208)">
+          <rect width="296" height="42" rx="6" fill="#0f172a" stroke="#1e293b" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Optimistic Action Mutations</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Metric Ticker -->
+    <g transform="translate(36, 400)">
+      <rect width="1008" height="66" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
+      <text x="28" y="38" fill="#94a3b8" font-family="monospace" font-size="11">PRODUCTION STATUS</text>
+      <text x="180" y="38" fill="#00ddb3" font-family="monospace" font-size="12" font-weight="700">SUB-30MS LATENCY</text>
+      <text x="370" y="38" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="700">0% REDUNDANT STORAGE</text>
+      <text x="610" y="38" fill="#818cf8" font-family="monospace" font-size="12" font-weight="700">VISIBLE LINEAGE ACTIVE</text>
+      <text x="860" y="38" fill="#f8fafc" font-family="monospace" font-size="12">Min Phanith</text>
+    </g>
+  </g>
+</svg>

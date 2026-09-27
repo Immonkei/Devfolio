@@ -3,9 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { projectSchema, ProjectInput } from "@/lib/validations/project";
-import { Technology, ProjectStatus } from "@/types";
+import { Technology, ProjectStatus, ProjectWithTechnologies } from "@/types";
+import { STANDARD_PROJECTS } from "@/lib/constants/projects";
 
-export async function getProjects() {
+export async function getProjects(): Promise<ProjectWithTechnologies[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("projects")
@@ -24,7 +25,7 @@ export async function getProjects() {
   }));
 }
 
-export async function getProjectBySlug(slug: string) {
+export async function getProjectBySlug(slug: string): Promise<ProjectWithTechnologies | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("projects")
@@ -196,4 +197,109 @@ export async function toggleProjectPublish(id: string, currentStatus: string) {
   revalidatePath("/admin/dashboard");
 
   return { success: true, newStatus };
+}
+
+export async function syncStandardProjects() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { success: false, error: "Unauthorized: Administrator privileges required." };
+  }
+
+  // Fetch all existing technologies in the database
+  const { data: dbTechnologies } = await supabase
+    .from("technologies")
+    .select("id, name");
+
+  const techMap = new Map<string, string>();
+  if (dbTechnologies) {
+    dbTechnologies.forEach((t) => {
+      techMap.set(t.name.toLowerCase().trim(), t.id);
+    });
+  }
+
+  let insertedCount = 0;
+  let updatedCount = 0;
+
+  for (const p of STANDARD_PROJECTS) {
+    const { data: existing } = await supabase
+      .from("projects")
+      .select("id")
+      .eq("slug", p.slug)
+      .maybeSingle();
+
+    const payload = {
+      title: p.title,
+      slug: p.slug,
+      short_description: p.short_description,
+      description: p.description,
+      problem: p.problem,
+      solution: p.solution,
+      architecture: p.architecture,
+      implementation: p.implementation,
+      challenges: p.challenges,
+      tradeoffs: p.tradeoffs,
+      results: p.results,
+      cover_image_url: p.cover_image_url,
+      github_url: p.github_url,
+      live_url: p.live_url,
+      featured: p.featured,
+      status: p.status,
+      display_order: p.display_order,
+      updated_at: new Date().toISOString(),
+    };
+
+    let targetProjectId = p.id;
+
+    if (existing) {
+      targetProjectId = existing.id;
+      await supabase.from("projects").update(payload).eq("id", existing.id);
+      updatedCount++;
+    } else {
+      const { data: createdProject } = await supabase
+        .from("projects")
+        .insert({
+          id: p.id,
+          ...payload,
+        })
+        .select("id")
+        .single();
+
+      if (createdProject) {
+        targetProjectId = createdProject.id;
+      }
+      insertedCount++;
+    }
+
+    // Associate technologies
+    if (p.technologies && p.technologies.length > 0) {
+      const matchedTechIds = p.technologies
+        .map((t) => techMap.get(t.name.toLowerCase().trim()))
+        .filter(Boolean) as string[];
+
+      if (matchedTechIds.length > 0) {
+        await supabase
+          .from("project_technologies")
+          .delete()
+          .eq("project_id", targetProjectId);
+
+        const junctions = matchedTechIds.map((techId) => ({
+          project_id: targetProjectId,
+          technology_id: techId,
+        }));
+        await supabase.from("project_technologies").insert(junctions);
+      }
+    }
+  }
+
+  revalidatePath("/");
+  revalidatePath("/projects");
+  revalidatePath("/admin/projects");
+  revalidatePath("/admin/dashboard");
+
+  return {
+    success: true,
+    message: `Synchronized ${insertedCount} new projects and updated ${updatedCount} existing projects.`,
+  };
 }
