@@ -8,6 +8,7 @@ import { NoteCard } from "@/components/public/note-card";
 import { GitHubFeed } from "@/components/public/github-feed";
 import { GitHubActivityGraph } from "@/components/public/github-activity-graph";
 import { TechBadge } from "@/components/public/tech-badge";
+import { STANDARD_TECHNOLOGIES } from "@/lib/tech-icons";
 import { Button } from "@/components/ui/button";
 import {
   FolderGit2,
@@ -111,30 +112,13 @@ export default async function HomePage() {
     "I build responsive, accessible web applications and reliable backend services. Bridging engineering fundamentals with modern React, TypeScript, Node.js, and database systems.";
   const resumeUrl = profile?.resume_url || "/resume.pdf";
 
-  const fallbackTechnologies: Technology[] = [
-    { id: "fb-1", name: "JavaScript", category: "LANGUAGE", icon: "javascript", created_at: "" },
-    { id: "fb-2", name: "TypeScript", category: "LANGUAGE", icon: "typescript", created_at: "" },
-    { id: "fb-3", name: "PHP", category: "LANGUAGE", icon: "php", created_at: "" },
-    { id: "fb-4", name: "Python", category: "LANGUAGE", icon: "python", created_at: "" },
-    { id: "fb-5", name: "Java", category: "LANGUAGE", icon: "java", created_at: "" },
-    { id: "fb-6", name: "C/C++", category: "LANGUAGE", icon: "cplusplus", created_at: "" },
-    { id: "fb-7", name: "React", category: "FRAMEWORK", icon: "react", created_at: "" },
-    { id: "fb-8", name: "Next.js", category: "FRAMEWORK", icon: "nextjs", created_at: "" },
-    { id: "fb-9", name: "Node.js", category: "FRAMEWORK", icon: "nodejs", created_at: "" },
-    { id: "fb-10", name: "Express.js", category: "FRAMEWORK", icon: "express", created_at: "" },
-    { id: "fb-11", name: "Laravel", category: "FRAMEWORK", icon: "laravel", created_at: "" },
-    { id: "fb-12", name: "FastAPI", category: "FRAMEWORK", icon: "fastapi", created_at: "" },
-    { id: "fb-13", name: "Flutter", category: "FRAMEWORK", icon: "flutter", created_at: "" },
-    { id: "fb-14", name: "PostgreSQL", category: "DATABASE", icon: "postgresql", created_at: "" },
-    { id: "fb-15", name: "MongoDB", category: "DATABASE", icon: "mongodb", created_at: "" },
-    { id: "fb-16", name: "MySQL", category: "DATABASE", icon: "mysql", created_at: "" },
-    { id: "fb-17", name: "Firebase", category: "DATABASE", icon: "firebase", created_at: "" },
-    { id: "fb-18", name: "DynamoDB", category: "DATABASE", icon: "dynamodb", created_at: "" },
-    { id: "fb-19", name: "Docker", category: "DEVOPS", icon: "docker", created_at: "" },
-    { id: "fb-20", name: "AWS Lambda", category: "DEVOPS", icon: "aws", created_at: "" },
-    { id: "fb-21", name: "Git", category: "TOOL", icon: "git", created_at: "" },
-    { id: "fb-22", name: "Tailwind CSS", category: "TOOL", icon: "tailwindcss", created_at: "" },
-  ];
+  const fallbackTechnologies: Technology[] = STANDARD_TECHNOLOGIES.map((t, idx) => ({
+    id: `std-tech-${idx + 1}`,
+    name: t.name,
+    category: t.category,
+    icon: t.icon,
+    created_at: "",
+  }));
 
   const activeTechnologies = technologies.length > 0 ? technologies : fallbackTechnologies;
 
