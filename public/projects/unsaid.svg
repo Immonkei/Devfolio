@@ -1,0 +1,106 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-unsaid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0f" />
+      <stop offset="50%" stop-color="#120e1f" />
+      <stop offset="100%" stop-color="#1a102f" />
+    </linearGradient>
+    <linearGradient id="rose-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="50%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="card-unsaid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b2e" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#110e1c" stop-opacity="0.95" />
+    </linearGradient>
+    <pattern id="grid-unsaid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#a855f7" stroke-opacity="0.04" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg-unsaid)" />
+  <rect width="1200" height="675" fill="url(#grid-unsaid)" />
+
+  <circle cx="200" cy="180" r="250" fill="#f43f5e" fill-opacity="0.12" filter="blur(80px)" />
+  <circle cx="1000" cy="480" r="260" fill="#a855f7" fill-opacity="0.12" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#3b2d54" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#0c0a14" stroke="#251b36" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#140f21" />
+    <path d="M0 48h1080" stroke="#251b36" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="340" height="28" rx="6" fill="#0c0a14" stroke="#251b36" stroke-width="1" />
+    <text x="116" y="28" fill="#94a3b8" font-family="monospace" font-size="12">https://unsaid.live/feed/anonymous</text>
+
+    <rect x="880" y="12" width="174" height="24" rx="12" fill="#f43f5e" fill-opacity="0.15" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="894" cy="24" r="3.5" fill="#f43f5e" />
+    <text x="906" y="28" fill="#fbcfe8" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">ANONYMOUS PLATFORM</text>
+
+    <!-- Content Area -->
+    <g transform="translate(36, 74)">
+      <!-- Left: Submission Card Mock -->
+      <rect width="620" height="300" rx="10" fill="url(#card-unsaid)" stroke="#3b2d54" stroke-width="1" />
+      <text x="24" y="32" fill="#ec4899" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">UNSPOKEN THOUGHT ARCHIVE</text>
+
+      <g transform="translate(24, 52)">
+        <rect width="572" height="130" rx="8" fill="#171226" stroke="#2e2242" />
+        <text x="20" y="36" fill="#f1f5f9" font-family="sans-serif" font-size="15" font-style="italic">"Say what you can't say. Nobody knows it's me,</text>
+        <text x="20" y="60" fill="#f1f5f9" font-family="sans-serif" font-size="15" font-style="italic">but someone out there might understand."</text>
+        <text x="20" y="100" fill="#94a3b8" font-family="monospace" font-size="11">#confession #late-night · 2m ago · 48 reactions</text>
+      </g>
+
+      <g transform="translate(24, 200)">
+        <rect width="276" height="74" rx="8" fill="#171226" stroke="#2e2242" />
+        <text x="16" y="28" fill="#a855f7" font-family="monospace" font-size="10" font-weight="700">META GRAPH DISPATCH</text>
+        <text x="16" y="52" fill="#e2e8f0" font-family="monospace" font-size="11">Auto-Publish: Active</text>
+      </g>
+
+      <g transform="translate(320, 200)">
+        <rect width="276" height="74" rx="8" fill="#171226" stroke="#2e2242" />
+        <text x="16" y="28" fill="#f43f5e" font-family="monospace" font-size="10" font-weight="700">PRIVACY ASSURANCE</text>
+        <text x="16" y="52" fill="#34d399" font-family="monospace" font-size="11">0 IP Logs · Zero Tracking</text>
+      </g>
+
+      <!-- Right: Technical Stack -->
+      <g transform="translate(644, 0)">
+        <rect width="364" height="300" rx="10" fill="url(#card-unsaid)" stroke="#3b2d54" stroke-width="1" />
+        <text x="24" y="32" fill="#ec4899" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">SYSTEM SPECS</text>
+
+        <g transform="translate(24, 52)">
+          <rect width="316" height="42" rx="6" fill="#171226" stroke="#2e2242" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Next.js App Router + React 19</text>
+        </g>
+        <g transform="translate(24, 104)">
+          <rect width="316" height="42" rx="6" fill="#171226" stroke="#2e2242" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Node.js + Express Backend</text>
+        </g>
+        <g transform="translate(24, 156)">
+          <rect width="316" height="42" rx="6" fill="#171226" stroke="#2e2242" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">PostgreSQL + Prisma ORM</text>
+        </g>
+        <g transform="translate(24, 208)">
+          <rect width="316" height="42" rx="6" fill="#171226" stroke="#2e2242" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Meta Graph API Webhooks</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Metric Ticker -->
+    <g transform="translate(36, 400)">
+      <rect width="1008" height="66" rx="8" fill="#140f21" stroke="#251b36" stroke-width="1" />
+      <text x="28" y="38" fill="#94a3b8" font-family="monospace" font-size="11">PLATFORM ARCHITECTURE</text>
+      <text x="210" y="38" fill="#f43f5e" font-family="monospace" font-size="12" font-weight="700">RATE-LIMITED SUBMISSION QUEUE</text>
+      <text x="500" y="38" fill="#a855f7" font-family="monospace" font-size="12" font-weight="700">PRISMA ORM</text>
+      <text x="640" y="38" fill="#ec4899" font-family="monospace" font-size="12" font-weight="700">100% ANONYMOUS</text>
+      <text x="860" y="38" fill="#f8fafc" font-family="monospace" font-size="12">Min Phanith</text>
+    </g>
+  </g>
+</svg>

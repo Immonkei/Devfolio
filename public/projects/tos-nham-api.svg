@@ -1,0 +1,105 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-tosnham" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c120c" />
+      <stop offset="50%" stop-color="#0f1910" />
+      <stop offset="100%" stop-color="#142617" />
+    </linearGradient>
+    <linearGradient id="card-tosnham" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#142617" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0c120c" stop-opacity="0.95" />
+    </linearGradient>
+    <pattern id="grid-tosnham" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#22c55e" stroke-opacity="0.04" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg-tosnham)" />
+  <rect width="1200" height="675" fill="url(#grid-tosnham)" />
+
+  <circle cx="200" cy="180" r="250" fill="#22c55e" fill-opacity="0.12" filter="blur(80px)" />
+  <circle cx="1000" cy="480" r="260" fill="#10b981" fill-opacity="0.1" filter="blur(80px)" />
+
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#1b3820" stroke-width="1.5" />
+
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#091009" stroke="#172b1a" stroke-width="1.5" />
+
+    <rect width="1080" height="48" rx="14" fill="#0f1a10" />
+    <path d="M0 48h1080" stroke="#172b1a" stroke-width="1" />
+
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <rect x="96" y="10" width="340" height="28" rx="6" fill="#091009" stroke="#172b1a" stroke-width="1" />
+    <text x="116" y="28" fill="#86efac" font-family="monospace" font-size="12">https://api.tosnham.com/v1/branches</text>
+
+    <rect x="880" y="12" width="174" height="24" rx="12" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="894" cy="24" r="3.5" fill="#22c55e" />
+    <text x="906" y="28" fill="#86efac" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">RESTAURANT REST API</text>
+
+    <!-- Content Area -->
+    <g transform="translate(36, 74)">
+      <rect width="620" height="300" rx="10" fill="url(#card-tosnham)" stroke="#1e3a22" stroke-width="1" />
+      <text x="24" y="32" fill="#4ade80" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">MULTI-BRANCH ARCHITECTURE</text>
+
+      <g transform="translate(24, 52)">
+        <rect width="572" height="60" rx="6" fill="#0d180e" stroke="#22c55e" stroke-width="1" />
+        <text x="16" y="26" fill="#86efac" font-family="monospace" font-size="11">POST /api/v1/reservations</text>
+        <text x="16" y="46" fill="#94a3b8" font-family="monospace" font-size="10">Auto 50% deposit calculation + Unique QR Arrival Token generation</text>
+      </g>
+
+      <g transform="translate(24, 124)">
+        <rect width="572" height="60" rx="6" fill="#0d180e" stroke="#16a34a" />
+        <text x="16" y="26" fill="#86efac" font-family="monospace" font-size="11">GET /api/v1/branches/:id/menu</text>
+        <text x="16" y="46" fill="#94a3b8" font-family="monospace" font-size="10">Branch-scoped inventory, categories, item images (Multer)</text>
+      </g>
+
+      <g transform="translate(24, 196)">
+        <rect width="276" height="78" rx="8" fill="#0d180e" stroke="#1e3a22" />
+        <text x="16" y="28" fill="#4ade80" font-family="monospace" font-size="10" font-weight="700">ROLE-BASED ACCESS</text>
+        <text x="16" y="52" fill="#e2e8f0" font-family="monospace" font-size="11">Customer · Staff · Admin</text>
+      </g>
+
+      <g transform="translate(320, 196)">
+        <rect width="276" height="78" rx="8" fill="#0d180e" stroke="#1e3a22" />
+        <text x="16" y="28" fill="#4ade80" font-family="monospace" font-size="10" font-weight="700">ARRIVAL VERIFICATION</text>
+        <text x="16" y="52" fill="#34d399" font-family="monospace" font-size="11">QR Scan &gt; "Arrived"</text>
+      </g>
+
+      <!-- Right: Technical Stack -->
+      <g transform="translate(644, 0)">
+        <rect width="364" height="300" rx="10" fill="url(#card-tosnham)" stroke="#1e3a22" stroke-width="1" />
+        <text x="24" y="32" fill="#4ade80" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">BACKEND FOUNDATIONS</text>
+
+        <g transform="translate(24, 52)">
+          <rect width="316" height="42" rx="6" fill="#0d180e" stroke="#172b1a" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Node.js + Express.js</text>
+        </g>
+        <g transform="translate(24, 104)">
+          <rect width="316" height="42" rx="6" fill="#0d180e" stroke="#172b1a" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">PostgreSQL Database</text>
+        </g>
+        <g transform="translate(24, 156)">
+          <rect width="316" height="42" rx="6" fill="#0d180e" stroke="#172b1a" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">JWT + BCrypt Authentication</text>
+        </g>
+        <g transform="translate(24, 208)">
+          <rect width="316" height="42" rx="6" fill="#0d180e" stroke="#172b1a" />
+          <text x="14" y="26" fill="#e2e8f0" font-family="sans-serif" font-size="12">Docker Containerization</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Metric Ticker -->
+    <g transform="translate(36, 400)">
+      <rect width="1008" height="66" rx="8" fill="#0f1a10" stroke="#172b1a" stroke-width="1" />
+      <text x="28" y="38" fill="#86efac" font-family="monospace" font-size="11">PERFORMANCE</text>
+      <text x="150" y="38" fill="#4ade80" font-family="monospace" font-size="12" font-weight="700">SUB-40MS API LATENCY</text>
+      <text x="360" y="38" fill="#22c55e" font-family="monospace" font-size="12" font-weight="700">BRANCH ISOLATION</text>
+      <text x="560" y="38" fill="#86efac" font-family="monospace" font-size="12" font-weight="700">QR TOKEN CHECK-IN</text>
+      <text x="860" y="38" fill="#f8fafc" font-family="monospace" font-size="12">Min Phanith</text>
+    </g>
+  </g>
+</svg>

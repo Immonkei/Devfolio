@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getProjectBySlug } from "@/actions/projects";
+import { getStandardProjectBySlug } from "@/lib/constants/projects";
 import {
   ArrowLeft,
   ExternalLink,
@@ -25,7 +26,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  let project = await getProjectBySlug(slug);
+  if (!project) {
+    project = getStandardProjectBySlug(slug) || null;
+  }
 
   if (!project) {
     return {
@@ -50,7 +54,10 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  let project = await getProjectBySlug(slug);
+  if (!project) {
+    project = getStandardProjectBySlug(slug) || null;
+  }
 
   if (!project || project.status !== "PUBLISHED") {
     notFound();
