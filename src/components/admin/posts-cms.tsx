@@ -6,10 +6,11 @@ import {
   updatePost,
   deletePost,
   togglePostPublish,
+  syncStandardPosts,
 } from "@/actions/posts";
 import { uploadMediaFile } from "@/actions/media";
 import { PostWithCategories, Category, PostStatus } from "@/types";
-import { Plus, Edit2, Trash2, X, Eye, EyeOff, Upload } from "lucide-react";
+import { Plus, Edit2, Trash2, X, Eye, EyeOff, Upload, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,8 +33,31 @@ export function PostsCMS({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncSuccess, setSyncSuccess] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [deviceFileName, setDeviceFileName] = useState<string | null>(null);
+
+  const handleSyncPosts = async () => {
+    setSyncing(true);
+    setError(null);
+    setSyncSuccess(null);
+    try {
+      const res = await syncStandardPosts();
+      if (res.success) {
+        setSyncSuccess(res.message || "Standard notes synchronized!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
+      } else {
+        setError(res.error || "Failed to sync notes.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sync error occurred.");
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const [form, setForm] = useState({
     title: "",
@@ -92,16 +116,6 @@ export function PostsCMS({
     setDeviceFileName(file.name);
     setError(null);
 
-    // Immediate client-side preview
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      if (result) {
-        setForm((prev) => ({ ...prev, cover_image_url: result }));
-      }
-    };
-    reader.readAsDataURL(file);
-
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -110,10 +124,12 @@ export function PostsCMS({
       if (res.success && res.data?.url) {
         setForm((prev) => ({ ...prev, cover_image_url: res.data.url }));
       } else {
-        console.warn("Media storage upload notice:", res.error);
+        setError(res.error || "Failed to upload file to storage bucket. Please check Supabase storage configuration.");
+        setDeviceFileName(null);
       }
     } catch (err: unknown) {
-      console.warn("Device upload error:", err);
+      setError(err instanceof Error ? err.message : "Device upload exception.");
+      setDeviceFileName(null);
     } finally {
       setUploadingImage(false);
       e.target.value = "";
@@ -220,16 +236,34 @@ export function PostsCMS({
         </div>
 
         {!isEditing && (
-          <Button
-            onClick={() => setIsEditing(true)}
-            size="sm"
-            className="gap-1.5 font-mono text-xs"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            <span>Draft New Note</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={handleSyncPosts}
+              disabled={syncing}
+              variant="outline"
+              size="sm"
+              className="gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${syncing ? "animate-spin text-primary" : ""}`} />
+              <span>{syncing ? "Syncing..." : "Sync Standard Notes"}</span>
+            </Button>
+            <Button
+              onClick={() => setIsEditing(true)}
+              size="sm"
+              className="gap-1.5 font-mono text-xs"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Draft New Note</span>
+            </Button>
+          </div>
         )}
       </div>
+
+      {syncSuccess && (
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 font-mono text-xs text-emerald-400">
+          {syncSuccess}
+        </div>
+      )}
 
       {isEditing && (
         <div className="rounded-xl border border-primary/30 bg-card p-6 shadow-xl space-y-6">

@@ -1,4 +1,4 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 import { Database } from "@/types/database";
 
@@ -14,42 +14,17 @@ export async function updateSession(request: NextRequest) {
 
   const supabase = createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
     cookies: {
-      get(name: string) {
-        return request.cookies.get(name)?.value;
+      getAll() {
+        return request.cookies.getAll();
       },
-      set(name: string, value: string, options: CookieOptions) {
-        request.cookies.set({
-          name,
-          value,
-          ...options,
-        });
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
         response = NextResponse.next({
-          request: {
-            headers: request.headers,
-          },
+          request,
         });
-        response.cookies.set({
-          name,
-          value,
-          ...options,
-        });
-      },
-      remove(name: string, options: CookieOptions) {
-        request.cookies.set({
-          name,
-          value: "",
-          ...options,
-        });
-        response = NextResponse.next({
-          request: {
-            headers: request.headers,
-          },
-        });
-        response.cookies.set({
-          name,
-          value: "",
-          ...options,
-        });
+        cookiesToSet.forEach(({ name, value, options }) =>
+          response.cookies.set(name, value, options)
+        );
       },
     },
   });
@@ -63,7 +38,6 @@ export async function updateSession(request: NextRequest) {
   const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
 
   if (isAdminRoute && !isAuthRoute && !user) {
-    // If not authenticated and trying to access admin dashboard, redirect to login
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
     url.searchParams.set("redirectTo", request.nextUrl.pathname);
@@ -71,7 +45,6 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (isAuthRoute && user) {
-    // If already logged in and visiting /admin/login, redirect to dashboard
     const url = request.nextUrl.clone();
     url.pathname = "/admin/dashboard";
     return NextResponse.redirect(url);

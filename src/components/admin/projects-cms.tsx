@@ -155,16 +155,6 @@ export function ProjectsCMS({
     setDeviceFileName(file.name);
     setError(null);
 
-    // Immediate client-side preview
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      if (result) {
-        setForm((prev) => ({ ...prev, cover_image_url: result }));
-      }
-    };
-    reader.readAsDataURL(file);
-
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -173,10 +163,12 @@ export function ProjectsCMS({
       if (res.success && res.data?.url) {
         setForm((prev) => ({ ...prev, cover_image_url: res.data.url }));
       } else {
-        console.warn("Media storage upload notice:", res.error);
+        setError(res.error || "Failed to upload file to storage bucket. Please check Supabase storage configuration.");
+        setDeviceFileName(null);
       }
     } catch (err: unknown) {
-      console.warn("Device upload error:", err);
+      setError(err instanceof Error ? err.message : "Device upload exception.");
+      setDeviceFileName(null);
     } finally {
       setUploadingImage(false);
       e.target.value = "";

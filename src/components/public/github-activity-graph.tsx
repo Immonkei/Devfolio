@@ -58,7 +58,7 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
     if (typeof window === "undefined" || process.env.NODE_ENV === "test") return;
     setIsSyncing(true);
     try {
-      const res = await fetch(`/api/github`, { cache: "no-store" });
+      const res = await fetch(`/api/github?fresh=true`, { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
       if (data?.activity) {
@@ -72,16 +72,21 @@ export function GitHubActivityGraph({ activity: initialActivity, username }: Git
     }
   }, []);
 
-  // Auto-sync periodically every 60s and immediately when returning to tab
+  // Auto-sync periodically every 5 minutes and safely when returning to tab
   useEffect(() => {
     if (typeof window === "undefined" || process.env.NODE_ENV === "test") return;
 
+    let lastFetchTime = Date.now();
+
     const interval = setInterval(() => {
+      lastFetchTime = Date.now();
       handleManualSync();
-    }, 60000);
+    }, 300000); // 5 minutes
 
     const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
+      // Only refresh on tab focus if at least 5 minutes have passed since last check
+      if (document.visibilityState === "visible" && Date.now() - lastFetchTime > 300000) {
+        lastFetchTime = Date.now();
         handleManualSync();
       }
     };

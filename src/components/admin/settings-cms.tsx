@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { updateProfile } from "@/actions/settings";
+import { upsertProfile } from "@/actions/settings";
 import { Profile } from "@/types";
 import { Save, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,17 +9,18 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 export function SettingsCMS({ initialProfile }: { initialProfile: Profile | null }) {
+  const [currentProfile, setCurrentProfile] = useState<Profile | null>(initialProfile);
   const [form, setForm] = useState({
-    name: initialProfile?.name || "Senior Systems Engineer",
-    headline: initialProfile?.headline || "Staff Software Engineer",
+    name: initialProfile?.name || "Min Phanith",
+    headline: initialProfile?.headline || "Junior Full-Stack Developer",
     bio: initialProfile?.bio || "",
-    location: initialProfile?.location || "San Francisco, CA & Remote",
+    location: initialProfile?.location || "Phnom Penh, Cambodia",
     avatar_url: initialProfile?.avatar_url || "",
     resume_url: initialProfile?.resume_url || "",
     github_url: initialProfile?.github_url || "",
     linkedin_url: initialProfile?.linkedin_url || "",
     twitter_url: initialProfile?.twitter_url || "",
-    role: initialProfile?.role || "Senior Software Engineer",
+    role: initialProfile?.role || "Junior Full-Stack Developer",
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,17 +29,19 @@ export function SettingsCMS({ initialProfile }: { initialProfile: Profile | null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!initialProfile) return;
 
     setLoading(true);
     setSaved(false);
     setError(null);
 
     try {
-      const res = await updateProfile(initialProfile.id, form);
+      const res = await upsertProfile(currentProfile?.id, form);
       if (!res.success) {
         setError(res.error || "Update failed.");
       } else {
+        if (res.data) {
+          setCurrentProfile(res.data);
+        }
         setSaved(true);
         setTimeout(() => setSaved(false), 3000);
       }
