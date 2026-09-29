@@ -1,12 +1,20 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { contactSchema, ContactInput } from "@/lib/validations/contact";
 
 export async function submitContactMessage(input: ContactInput) {
   const parsed = contactSchema.safeParse(input);
   if (!parsed.success) {
+    // If the error was triggered by the hidden honeypot website field, silently succeed to confuse bots
+    if (
+      parsed.error.issues.some(
+        (issue) => issue.message === "Bot detected" || issue.path.includes("website")
+      )
+    ) {
+      return { success: true };
+    }
     return {
       success: false,
       error: parsed.error.issues[0]?.message || "Invalid contact input.",
@@ -18,8 +26,8 @@ export async function submitContactMessage(input: ContactInput) {
     return { success: true };
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
+  const supabase = createPublicClient();
+  const { error } = await supabase
     .from("contact_messages")
     .insert([
       {
@@ -29,9 +37,7 @@ export async function submitContactMessage(input: ContactInput) {
         message: parsed.data.message,
         status: "NEW",
       },
-    ])
-    .select()
-    .single();
+    ]);
 
   if (error) {
     console.error("Error submitting contact message:", error);
@@ -44,7 +50,7 @@ export async function submitContactMessage(input: ContactInput) {
   revalidatePath("/admin/messages");
   revalidatePath("/admin/dashboard");
 
-  return { success: true, data };
+  return { success: true, data: { name: parsed.data.name } };
 }
 
 export async function getContactMessages() {

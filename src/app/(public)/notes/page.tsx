@@ -2,6 +2,7 @@ import { createPublicClient } from "@/lib/supabase/server";
 import { NoteCard } from "@/components/public/note-card";
 import { FileText, BookOpen } from "lucide-react";
 import { PostWithCategories, Category } from "@/types";
+import { STANDARD_POSTS } from "@/lib/constants/posts";
 
 export const metadata = {
   title: "Engineering Notes",
@@ -21,14 +22,27 @@ export default async function NotesPage() {
       .eq("status", "PUBLISHED")
       .order("created_at", { ascending: false });
 
-    if (data) {
+    if (data && data.length > 0) {
       posts = data.map((p) => ({
         ...p,
         categories: (p.post_categories || []).map((pc: { categories: Category | null }) => pc.categories).filter(Boolean) as Category[],
       }));
+    } else {
+      posts = STANDARD_POSTS.map((p) => ({
+        ...p,
+        categories: p.category_slugs.map((slug) => ({ id: `cat-${slug}`, name: slug.toUpperCase(), slug })),
+        created_at: p.published_at,
+        updated_at: p.published_at,
+      }));
     }
   } catch (err) {
     console.error("Notes query error:", err);
+    posts = STANDARD_POSTS.map((p) => ({
+      ...p,
+      categories: p.category_slugs.map((slug) => ({ id: `cat-${slug}`, name: slug.toUpperCase(), slug })),
+      created_at: p.published_at,
+      updated_at: p.published_at,
+    }));
   }
 
   return (

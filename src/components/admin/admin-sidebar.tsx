@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const ADMIN_NAV = [
+export const ADMIN_NAV = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Projects", href: "/admin/projects", icon: FolderGit2 },
   { name: "Experience", href: "/admin/experience", icon: Briefcase },
@@ -33,7 +33,7 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r border-border bg-card/60 flex flex-col justify-between h-screen sticky top-0">
+    <aside className="hidden md:flex w-64 border-r border-border bg-card/60 flex-col justify-between h-screen sticky top-0 shrink-0">
       <div>
         {/* Header Branding */}
         <div className="flex h-16 items-center gap-2.5 px-6 border-b border-border">

@@ -1,12 +1,13 @@
 "use server";
 
+import { cache } from "react";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { postSchema, PostInput } from "@/lib/validations/post";
-import { Category, PostStatus } from "@/types";
+import { Category, PostStatus, PostWithCategories } from "@/types";
 
-export async function getPosts() {
-  const supabase = await createClient();
+export const getPosts = cache(async (): Promise<PostWithCategories[]> => {
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("posts")
     .select("*, post_categories(category_id, categories(*))")
@@ -18,26 +19,44 @@ export async function getPosts() {
   }
 
   return (data || []).map((p) => ({
-    ...p,
+    id: p.id,
+    title: p.title,
+    slug: p.slug,
+    excerpt: p.excerpt,
+    content: p.content,
+    cover_image_url: p.cover_image_url,
+    status: p.status,
+    published_at: p.published_at,
+    created_at: p.created_at,
+    updated_at: p.updated_at,
     categories: (p.post_categories || []).map((pc: { categories: Category | null }) => pc.categories).filter(Boolean) as Category[],
   }));
-}
+});
 
-export async function getPostBySlug(slug: string) {
-  const supabase = await createClient();
+export const getPostBySlug = cache(async (slug: string): Promise<PostWithCategories | null> => {
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("posts")
     .select("*, post_categories(category_id, categories(*))")
     .eq("slug", slug)
-    .single();
+    .maybeSingle();
 
   if (error || !data) return null;
 
   return {
-    ...data,
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    cover_image_url: data.cover_image_url,
+    status: data.status,
+    published_at: data.published_at,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
     categories: (data.post_categories || []).map((pc: { categories: Category | null }) => pc.categories).filter(Boolean) as Category[],
   };
-}
+});
 
 export async function createPost(input: PostInput) {
   const supabase = await createClient();
@@ -198,4 +217,52 @@ export async function togglePostPublish(id: string, currentStatus: string) {
   revalidatePath("/admin/dashboard");
 
   return { success: true, newStatus };
+}
+
+export async function syncStandardPosts() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { success: false, error: "Unauthorized: Administrator privileges required." };
+  }
+
+  const { STANDARD_POSTS } = await import("@/lib/constants/posts");
+  let synced = 0;
+
+  for (const post of STANDARD_POSTS) {
+    const { data: existing } = await supabase
+      .from("posts")
+      .select("id")
+      .eq("slug", post.slug)
+      .maybeSingle();
+
+    const payload = {
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      content: post.content,
+      cover_image_url: post.cover_image_url,
+      status: post.status,
+      published_at: post.published_at,
+      updated_at: new Date().toISOString(),
+    };
+
+    if (existing) {
+      await supabase.from("posts").update(payload).eq("id", existing.id);
+    } else {
+      await supabase.from("posts").insert([{ id: post.id, ...payload }]);
+    }
+    synced++;
+  }
+
+  revalidatePath("/");
+  revalidatePath("/notes");
+  revalidatePath("/admin/posts");
+  revalidatePath("/admin/dashboard");
+
+  return {
+    success: true,
+    message: `Successfully synchronized ${synced} engineering notes into database.`,
+  };
 }

@@ -1,13 +1,14 @@
 "use server";
 
+import { cache } from "react";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { projectSchema, ProjectInput } from "@/lib/validations/project";
 import { Technology, ProjectStatus, ProjectWithTechnologies } from "@/types";
 import { STANDARD_PROJECTS } from "@/lib/constants/projects";
 
-export async function getProjects(): Promise<ProjectWithTechnologies[]> {
-  const supabase = await createClient();
+export const getProjects = cache(async (): Promise<ProjectWithTechnologies[]> => {
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("projects")
     .select("*, project_technologies(technology_id, technologies(*))")
@@ -23,15 +24,15 @@ export async function getProjects(): Promise<ProjectWithTechnologies[]> {
     ...p,
     technologies: (p.project_technologies || []).map((pt: { technologies: Technology | null }) => pt.technologies).filter(Boolean) as Technology[],
   }));
-}
+});
 
-export async function getProjectBySlug(slug: string): Promise<ProjectWithTechnologies | null> {
-  const supabase = await createClient();
+export const getProjectBySlug = cache(async (slug: string): Promise<ProjectWithTechnologies | null> => {
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("projects")
     .select("*, project_technologies(technology_id, technologies(*))")
     .eq("slug", slug)
-    .single();
+    .maybeSingle();
 
   if (error || !data) return null;
 
@@ -39,7 +40,7 @@ export async function getProjectBySlug(slug: string): Promise<ProjectWithTechnol
     ...data,
     technologies: (data.project_technologies || []).map((pt: { technologies: Technology | null }) => pt.technologies).filter(Boolean) as Technology[],
   };
-}
+});
 
 export async function createProject(input: ProjectInput) {
   const supabase = await createClient();

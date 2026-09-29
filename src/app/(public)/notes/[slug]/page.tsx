@@ -4,8 +4,11 @@ import Image from "next/image";
 import { getPostBySlug } from "@/actions/posts";
 import { ArrowLeft, Calendar, Clock, BookOpen } from "lucide-react";
 import { formatFullDate } from "@/lib/utils";
-import { Category } from "@/types";
+import { MarkdownRenderer } from "@/components/public/markdown-renderer";
+import { Category, PostWithCategories } from "@/types";
 import type { Metadata } from "next";
+
+import { getStandardPostBySlug } from "@/lib/constants/posts";
 
 export async function generateMetadata({
   params,
@@ -13,7 +16,25 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  let post: PostWithCategories | null = await getPostBySlug(slug);
+  if (!post) {
+    const std = getStandardPostBySlug(slug);
+    if (std) {
+      post = {
+        id: std.id,
+        title: std.title,
+        slug: std.slug,
+        excerpt: std.excerpt,
+        content: std.content,
+        cover_image_url: std.cover_image_url,
+        status: std.status,
+        published_at: std.published_at,
+        created_at: std.published_at,
+        updated_at: std.published_at,
+        categories: std.category_slugs.map((s) => ({ id: `cat-${s}`, name: s.toUpperCase(), slug: s })),
+      };
+    }
+  }
 
   if (!post) {
     return { title: "Note Not Found" };
@@ -37,7 +58,25 @@ export default async function NoteDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  let post: PostWithCategories | null = await getPostBySlug(slug);
+  if (!post) {
+    const std = getStandardPostBySlug(slug);
+    if (std) {
+      post = {
+        id: std.id,
+        title: std.title,
+        slug: std.slug,
+        excerpt: std.excerpt,
+        content: std.content,
+        cover_image_url: std.cover_image_url,
+        status: std.status,
+        published_at: std.published_at,
+        created_at: std.published_at,
+        updated_at: std.published_at,
+        categories: std.category_slugs.map((s) => ({ id: `cat-${s}`, name: s.toUpperCase(), slug: s })),
+      };
+    }
+  }
 
   if (!post || post.status !== "PUBLISHED") {
     notFound();
@@ -114,10 +153,8 @@ export default async function NoteDetailPage({
       </div>
 
       {/* Article Content */}
-      <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed text-base space-y-6">
-        <div className="whitespace-pre-line font-sans text-foreground/90 leading-relaxed">
-          {post.content}
-        </div>
+      <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed text-base pt-4">
+        <MarkdownRenderer content={post.content} />
       </div>
     </article>
   );
