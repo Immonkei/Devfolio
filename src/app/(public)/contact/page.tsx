@@ -5,7 +5,7 @@ import { createPublicClient } from "@/lib/supabase/server";
 
 export const metadata = {
   title: "Contact",
-  description: "Get in touch for collaboration, freelance work, or job opportunities.",
+  description: "Get in touch for technical discussions, engineering collaboration, or inquiries.",
 };
 
 export default async function ContactPage() {
@@ -35,7 +35,7 @@ export default async function ContactPage() {
           Get In Touch
         </h1>
         <p className="mt-2 text-muted-foreground text-sm max-w-xl">
-          Whether you have a project idea, a job opportunity, or just want to connect — feel free to reach out using the form below.
+          Whether you have a technical question, project inquiry, or just want to connect — feel free to reach out using the form below.
         </p>
       </div>
 
