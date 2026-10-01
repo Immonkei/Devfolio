@@ -3,6 +3,7 @@ import { ExperienceCard } from "@/components/public/experience-card";
 import { Briefcase, GraduationCap, ExternalLink } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { Experience, Education } from "@/types";
+import { STANDARD_EXPERIENCES } from "@/lib/constants/experiences";
 
 export const metadata = {
   title: "Experience & Track Record",
@@ -22,10 +23,15 @@ export default async function ExperiencePage() {
       supabase.from("education").select("*").order("display_order", { ascending: true }),
     ]);
 
-    if (expData) experiences = expData;
+    if (expData && expData.length > 0) {
+      experiences = expData;
+    } else {
+      experiences = STANDARD_EXPERIENCES;
+    }
     if (eduData) education = eduData;
   } catch (err) {
     console.error("Experience query error:", err);
+    experiences = STANDARD_EXPERIENCES;
   }
 
   return (

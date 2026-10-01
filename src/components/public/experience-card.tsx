@@ -1,9 +1,18 @@
 import { formatDate } from "@/lib/utils";
 import { Experience } from "@/types";
-import { Calendar } from "lucide-react";
+import { Calendar, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+const COMPANY_LINKS: Record<string, string> = {
+  allweb: "https://www.linkedin.com/company/allwebcoltd/posts/",
+};
+
 export function ExperienceCard({ experience }: { experience: Experience }) {
+  const companyKey = Object.keys(COMPANY_LINKS).find((key) =>
+    experience.company.toLowerCase().includes(key.toLowerCase())
+  );
+  const companyUrl = companyKey ? COMPANY_LINKS[companyKey] : null;
+
   return (
     <div className="relative pl-6 sm:pl-8 border-l border-border/80 group">
       {/* Timeline Node */}
@@ -16,9 +25,22 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
             <h3 className="text-lg font-bold text-foreground">
               {experience.role}
             </h3>
-            <div className="font-mono text-sm text-primary font-medium">
-              {experience.company}
-            </div>
+            {companyUrl ? (
+              <a
+                href={companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/link inline-flex items-center gap-1.5 font-mono text-sm text-primary font-medium hover:underline hover:opacity-85 transition-opacity"
+                title={`View ${experience.company} on LinkedIn`}
+              >
+                <span>{experience.company}</span>
+                <ExternalLink className="h-3.5 w-3.5 opacity-70 group-hover/link:opacity-100 transition-opacity" />
+              </a>
+            ) : (
+              <div className="font-mono text-sm text-primary font-medium">
+                {experience.company}
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
