@@ -215,17 +215,6 @@ export default async function HomePage() {
               {/* Soft, Diffused Ambient Backlight Aura */}
               <div className="absolute -inset-4 sm:-inset-8 rounded-full bg-gradient-to-tr from-primary/25 via-cyan-400/15 to-blue-600/20 blur-3xl opacity-70 pointer-events-none" />
 
-              {/* Minimalist Floating Status Pill */}
-              <div className="absolute top-2 -right-1 sm:top-4 sm:-right-2 z-20">
-                <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/80 px-3 py-1 font-mono text-[11px] text-muted-foreground backdrop-blur-md shadow-sm transition-colors hover:border-primary/40 hover:text-foreground">
-                  <span className="relative flex h-2 w-2 shrink-0">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                  </span>
-                  <span className="font-medium text-foreground">Available for hire</span>
-                </div>
-              </div>
-
               {/* Portrait with Natural, Smooth Bottom Dissolve (No Box Clipping) */}
               <div className="relative z-10 [mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)]">
                 <Image
@@ -433,13 +422,13 @@ export default async function HomePage() {
       <section className="container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 sm:p-12 text-center flex flex-col items-center">
           <span className="font-mono text-xs uppercase tracking-widest text-primary">
-            Open to Opportunities
+            Connect
           </span>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-foreground">
             Let&apos;s Build Something Together
           </h2>
           <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-            Available for junior engineering positions, internships, freelance projects, and open-source collaborations.
+            Always open to technical discussions, knowledge sharing, and engineering collaborations.
           </p>
           <div className="mt-6 flex items-center gap-4">
             <Link href="/contact">

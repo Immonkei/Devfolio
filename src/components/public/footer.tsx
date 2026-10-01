@@ -9,16 +9,11 @@ export function PublicFooter() {
     <footer className="w-full border-t border-border/80 bg-background/80 py-8 text-xs font-mono">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          {/* Left: Non-duplicated identity + live availability */}
+          {/* Left: Identity */}
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
             <span className="font-semibold text-foreground tracking-tight">
               © {currentYear} Min Phanith
             </span>
-            <span className="hidden sm:inline text-border/60">•</span>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] text-emerald-400">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Available for opportunities</span>
-            </div>
           </div>
 
           {/* Right: Social Media & Contact Icon Dock */}
