@@ -10,6 +10,7 @@ import { GitHubActivityGraph } from "@/components/public/github-activity-graph";
 import { TechBadge } from "@/components/public/tech-badge";
 import { STANDARD_TECHNOLOGIES } from "@/lib/tech-icons";
 import { STANDARD_PROJECTS } from "@/lib/constants/projects";
+import { STANDARD_EXPERIENCES } from "@/lib/constants/experiences";
 import { Button } from "@/components/ui/button";
 import {
   FolderGit2,
@@ -87,7 +88,11 @@ export default async function HomePage() {
     } else {
       projects = STANDARD_PROJECTS.slice(0, 4);
     }
-    if (experiencesData) experiences = experiencesData;
+    if (experiencesData && experiencesData.length > 0) {
+      experiences = experiencesData;
+    } else {
+      experiences = STANDARD_EXPERIENCES;
+    }
     if (technologiesData) technologies = technologiesData;
     if (postsData) {
       posts = postsData.map((p) => ({
@@ -104,10 +109,14 @@ export default async function HomePage() {
     activity = fetchedActivity;
   } catch (err) {
     console.error("Home page query error:", err);
+    experiences = STANDARD_EXPERIENCES;
   }
 
   if (projects.length === 0) {
     projects = STANDARD_PROJECTS.slice(0, 4);
+  }
+  if (experiences.length === 0) {
+    experiences = STANDARD_EXPERIENCES;
   }
 
   // Fallback defaults if database tables are being newly seeded
