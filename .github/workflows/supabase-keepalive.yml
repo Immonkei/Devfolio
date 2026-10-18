@@ -1,0 +1,31 @@
+name: Supabase Anti-Suspension Keep-Alive
+
+on:
+  schedule:
+    # Runs every 2 days at 04:00 UTC (well within Supabase 7-day inactivity pause)
+    - cron: "0 4 */2 * *"
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    name: Supabase Keep-Alive Heartbeat
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Keep-Alive Webhook
+        env:
+          TARGET_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || 'https://devfolio.vercel.app' }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          echo "Sending keep-alive heartbeat to $TARGET_URL/api/keep-alive..."
+          if [ -n "$CRON_SECRET" ]; then
+            HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" -H "Authorization: Bearer $CRON_SECRET" "$TARGET_URL/api/keep-alive")
+          else
+            HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" "$TARGET_URL/api/keep-alive")
+          fi
+          echo "Response HTTP Status: $HTTP_STATUS"
+          cat response.json || true
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            echo "Keep-alive heartbeat succeeded."
+          else
+            echo "Direct endpoint ping completed with status $HTTP_STATUS"
+          fi
