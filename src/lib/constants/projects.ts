@@ -18,26 +18,26 @@ function getTech(name: string): Technology {
 export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
   {
     id: "40000000-0000-0000-0000-000000000001",
-    title: "EaseLife - Production Personal Operating System",
+    title: "EaseLife - Personal Productivity System",
     slug: "easelife",
     short_description:
-      "A production-grade personal operating system built with Next.js 16, Tailwind CSS v4, and Supabase featuring visible lineage architecture and dynamic pace engines.",
+      "A personal productivity web app built with Next.js, Tailwind CSS, and Supabase to organize goals, projects, and daily habits.",
     description:
-      "EaseLife grounds daily concrete execution in high-level purpose via an unbroken hierarchy: Vision -> Goal -> Milestone -> Project -> Task/Habit. The application features zero-redundancy mathematically derived progress calculations, real-time pace deltas, and timezone-normalized immutable habit completion tracking.",
+      "EaseLife helps you connect daily tasks directly to your long-term goals. It breaks large milestones down into actionable projects and daily habits with live progress tracking and streak analytics.",
     problem:
-      "Daily productivity systems suffer from fragmented task tracking where atomic to-dos become disconnected from long-term goals, and arbitrary streak counters fail across timezone shifts.",
+      "Most to-do apps keep daily tasks disconnected from long-term goals, making it hard to track meaningful progress.",
     solution:
-      "Engineered Visible Lineage Architecture providing an inspectable relational drawer for any task, backed by real-time mathematical progress engines and midday-normalized date logs.",
+      "Built a clear hierarchy connecting Vision, Goals, Projects, and Daily Habits with real-time progress calculations.",
     architecture:
-      "Next.js 16 App Router full-stack architecture with Turbopack, Tailwind CSS v4, and Supabase PostgreSQL with strict Row Level Security (RLS) policies and Task XOR ownership constraints.",
+      "Next.js App Router frontend, Tailwind CSS, and Supabase PostgreSQL with Row Level Security (RLS).",
     implementation:
-      "Implemented atomic weighted project progress formulas, real-time pace deltas (On Track, At Risk, Off Track), optimistic UI mutations, and immutable habit completion event logs.",
+      "Weighted project progress tracking, daily habit checkboxes, streak calculations, and optimistic UI updates.",
     challenges:
-      "Normalizing date-stamped completion logs across midnight and DST boundaries without introducing distributed lock latency.",
+      "Handling habit completion dates and streak calculations accurately across multiple time zones.",
     tradeoffs:
-      "Computing project completion percentages dynamically on request rather than storing denormalized counts to guarantee absolute data consistency.",
+      "Calculated completion percentages dynamically on request to guarantee consistent data without sync conflicts.",
     results:
-      "Delivered sub-30ms client interactions with zero desynchronization across multi-device usage.",
+      "Fast, responsive app that keeps goals organized with zero multi-device lag.",
     cover_image_url: "/projects/easelife.svg",
     github_url: "https://github.com/Immonkei/EaseLife",
     live_url: null,
@@ -56,26 +56,26 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
   },
   {
     id: "40000000-0000-0000-0000-000000000002",
-    title: "Borejak - Blood Donation System",
+    title: "Borejak - Blood Donation Platform",
     slug: "borejak",
     short_description:
-      "An integrated blood donation platform featuring automated donor eligibility verification, administrative triage dashboards, and emergency request dispatch.",
+      "A web platform connecting volunteer blood donors with hospitals, featuring donor screening and appointment booking.",
     description:
-      "Borejak is a production-style healthcare application connecting volunteer blood donors with medical facilities in urgent need. Built using Next.js and Node.js with PostgreSQL, the platform streamlines the donor lifecycle from medical pre-screening questionnaires to appointment confirmation and hospital inventory oversight.",
+      "Borejak simplifies blood donation by connecting donors directly with hospitals in need. Donors can check eligibility through a simple health questionnaire, book appointments, and hospitals can manage urgent requests.",
     problem:
-      "Blood donation initiatives encounter high attrition due to confusing manual health eligibility criteria and disconnected hospital emergency dispatch queues.",
+      "Blood donation campaigns suffer from slow manual paperwork and fragmented emergency communication with hospitals.",
     solution:
-      "Engineered an automated multi-step clinical evaluation questionnaire that calculates donor eligibility before appointment scheduling, reducing triage overhead.",
+      "Built an online pre-screening questionnaire and real-time appointment scheduling system for donors and medical staff.",
     architecture:
-      "Next.js modular full-stack architecture with RESTful API handlers, PostgreSQL relational data persistence, and role-based access control.",
+      "Next.js full-stack architecture with REST API endpoints, PostgreSQL database, and role-based permissions.",
     implementation:
-      "Implemented donor appointment scheduling, hospital blood request dispatch queues, health eligibility verification logic, and administrative triage interfaces.",
+      "Donor appointment scheduling, hospital blood request queues, eligibility verification logic, and admin review interfaces.",
     challenges:
-      "Handling edge cases in medical questionnaire expiration and ensuring strict patient data confidentiality.",
+      "Ensuring donor medical questionnaire responses remain private and secure.",
     tradeoffs:
-      "Selected relational PostgreSQL over NoSQL to maintain strict ACID compliance on critical blood inventory records and hospital request queues.",
+      "Selected PostgreSQL over NoSQL to ensure strict transaction safety for blood requests and appointments.",
     results:
-      "Successfully validated donor flows, decreased pre-screening friction, and established structured emergency request protocols.",
+      "Streamlined donor check-ins, less paperwork, and reliable hospital emergency coordination.",
     cover_image_url: "/projects/borejak.svg",
     github_url: "https://github.com/Immonkei/Borejak",
     live_url: null,
@@ -97,23 +97,23 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     title: "UNSAID - Anonymous Expression Platform",
     slug: "unsaid",
     short_description:
-      "A safe, minimal anonymous emotional expression platform with automated content moderation, report queues, and Meta Graph API auto-publishing.",
+      "A minimal, safe web space for sharing anonymous thoughts, reflections, and confessions with built-in moderation.",
     description:
-      "UNSAID provides an anonymous outlet where users can safely submit thoughts, confessions, and unspoken reflections. Features two-tier content moderation, rate-limiting security, and automated webhook publishers to social channels.",
+      "UNSAID offers a judgment-free space for honest, anonymous expression. Users can submit unspoken thoughts safely with spam protection and an admin moderation queue.",
     problem:
-      "People lack safe, privacy-preserving digital spaces to voice vulnerable emotional thoughts without social algorithmic pressure or toxic feedback.",
+      "People often need a safe space to share personal thoughts without social media pressure, follower counts, or profile visibility.",
     solution:
-      "Constructed a minimal anonymous submission platform with automated sentiment checks, admin review workflows, and automated Meta Graph API publishing.",
+      "Created an anonymous submission platform with automated spam filters and an admin review workflow.",
     architecture:
-      "Next.js App Router frontend with React 19 coupled to an Express and TypeScript backend utilizing PostgreSQL and Prisma ORM.",
+      "Next.js frontend with Node.js and Express backend using PostgreSQL and Prisma ORM.",
     implementation:
-      "Implemented Zod validation schemas, BCrypt & JWT admin authentication, spam throttling middleware, and Meta Graph API webhook dispatchers.",
+      "Zod schema validation, admin dashboard with JWT authentication, spam throttling, and Meta Graph API auto-publishing.",
     challenges:
-      "Filtering malicious content and automated spam while preserving absolute user anonymity with zero IP or tracking log retention.",
+      "Preventing spam and abusive content while strictly never tracking user IP addresses.",
     tradeoffs:
-      "Implemented queue-based moderation review over instant unmoderated publishing to guarantee community safety and prevent harassment.",
+      "Added an admin review step before publishing to keep content safe and constructive.",
     results:
-      "Successfully processed anonymous submissions with zero identifiable user metadata leakage.",
+      "Safe, privacy-focused platform that protects user identity with zero tracking.",
     cover_image_url: "/projects/unsaid.svg",
     github_url: "https://github.com/Immonkei/UNSAID",
     live_url: null,
@@ -136,23 +136,23 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     title: "ReanHub - Academic LMS",
     slug: "reanhub",
     short_description:
-      "A full-stack LMS applying Object-Oriented Analysis & Design (OOAD) with role-based access for students, instructors, and administrators.",
+      "A learning management portal for course materials, assignments, and student submissions with role-based access.",
     description:
-      "ReanHub provides academic institutions with an organized digital portal for managing courses, tracking assignments, and reviewing student submissions. Designed applying Object-Oriented Analysis & Design (OOAD) principles to maximize modularity and maintainability.",
+      "ReanHub provides universities and schools with a clean web portal to manage courses, upload homework assignments, and submit student work.",
     problem:
-      "Educational workflows involve complex hierarchies (instructors, courses, modules, assignments, submissions) that become unmaintainable when built without strict software architecture.",
+      "Handling courses, assignment files, and grading across emails and chat groups causes confusion and lost files.",
     solution:
-      "Applied Object-Oriented Analysis & Design (OOAD) to define clear entity boundaries, abstract data access layers, and separation of concerns.",
+      "Designed an intuitive LMS with clear role separation for students, instructors, and administrators.",
     architecture:
-      "React frontend coupled with an Express and MongoDB backend, utilizing Mongoose models and JWT authentication middleware.",
+      "React frontend with an Express and MongoDB backend using Mongoose models and JWT authentication.",
     implementation:
-      "Constructed intuitive course creation portals, assignment submission file uploaders, and grade evaluation interfaces with Tailwind CSS.",
+      "Course creation tools, file uploaders for assignments, and student grade tracking tables with Tailwind CSS.",
     challenges:
-      "Enforcing strict submission deadline locks across differing client timezones.",
+      "Enforcing assignment submission deadlines consistently across different client timezones.",
     tradeoffs:
-      "Opted for document-oriented MongoDB schema design to easily store heterogeneous assignment questions and variable course metadata.",
+      "Used MongoDB to easily store different course formats and varied homework question types.",
     results:
-      "Delivered clean modular codebase with high reusability across student and instructor modules.",
+      "Clean, modular codebase with intuitive workflows for both students and instructors.",
     cover_image_url: "/projects/reanhub.svg",
     github_url: "https://github.com/Immonkei/OOAD-Project-ReanHub-",
     live_url: null,
@@ -175,23 +175,23 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     title: "Tos-Nham - Restaurant Management API",
     slug: "tos-nham-api",
     short_description:
-      "A resilient Node.js Express backend supporting multi-branch restaurant operations, QR token arrival verification, table reservations, and orders.",
+      "A REST API for multi-branch restaurant management, table reservations, deposit calculations, and QR check-in.",
     description:
-      "A high-performance restaurant operations backend supporting customer, staff, and admin roles. Features multi-branch isolation, dynamic menu categorization, table booking with deposit calculations, and unique QR token generation for customer arrival verification.",
+      "Tos-Nham powers daily operations for restaurants with multiple branches. It handles menu categories, table bookings with deposit calculations, and QR codes for customer arrival check-in.",
     problem:
-      "Multi-branch restaurants struggle with fragmented reservation systems, inconsistent deposit tracking, and chaotic front-of-house guest check-ins.",
+      "Multi-branch restaurants struggle with fragmented reservation logs, inconsistent deposits, and slow front-of-house check-ins.",
     solution:
-      "Engineered a centralized REST API architecture featuring branch-scoped database queries, automated 50% deposit calculations, and QR arrival tokens.",
+      "Built a centralized REST API with branch-level filtering, automatic deposit calculations, and QR arrival tokens.",
     architecture:
-      "Express.js modular routing layer with middleware interceptors for JWT token validation, role-based access control, Multer image upload handling, and Docker containerization.",
+      "Express.js REST API with JWT authentication, role checks, image upload handling, and PostgreSQL database.",
     implementation:
-      "Implemented secure JWT authentication, multi-branch query filters, automated reservation deposit computation, and QR code token verification endpoints.",
+      "Branch-filtered menu endpoints, reservation deposit processing, and QR code verification routes.",
     challenges:
-      "Ensuring transactional consistency during peak-hour simultaneous table reservation attempts across multiple restaurant branches.",
+      "Preventing double-booking during peak dining hours across different branches.",
     tradeoffs:
-      "Scoped all database operations by branch_id rather than running separate microservices per branch to minimize infrastructure complexity and maintenance costs.",
+      "Managed all branches in a single database partitioned by branch ID to reduce server costs and complexity.",
     results:
-      "Achieved reliable sub-40ms response times across branch menu lookups and reservation dispatch.",
+      "Fast, dependable API with response times under 40ms for menu loading and booking verification.",
     cover_image_url: "/projects/tos-nham-api.svg",
     github_url: "https://github.com/Immonkei/Tos-Nham-backend",
     live_url: null,
@@ -211,26 +211,26 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
   },
   {
     id: "40000000-0000-0000-0000-000000000006",
-    title: "Daymark - Habit & Goal Tracking PWA",
+    title: "Daymark - Habit & Goal Tracker PWA",
     slug: "daymark",
     short_description:
-      "A client-driven Progressive Web App for daily habit tracking, streak preservation, and productivity workflows built with Next.js and Supabase.",
+      "A clean Progressive Web App for tracking daily habits, building streaks, and staying productive offline or online.",
     description:
-      "Daymark delivers a distraction-free habit and goal tracker designed as an offline-first Progressive Web App. Backed by Supabase and Next.js, it provides instant responsiveness, streak analysis, and visual habit heatmaps.",
+      "Daymark is a simple, distraction-free habit tracker built to work seamlessly on mobile and desktop. Powered by Next.js and Supabase, it gives you quick daily checkboxes, streak statistics, and monthly progress charts.",
     problem:
-      "Habit tracker apps often feel bloated, slow to open on mobile devices, and lack reliable offline sync when habits are logged without connectivity.",
+      "Many habit apps are bloated, slow to open on mobile, and lose your progress when you lose internet connection.",
     solution:
-      "Built a lightweight Progressive Web App utilizing client-side state caching, optimistic UI updates, and background synchronization.",
+      "Built a lightweight Progressive Web App with offline caching, instant local state updates, and background sync.",
     architecture:
-      "Next.js App Router client-driven architecture with Tailwind CSS, Lucide icons, and Supabase PostgreSQL with Row Level Security.",
+      "Next.js App Router client architecture, Tailwind CSS, Lucide icons, and Supabase PostgreSQL with Row Level Security.",
     implementation:
-      "Implemented service worker offline caching, habit completion toggle logic, streak calculation algorithms, and habit completion history graphs.",
+      "Service worker offline caching, one-tap habit toggles, streak calculation algorithms, and habit completion charts.",
     challenges:
-      "Accurate local streak reconciliation when offline client timestamps sync back to the server.",
+      "Syncing offline habit timestamps accurately when the device reconnects to the network.",
     tradeoffs:
-      "Prioritized ultra-fast client-side state transitions over heavy server-side validation during daily checkbox logging.",
+      "Prioritized instant local UI response over waiting for network calls so checking off habits feels instant.",
     results:
-      "Instant mobile startup time and offline capability across desktop and mobile devices.",
+      "Instant startup time and reliable offline capability across mobile and desktop devices.",
     cover_image_url: "/projects/daymark.svg",
     github_url: "https://github.com/Immonkei/Daymark",
     live_url: null,
@@ -248,26 +248,26 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
   },
   {
     id: "40000000-0000-0000-0000-000000000007",
-    title: "Recipe Finder - Android Native App",
+    title: "Recipe Finder - Android App",
     slug: "recipe-finder-android",
     short_description:
-      "A modern Android application developed with Kotlin and Jetpack Compose implementing MVVM architecture, Retrofit REST client, and Room Database.",
+      "A native Android app to search food recipes, inspect cooking steps, and save favorite meals offline.",
     description:
-      "A native Android application designed to discover recipes, inspect culinary instructions, and save favorite meals. Developed following modern Android architectural guidelines with Kotlin, Jetpack Compose, Retrofit, Coroutines, and Room local persistence.",
+      "Recipe Finder helps you discover new meals, read step-by-step cooking instructions, and save favorite recipes locally on your phone using modern Android design.",
     problem:
-      "Users need rapid recipe discovery with offline access to saved ingredients and preparation steps when cooking without stable internet.",
+      "Cooks need fast recipe lookups with offline access when cooking in kitchens with poor Wi-Fi.",
     solution:
-      "Engineered a clean Android application using MVVM architecture with Room Database local cache synchronization.",
+      "Engineered a native Android application using MVVM architecture with Room SQLite database for offline caching.",
     architecture:
-      "Android Native application utilizing Kotlin, Jetpack Compose declarative UI, MVVM design pattern, Retrofit HTTP client, and Room SQLite database.",
+      "Android Native app with Kotlin, Jetpack Compose declarative UI, MVVM pattern, Retrofit HTTP client, and Room Database.",
     implementation:
-      "Built composable UI layouts, asynchronous recipe search queries with Kotlin Coroutines, and Room Database DAO repositories for favorites persistence.",
+      "Composable UI screens, recipe search API integration with Coroutines, and local bookmarks database.",
     challenges:
-      "Managing complex state transitions between network loading, empty search results, and local SQLite database queries.",
+      "Managing UI states smoothly between network loading, empty search results, and local SQLite data.",
     tradeoffs:
-      "Adopted Jetpack Compose over legacy Android XML views to accelerate UI development and ensure declarative unidirectional data flow.",
+      "Used modern Jetpack Compose instead of legacy XML views to build a faster, cleaner interface.",
     results:
-      "Smooth 60fps UI performance and offline access to saved recipes.",
+      "Smooth 60fps UI performance and full offline access to saved recipes.",
     cover_image_url: "/projects/campus-mobile-companion.svg",
     github_url: "https://github.com/Immonkei/recipe-app-android-M2-MinPhanith",
     live_url: null,
@@ -288,23 +288,23 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     title: "CipherVerse - Cryptography Explorer",
     slug: "cipherverse",
     short_description:
-      "An interactive cryptography visualization application demonstrating RSA key pair generation, modular arithmetic, and encryption algorithms.",
+      "An interactive web visualizer to demonstrate RSA key generation, modular math, and encryption algorithms.",
     description:
-      "An educational web laboratory built with React and TypeScript to deconstruct asymmetric cryptography, RSA key generation, modular exponentiation, and digital signatures.",
+      "CipherVerse is an interactive learning tool that breaks down public-key cryptography step-by-step. Users can generate primes, calculate keys, and test encryption in real time.",
     problem:
-      "Public-key cryptography concepts can feel abstract without step-by-step mathematical visualization.",
+      "Cryptography concepts like RSA and modular math can feel abstract and difficult to grasp without step-by-step visual examples.",
     solution:
-      "Engineered an interactive step-by-step visualizer breaking down prime generation, Euler totient calculation, modular inverses, and encryption/decryption mathematics.",
+      "Built an interactive visualizer that walks users through prime selection, key pair generation, and message encryption.",
     architecture:
-      "Client-side TypeScript application utilizing arbitrary-precision BigInt arithmetic and Tailwind CSS.",
+      "Client-side React and TypeScript application using native BigInt for precision math, styled with Tailwind CSS.",
     implementation:
-      "Implemented pure TypeScript RSA mathematical functions, key visualization cards, and interactive plaintext-to-ciphertext transformations.",
+      "Pure TypeScript RSA algorithms, animated step cards, and interactive plaintext-to-ciphertext demos.",
     challenges:
-      "Precision handling of large prime calculations and modular math within the browser JavaScript runtime.",
+      "Calculating large numbers quickly in the browser without freezing the user interface.",
     tradeoffs:
-      "Executed all calculations on the client side using native BigInt to eliminate backend latency.",
+      "Executed all calculations in the browser using native BigInt to eliminate server costs and network delays.",
     results:
-      "Created a comprehensive visual teaching tool for computer network security and cryptography students.",
+      "Clear, interactive learning tool used by students to understand encryption principles.",
     cover_image_url: "/projects/cipherverse.svg",
     github_url: "https://github.com/Immonkei/RSA-Project-Web",
     live_url: null,
