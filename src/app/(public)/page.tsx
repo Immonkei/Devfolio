@@ -126,7 +126,6 @@ export default async function HomePage() {
   const engineerBio =
     profile?.bio ||
     "I build responsive, accessible web applications and reliable backend services. Bridging engineering fundamentals with modern React, TypeScript, Node.js, and database systems.";
-  const resumeUrl = profile?.resume_url || "/resume.pdf";
 
   const fallbackTechnologies: Technology[] = STANDARD_TECHNOLOGIES.map((t, idx) => ({
     id: `std-tech-${idx + 1}`,
@@ -205,17 +204,14 @@ export default async function HomePage() {
                     <span>Get In Touch</span>
                   </Button>
                 </Link>
-                {resumeUrl && (
-                  <a
-                    href={resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
-                  >
-                    <Download className="h-3.5 w-3.5" />
-                    <span>Download CV</span>
-                  </a>
-                )}
+                <a
+                  href="/api/resume/download"
+                  download="Min_Phanith_CV.pdf"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  <span>Download CV</span>
+                </a>
               </div>
             </div>
 

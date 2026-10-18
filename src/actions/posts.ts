@@ -266,3 +266,55 @@ export async function syncStandardPosts() {
     message: `Successfully synchronized ${synced} engineering notes into database.`,
   };
 }
+
+export async function ensureCategory(
+  name: string
+): Promise<{ success: boolean; data?: Category; error?: string }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { success: false, error: "Unauthorized: Administrator privileges required." };
+  }
+
+  const cleanName = name.trim().replace(/^#+/, "").trim();
+  if (!cleanName) {
+    return { success: false, error: "Tag name cannot be empty." };
+  }
+
+  const slug = cleanName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  if (!slug) {
+    return { success: false, error: "Invalid tag name." };
+  }
+
+  // Check if exists
+  const { data: existing } = await supabase
+    .from("categories")
+    .select("*")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (existing) {
+    return { success: true, data: existing };
+  }
+
+  // Insert new category
+  const { data: created, error } = await supabase
+    .from("categories")
+    .insert([{ name: cleanName, slug }])
+    .select()
+    .single();
+
+  if (error) {
+    return { success: false, error: error.message };
+  }
+
+  revalidatePath("/admin/posts");
+  return { success: true, data: created };
+}

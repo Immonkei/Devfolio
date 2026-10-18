@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { TechBadge } from '../tech-badge';
 import { ProjectCard } from '../project-card';
 import { ExperienceCard } from '../experience-card';
 import { NoteCard } from '../note-card';
 import { GitHubActivityGraph } from '../github-activity-graph';
+import { MarkdownRenderer } from '../markdown-renderer';
+import { NotesDirectory } from '../notes-directory';
 import { ProjectWithTechnologies, Experience, PostWithCategories, Technology, GitHubActivityData } from '@/types';
 
 describe('Public UI Components', () => {
@@ -186,5 +188,103 @@ describe('Public UI Components', () => {
       expect(screen.getByText('@Immonkei')).toBeInTheDocument();
     });
   });
+
+  describe('MarkdownRenderer', () => {
+    it('renders code block with language and copy button', () => {
+      const content = "```typescript\nconst a: number = 42;\n```";
+      render(<MarkdownRenderer content={content} />);
+      expect(screen.getByText(/typescript/i)).toBeInTheDocument();
+      expect(screen.getByText('Copy Code')).toBeInTheDocument();
+      expect(screen.getByText('const a: number = 42;')).toBeInTheDocument();
+    });
+
+    it('renders GitHub-style callouts properly', () => {
+      const content = "> [!NOTE]\n> Critical database insight here.";
+      render(<MarkdownRenderer content={content} />);
+      expect(screen.getByText('Note')).toBeInTheDocument();
+      expect(screen.getByText('Critical database insight here.')).toBeInTheDocument();
+    });
+
+    it('renders markdown images with captions', () => {
+      const content = "![System Architecture Diagram](/notes/modular-rest-apis.svg)";
+      render(<MarkdownRenderer content={content} />);
+      const img = screen.getByRole('img', { name: 'System Architecture Diagram' });
+      expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('src', '/notes/modular-rest-apis.svg');
+    });
+
+    it('renders markdown tables with headers and rows', () => {
+      const content = "| Param | Type |\n| --- | --- |\n| userId | string |";
+      render(<MarkdownRenderer content={content} />);
+      expect(screen.getByText('Param')).toBeInTheDocument();
+      expect(screen.getByText('Type')).toBeInTheDocument();
+      expect(screen.getByText('userId')).toBeInTheDocument();
+      expect(screen.getByText('string')).toBeInTheDocument();
+    });
+  });
+
+  describe('NotesDirectory', () => {
+    const mockPosts: PostWithCategories[] = [
+      {
+        id: 'p1',
+        title: 'PostgreSQL Connection Pooling Guide',
+        slug: 'postgresql-connection-pooling-guide',
+        excerpt: 'Benchmarking PgBouncer under 10k concurrent connections.',
+        content: 'Article content about database connections...',
+        cover_image_url: null,
+        status: 'PUBLISHED',
+        published_at: '2026-03-01T00:00:00Z',
+        created_at: '2026-03-01T00:00:00Z',
+        updated_at: '2026-03-01T00:00:00Z',
+        categories: [{ id: 'c1', name: 'Database', slug: 'database' }],
+      },
+      {
+        id: 'p2',
+        title: 'Building Resilient Microservices',
+        slug: 'building-resilient-microservices',
+        excerpt: 'Distributed sagas and idempotent APIs.',
+        content: 'Article content about architecture...',
+        cover_image_url: null,
+        status: 'PUBLISHED',
+        published_at: '2026-02-15T00:00:00Z',
+        created_at: '2026-02-15T00:00:00Z',
+        updated_at: '2026-02-15T00:00:00Z',
+        categories: [{ id: 'c2', name: 'Architecture', slug: 'architecture' }],
+      },
+    ];
+
+    it('renders all notes initially with count', () => {
+      render(<NotesDirectory initialPosts={mockPosts} />);
+      expect(screen.getByText('PostgreSQL Connection Pooling Guide')).toBeInTheDocument();
+      expect(screen.getByText('Building Resilient Microservices')).toBeInTheDocument();
+      expect(screen.getByText(/2 notes/i)).toBeInTheDocument();
+    });
+
+    it('filters notes dynamically by search query', () => {
+      render(<NotesDirectory initialPosts={mockPosts} />);
+      const searchInput = screen.getByPlaceholderText(/Search notes/i);
+
+      fireEvent.change(searchInput, { target: { value: 'PostgreSQL' } });
+
+      expect(screen.getByText('PostgreSQL Connection Pooling Guide')).toBeInTheDocument();
+      expect(screen.queryByText('Building Resilient Microservices')).not.toBeInTheDocument();
+    });
+
+    it('shows empty state when no notes match search query and allows reset', () => {
+      render(<NotesDirectory initialPosts={mockPosts} />);
+      const searchInput = screen.getByPlaceholderText(/Search notes/i);
+
+      fireEvent.change(searchInput, { target: { value: 'NonExistentTopicXYZ' } });
+
+      expect(screen.getByText(/No matching notes found/i)).toBeInTheDocument();
+
+      const clearBtn = screen.getByText('Clear Search');
+      fireEvent.click(clearBtn);
+
+      expect(screen.getByText('PostgreSQL Connection Pooling Guide')).toBeInTheDocument();
+      expect(screen.getByText('Building Resilient Microservices')).toBeInTheDocument();
+    });
+  });
 });
+
 

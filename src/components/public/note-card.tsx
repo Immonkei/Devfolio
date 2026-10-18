@@ -1,13 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { formatFullDate } from "@/lib/utils";
+import { formatFullDate, readingTime } from "@/lib/utils";
 import { PostWithCategories } from "@/types";
 import { ArrowRight, BookOpen, Clock } from "lucide-react";
 
 export function NoteCard({ post }: { post: PostWithCategories }) {
-  // Approximate reading time
-  const wordCount = post.content ? post.content.split(/\s+/).length : 200;
-  const readTimeMin = Math.max(1, Math.ceil(wordCount / 200));
   const coverUrl = post.cover_image_url || "/notes/default-note.svg";
 
   return (
@@ -36,7 +33,7 @@ export function NoteCard({ post }: { post: PostWithCategories }) {
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            <span>{readTimeMin} min read</span>
+            <span>{readingTime(post.content)}</span>
           </div>
         </div>
 
@@ -51,20 +48,6 @@ export function NoteCard({ post }: { post: PostWithCategories }) {
         <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
           {post.excerpt}
         </p>
-
-        {/* Categories */}
-        {post.categories && post.categories.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 pt-2">
-            {post.categories.map((cat) => (
-              <span
-                key={cat.id}
-                className="rounded-md border border-border/80 bg-secondary/50 px-2 py-0.5 font-mono text-[11px] text-primary"
-              >
-                #{cat.slug}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Read link */}

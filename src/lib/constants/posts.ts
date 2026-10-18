@@ -1,3 +1,5 @@
+import { PostWithCategories } from "@/types";
+
 export interface StandardPost {
   id: string;
   title: string;
@@ -116,4 +118,32 @@ Writing clean software is about creating explicit mental models. When domain ent
 export function getStandardPostBySlug(slug: string): StandardPost | undefined {
   const normalized = slug.toLowerCase().trim();
   return STANDARD_POSTS.find((p) => p.slug.toLowerCase().trim() === normalized);
+}
+
+export function getStandardPostsWithCategories(): PostWithCategories[] {
+  return STANDARD_POSTS.map((p) => ({
+    ...p,
+    categories: p.category_slugs.map((slug) => ({
+      id: `cat-${slug}`,
+      name: slug.toUpperCase(),
+      slug,
+    })),
+    created_at: p.published_at,
+    updated_at: p.published_at,
+  }));
+}
+
+export function getStandardPostWithCategoriesBySlug(slug: string): PostWithCategories | null {
+  const std = getStandardPostBySlug(slug);
+  if (!std) return null;
+  return {
+    ...std,
+    categories: std.category_slugs.map((s) => ({
+      id: `cat-${s}`,
+      name: s.toUpperCase(),
+      slug: s,
+    })),
+    created_at: std.published_at,
+    updated_at: std.published_at,
+  };
 }

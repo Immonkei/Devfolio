@@ -1,6 +1,6 @@
 import { createPublicClient } from "@/lib/supabase/server";
 import Image from "next/image";
-import { GraduationCap, Compass, Terminal, ArrowRight, ExternalLink } from "lucide-react";
+import { GraduationCap, Compass, Terminal, ArrowRight, ExternalLink, Download } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
@@ -226,16 +226,26 @@ export default async function AboutPage() {
 
       {/* CTA */}
       <section className="pt-6 border-t border-border">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <span className="font-mono text-xs text-muted-foreground">
             Looking for a motivated developer for your team or project?
           </span>
-          <Link href="/contact">
-            <Button size="sm" className="font-mono text-xs gap-1.5">
-              <span>Get in touch</span>
-              <ArrowRight className="h-3 w-3" />
-            </Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <a
+              href="/api/resume/download"
+              download="Min_Phanith_CV.pdf"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>Download CV</span>
+            </a>
+            <Link href="/contact">
+              <Button size="sm" className="font-mono text-xs gap-1.5">
+                <span>Get in touch</span>
+                <ArrowRight className="h-3 w-3" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

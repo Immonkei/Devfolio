@@ -1,8 +1,8 @@
 import { createPublicClient } from "@/lib/supabase/server";
-import { NoteCard } from "@/components/public/note-card";
-import { FileText, BookOpen } from "lucide-react";
+import { NotesDirectory } from "@/components/public/notes-directory";
+import { FileText } from "lucide-react";
 import { PostWithCategories, Category } from "@/types";
-import { STANDARD_POSTS } from "@/lib/constants/posts";
+import { getStandardPostsWithCategories } from "@/lib/constants/posts";
 
 export const metadata = {
   title: "Engineering Notes",
@@ -28,25 +28,15 @@ export default async function NotesPage() {
         categories: (p.post_categories || []).map((pc: { categories: Category | null }) => pc.categories).filter(Boolean) as Category[],
       }));
     } else {
-      posts = STANDARD_POSTS.map((p) => ({
-        ...p,
-        categories: p.category_slugs.map((slug) => ({ id: `cat-${slug}`, name: slug.toUpperCase(), slug })),
-        created_at: p.published_at,
-        updated_at: p.published_at,
-      }));
+      posts = getStandardPostsWithCategories();
     }
   } catch (err) {
     console.error("Notes query error:", err);
-    posts = STANDARD_POSTS.map((p) => ({
-      ...p,
-      categories: p.category_slugs.map((slug) => ({ id: `cat-${slug}`, name: slug.toUpperCase(), slug })),
-      created_at: p.published_at,
-      updated_at: p.published_at,
-    }));
+    posts = getStandardPostsWithCategories();
   }
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-16 sm:px-6 space-y-12">
+    <div className="container mx-auto max-w-6xl px-4 py-16 sm:px-6 space-y-10">
       {/* Header */}
       <div>
         <div className="flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider">
@@ -57,25 +47,12 @@ export default async function NotesPage() {
           Engineering Notes & Field Reports
         </h1>
         <p className="mt-2 text-muted-foreground text-sm max-w-2xl">
-          Deep-dive technical essays on systems design, distributed concurrency, PostgreSQL optimization, and architectural lessons learned from production.
+          Articles, practical tutorials, bug walkthroughs, and personal learnings from building web apps and services.
         </p>
       </div>
 
-      {/* Notes Grid */}
-      {posts.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-border p-16 text-center">
-          <BookOpen className="mx-auto h-8 w-8 text-muted-foreground/60 mb-2" />
-          <p className="font-mono text-xs text-muted-foreground">
-            No published notes currently available. Check back soon.
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <NoteCard key={post.id} post={post} />
-          ))}
-        </div>
-      )}
+      {/* Directory with Search & Category Filters */}
+      <NotesDirectory initialPosts={posts} />
     </div>
   );
 }

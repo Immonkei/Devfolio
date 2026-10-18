@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Terminal, Menu, X } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
+import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -28,7 +29,7 @@ export function PublicNavbar() {
           href="/"
           className="group flex items-center gap-2.5 font-mono text-sm font-semibold tracking-tight text-foreground transition-colors hover:text-primary"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-secondary group-hover:border-primary/50">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-secondary group-hover:border-primary/50 transition-colors">
             <Terminal className="h-4 w-4 text-primary" />
           </div>
           <span className="flex items-center gap-1">
@@ -62,13 +63,15 @@ export function PublicNavbar() {
           })}
         </nav>
 
-        {/* Right Action / GitHub */}
-        <div className="hidden md:flex items-center gap-2">
+        {/* Right Actions: Theme Toggle & GitHub */}
+        <div className="hidden md:flex items-center gap-2.5">
+          <ThemeToggle />
+
           <a
             href="https://github.com/Immonkei"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-lg border border-border/80 bg-secondary/30 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-all duration-200 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_10px_rgba(56,189,248,0.15)]"
+            className="flex items-center gap-2 rounded-lg border border-border/80 bg-secondary/30 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-all duration-200 hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
             aria-label="GitHub Profile"
           >
             <GithubIcon className="h-4 w-4" />
@@ -76,8 +79,10 @@ export function PublicNavbar() {
           </a>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile controls */}
         <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+
           <a
             href="https://github.com/Immonkei"
             target="_blank"
@@ -87,6 +92,7 @@ export function PublicNavbar() {
           >
             <GithubIcon className="h-4 w-4" />
           </a>
+
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-secondary hover:text-foreground"

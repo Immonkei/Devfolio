@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { Mail, Compass } from "lucide-react";
+import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TelegramIcon } from "@/components/ui/icons";
+import { ThemeToggle } from "./theme-toggle";
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
@@ -16,8 +19,10 @@ export function PublicFooter() {
             </span>
           </div>
 
-          {/* Right: Social Media & Contact Icon Dock */}
+          {/* Right: Theme Toggle & Social Media / Contact Icon Dock */}
           <div className="flex items-center gap-2.5">
+            <ThemeToggle />
+
             <a
               href="https://github.com/Immonkei"
               target="_blank"
@@ -58,15 +63,6 @@ export function PublicFooter() {
               title="Contact / Email"
             >
               <Mail className="h-4 w-4" />
-            </Link>
-
-            <Link
-              href="/sitemap.xml"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all"
-              aria-label="Sitemap"
-              title="Sitemap"
-            >
-              <Compass className="h-4 w-4" />
             </Link>
           </div>
         </div>
