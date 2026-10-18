@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   createProject,
   updateProject,
@@ -8,9 +8,27 @@ import {
   toggleProjectPublish,
   syncStandardProjects,
 } from "@/actions/projects";
-import { uploadMediaFile } from "@/actions/media";
+import {
+  uploadMediaFile,
+  uploadMultipleMediaFiles,
+  UploadedMediaResult,
+} from "@/actions/media";
+import { MarkdownRenderer } from "@/components/public/markdown-renderer";
 import { ProjectWithTechnologies, Technology, ProjectStatus } from "@/types";
-import { Plus, Edit2, Trash2, Eye, EyeOff, X, Upload, RefreshCw } from "lucide-react";
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  Eye,
+  EyeOff,
+  X,
+  Upload,
+  RefreshCw,
+  Columns,
+  Copy,
+  Check,
+  Image as ImageIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,6 +61,14 @@ export function ProjectsCMS({
   const [syncSuccess, setSyncSuccess] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [deviceFileName, setDeviceFileName] = useState<string | null>(null);
+
+  // Multi-image upload and asset management
+  const [attachedImages, setAttachedImages] = useState<UploadedMediaResult[]>([]);
+  const [uploadingMultiImages, setUploadingMultiImages] = useState(false);
+  const [multiUploadStatus, setMultiUploadStatus] = useState<string | null>(null);
+  const [copiedTagUrl, setCopiedTagUrl] = useState<string | null>(null);
+  const [descEditorMode, setDescEditorMode] = useState<"write" | "preview">("write");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSyncProjects = async () => {
     setSyncing(true);
@@ -86,6 +112,27 @@ export function ProjectsCMS({
     technology_ids: [] as string[],
   });
 
+  const extractImagesFromMarkdown = (text: string): UploadedMediaResult[] => {
+    if (!text) return [];
+    const regex = /!\[(.*?)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\)/g;
+    const found: UploadedMediaResult[] = [];
+    const seen = new Set<string>();
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const alt = match[1];
+      const url = match[2];
+      if (!seen.has(url)) {
+        seen.add(url);
+        found.push({
+          url,
+          fileName: alt || url.split("/").pop() || "project-image",
+          size: 0,
+        });
+      }
+    }
+    return found;
+  };
+
   const resetForm = () => {
     setForm({
       title: "",
@@ -112,6 +159,11 @@ export function ProjectsCMS({
     setError(null);
     setDeviceFileName(null);
     setUploadingImage(false);
+    setAttachedImages([]);
+    setUploadingMultiImages(false);
+    setMultiUploadStatus(null);
+    setCopiedTagUrl(null);
+    setDescEditorMode("write");
   };
 
   const handleEdit = (p: ProjectWithTechnologies) => {
@@ -138,7 +190,123 @@ export function ProjectsCMS({
     });
     setDeviceFileName(null);
     setUploadingImage(false);
+    setAttachedImages(extractImagesFromMarkdown(p.description));
+    setUploadingMultiImages(false);
+    setMultiUploadStatus(null);
+    setCopiedTagUrl(null);
+    setDescEditorMode("write");
     setIsEditing(true);
+  };
+
+  const insertFormatting = (prefix: string, suffix: string = "", defaultText: string = "") => {
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      setForm((prev) => ({
+        ...prev,
+        description: prev.description
+          ? `${prev.description}\n\n${prefix}${defaultText}${suffix}`
+          : `${prefix}${defaultText}${suffix}`,
+      }));
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selection = form.description.substring(start, end) || defaultText;
+    const replacement = `${prefix}${selection}${suffix}`;
+
+    const newDescription =
+      form.description.substring(0, start) + replacement + form.description.substring(end);
+
+    setForm((prev) => ({ ...prev, description: newDescription }));
+
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(
+        start + prefix.length,
+        start + prefix.length + selection.length
+      );
+    }, 50);
+  };
+
+  // Multiple Images Upload handler
+  const handleMultipleImagesUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploadingMultiImages(true);
+    setMultiUploadStatus(`Uploading ${files.length} image(s)...`);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
+      const res = await uploadMultipleMediaFiles(formData);
+
+      if (res.success && res.data && res.data.length > 0) {
+        setAttachedImages((prev) => [...prev, ...res.data]);
+        setMultiUploadStatus(
+          `Successfully uploaded ${res.data.length} image(s). Click 'Insert' to add to project narrative.`
+        );
+
+        if (!form.cover_image_url || form.cover_image_url === "/projects/default-project.svg") {
+          setForm((prev) => ({ ...prev, cover_image_url: res.data[0].url }));
+        }
+      } else {
+        setError(res.error || "Failed to upload one or more images.");
+        setMultiUploadStatus(null);
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Multi-image upload exception.");
+      setMultiUploadStatus(null);
+    } finally {
+      setUploadingMultiImages(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleInsertImageTag = (img: UploadedMediaResult) => {
+    const cleanAlt = img.fileName.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
+    insertFormatting(`\n![${cleanAlt}](`, ")\n", img.url);
+  };
+
+  const handleInsertAllAsGallery = () => {
+    if (attachedImages.length === 0) return;
+    const galleryMarkdown =
+      "\n" +
+      attachedImages
+        .map((img) => {
+          const cleanAlt = img.fileName.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
+          return `![${cleanAlt}](${img.url})`;
+        })
+        .join("\n") +
+      "\n";
+
+    setForm((prev) => ({
+      ...prev,
+      description: prev.description
+        ? prev.description.trimEnd() + "\n\n" + galleryMarkdown.trim()
+        : galleryMarkdown.trim(),
+    }));
+  };
+
+  const handleCopyTag = async (img: UploadedMediaResult) => {
+    const cleanAlt = img.fileName.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
+    const tag = `![${cleanAlt}](${img.url})`;
+    try {
+      await navigator.clipboard.writeText(tag);
+      setCopiedTagUrl(img.url);
+      setTimeout(() => setCopiedTagUrl(null), 2000);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleRemoveAttachedImage = (index: number) => {
+    setAttachedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleDeviceImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -373,15 +541,59 @@ export function ProjectsCMS({
               />
             </div>
 
-            <div className="space-y-1">
-              <label className="text-foreground font-semibold">Full Narrative *</label>
-              <Textarea
-                required
-                rows={3}
-                placeholder="Detailed project context, operational objectives, and execution details"
-                value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })}
-              />
+            {/* Full Narrative with Write / Preview toggle */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-foreground font-semibold flex items-center gap-2">
+                  <span>Full Narrative (Markdown Supported) *</span>
+                </label>
+                <div className="inline-flex rounded-md border border-border bg-secondary/50 p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setDescEditorMode("write")}
+                    className={`px-2.5 py-0.5 rounded text-xs font-mono transition-colors cursor-pointer ${
+                      descEditorMode === "write"
+                        ? "bg-primary text-primary-foreground font-bold shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Write
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDescEditorMode("preview")}
+                    className={`px-2.5 py-0.5 rounded text-xs font-mono transition-colors cursor-pointer ${
+                      descEditorMode === "preview"
+                        ? "bg-primary text-primary-foreground font-bold shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Preview
+                  </button>
+                </div>
+              </div>
+
+              {descEditorMode === "write" ? (
+                <Textarea
+                  ref={textareaRef}
+                  required
+                  rows={6}
+                  placeholder="Detailed project context, operational objectives, and execution details. Supports Markdown, code blocks, and images (![Alt](url))."
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                />
+              ) : (
+                <div className="min-h-[140px] max-h-[350px] overflow-y-auto rounded-md border border-border bg-secondary/15 p-4 text-xs font-sans">
+                  <MarkdownRenderer
+                    content={
+                      form.description || "_No narrative content entered yet. Switch to Write mode to compose your project story._"
+                    }
+                  />
+                </div>
+              )}
+              <p className="text-[11px] text-muted-foreground font-mono">
+                Supports markdown tables, checklists, code blocks, and consecutive images (rendered as responsive image galleries with click-to-zoom).
+              </p>
             </div>
 
             {/* Architecture Sections */}
@@ -475,6 +687,148 @@ export function ProjectsCMS({
                   onChange={(e) => setForm({ ...form, live_url: e.target.value })}
                 />
               </div>
+            </div>
+
+            {/* Multi-Image Upload & Asset Management */}
+            <div className="space-y-3 pt-3 border-t border-border">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div>
+                  <label className="text-foreground font-semibold flex items-center gap-2">
+                    <ImageIcon className="h-4 w-4 text-primary" />
+                    <span>Project Screenshots & Architecture Diagrams (Multi-Image Upload)</span>
+                    {uploadingMultiImages && (
+                      <span className="text-[11px] text-primary animate-pulse font-normal">
+                        (Uploading files...)
+                      </span>
+                    )}
+                  </label>
+                  <p className="text-[11px] text-muted-foreground font-mono">
+                    Select multiple screenshot files at once. Insert single images or generate a multi-image gallery grid.
+                  </p>
+                </div>
+
+                {attachedImages.length > 0 && (
+                  <Button
+                    type="button"
+                    onClick={handleInsertAllAsGallery}
+                    variant="outline"
+                    size="sm"
+                    className="gap-1.5 font-mono text-xs border-primary/40 text-primary hover:bg-primary/10 shrink-0 self-start sm:self-auto cursor-pointer"
+                    title="Insert all attached images as a responsive multi-image gallery"
+                  >
+                    <Columns className="h-3.5 w-3.5" />
+                    <span>Insert All as Gallery Grid</span>
+                  </Button>
+                )}
+              </div>
+
+              {/* Multi-file Input Dropzone */}
+              <div className="rounded-xl border border-dashed border-border/80 bg-secondary/15 p-4 text-center">
+                <input
+                  type="file"
+                  id="project-multi-images-input"
+                  multiple
+                  accept="image/*"
+                  onChange={handleMultipleImagesUpload}
+                  disabled={uploadingMultiImages}
+                  className="hidden"
+                />
+                <label
+                  htmlFor="project-multi-images-input"
+                  className="inline-flex flex-col items-center justify-center gap-2 cursor-pointer w-full"
+                >
+                  <div className="rounded-full bg-primary/10 p-2.5 text-primary">
+                    <Upload className={`h-5 w-5 ${uploadingMultiImages ? "animate-bounce" : ""}`} />
+                  </div>
+                  <div className="text-xs font-mono">
+                    <span className="font-semibold text-primary underline underline-offset-2">
+                      Click to select multiple screenshots
+                    </span>{" "}
+                    <span className="text-muted-foreground">or drag & drop here (PNG, JPG, SVG, WebP up to 10MB each)</span>
+                  </div>
+                </label>
+              </div>
+
+              {multiUploadStatus && (
+                <div className="rounded-lg border border-primary/30 bg-primary/10 p-2.5 font-mono text-[11px] text-primary flex items-center gap-2">
+                  <Check className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>{multiUploadStatus}</span>
+                </div>
+              )}
+
+              {/* Attached Images Asset Shelf */}
+              {attachedImages.length > 0 && (
+                <div className="space-y-2 pt-1">
+                  <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
+                    <span>Uploaded Assets ({attachedImages.length}):</span>
+                    <span>Click &apos;Insert&apos; to add into Full Narrative</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+                    {attachedImages.map((img, iIdx) => (
+                      <div
+                        key={iIdx}
+                        className="group flex items-center gap-2.5 rounded-lg border border-border bg-card p-2 shadow-xs hover:border-primary/50 transition-colors"
+                      >
+                        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded border border-border/70 bg-secondary/40">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={img.url}
+                            alt={img.fileName}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1 space-y-1">
+                          <p className="truncate font-mono text-[11px] text-foreground font-medium">
+                            {img.fileName}
+                          </p>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <button
+                              type="button"
+                              onClick={() => handleInsertImageTag(img)}
+                              className="text-[10px] text-primary hover:underline font-mono flex items-center gap-0.5 cursor-pointer font-bold"
+                              title="Insert markdown tag into Full Narrative"
+                            >
+                              <Plus className="h-3 w-3" />
+                              <span>Insert</span>
+                            </button>
+                            <span className="text-muted-foreground/40">•</span>
+                            <button
+                              type="button"
+                              onClick={() => setForm((prev) => ({ ...prev, cover_image_url: img.url }))}
+                              className="text-[10px] text-muted-foreground hover:text-primary font-mono cursor-pointer"
+                              title="Set as project cover thumbnail"
+                            >
+                              Cover
+                            </button>
+                            <span className="text-muted-foreground/40">•</span>
+                            <button
+                              type="button"
+                              onClick={() => handleCopyTag(img)}
+                              className="text-[10px] text-muted-foreground hover:text-foreground font-mono flex items-center gap-0.5 cursor-pointer"
+                            >
+                              {copiedTagUrl === img.url ? (
+                                <Check className="h-3 w-3 text-emerald-400" />
+                              ) : (
+                                <Copy className="h-3 w-3" />
+                              )}
+                              <span>{copiedTagUrl === img.url ? "Copied" : "Copy"}</span>
+                            </button>
+                            <span className="text-muted-foreground/40">•</span>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveAttachedImage(iIdx)}
+                              className="text-[10px] text-muted-foreground hover:text-destructive font-mono cursor-pointer"
+                              title="Remove from list"
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Cover Image Thumbnail Section */}
