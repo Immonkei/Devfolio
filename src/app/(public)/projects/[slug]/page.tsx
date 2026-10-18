@@ -18,6 +18,7 @@ import { GithubIcon } from "@/components/ui/icons";
 import { Badge } from "@/components/ui/badge";
 import { formatFullDate } from "@/lib/utils";
 import { Technology } from "@/types";
+import { MarkdownRenderer } from "@/components/public/markdown-renderer";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -191,8 +192,8 @@ export default async function ProjectDetailPage({
       {/* Main Narrative Sections */}
       <div className="space-y-10 border-t border-border pt-10">
         {project.description && (
-          <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed text-sm sm:text-base">
-            <p>{project.description}</p>
+          <div className="space-y-4">
+            <MarkdownRenderer content={project.description} />
           </div>
         )}
 
@@ -209,9 +210,7 @@ export default async function ProjectDetailPage({
                   {section.title}
                 </h2>
               </div>
-              <div className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line font-sans">
-                {section.content}
-              </div>
+              <MarkdownRenderer content={section.content || ""} />
             </section>
           );
         })}
