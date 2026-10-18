@@ -9,6 +9,7 @@ import {
   Plus,
   Activity,
   Layers,
+  Database,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -137,6 +138,15 @@ export default async function AdminDashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <Link
+            href="/admin/settings"
+            className="inline-flex items-center gap-2 rounded-lg border border-border bg-card/60 px-3 py-1.5 text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors shadow-xs"
+            title="Supabase Anti-Suspension Guard: Active"
+          >
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <Database className="h-3.5 w-3.5 text-primary" />
+            <span>Supabase Guard</span>
+          </Link>
           <Link href="/admin/projects">
             <Button size="sm" className="gap-1.5 font-mono text-xs">
               <Plus className="h-3.5 w-3.5" />
