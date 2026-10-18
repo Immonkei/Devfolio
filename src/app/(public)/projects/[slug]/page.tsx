@@ -65,37 +65,37 @@ export default async function ProjectDetailPage({
 
   const sections = [
     {
-      title: "Problem Statement & Context",
+      title: "The Problem",
       icon: AlertCircle,
       content: project.problem,
     },
     {
-      title: "Solution & Strategy",
+      title: "The Solution",
       icon: Lightbulb,
       content: project.solution,
     },
     {
-      title: "System Architecture",
+      title: "Architecture",
       icon: Layers,
       content: project.architecture,
     },
     {
-      title: "Technical Implementation",
+      title: "Implementation",
       icon: Cpu,
       content: project.implementation,
     },
     {
-      title: "Challenges Overcome",
+      title: "Key Challenges",
       icon: AlertCircle,
       content: project.challenges,
     },
     {
-      title: "Engineering Trade-offs & Decisions",
+      title: "Trade-offs",
       icon: Scale,
       content: project.tradeoffs,
     },
     {
-      title: "Empirical Results & Impact",
+      title: "Results & Impact",
       icon: CheckCircle2,
       content: project.results,
     },
@@ -110,7 +110,7 @@ export default async function ProjectDetailPage({
           className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          <span>Return to Projects Matrix</span>
+          <span>Return to Projects</span>
         </Link>
       </div>
 
@@ -118,7 +118,7 @@ export default async function ProjectDetailPage({
       <header className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="default" className="font-mono text-xs">
-            Architecture Case Study
+            Case Study
           </Badge>
           <span className="font-mono text-xs text-muted-foreground flex items-center gap-1">
             <Calendar className="h-3 w-3" />

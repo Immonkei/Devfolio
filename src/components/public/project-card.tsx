@@ -31,7 +31,7 @@ export function ProjectCard({ project }: { project: ProjectWithTechnologies }) {
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
             <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-              Production Case Study
+              Case Study
             </span>
           </div>
           {project.featured && (
@@ -74,7 +74,7 @@ export function ProjectCard({ project }: { project: ProjectWithTechnologies }) {
           href={`/projects/${project.slug}`}
           className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
         >
-          <span>Architecture Deep Dive</span>
+          <span>View Project Details</span>
           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
         </Link>
 
