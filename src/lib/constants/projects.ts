@@ -17,6 +17,45 @@ function getTech(name: string): Technology {
 
 export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
   {
+    id: "40000000-0000-0000-0000-000000000009",
+    title: "Finora - Personal Finance Tracker",
+    slug: "finora",
+    short_description:
+      "An offline-first personal finance PWA with dynamic daily spending allowance, dual USD/KHR currency conversion, and AI receipt OCR.",
+    description:
+      "Finora helps you stay in control of daily expenses with real-time daily allowance calculations, dual currency support (USD and KHR), offline mode, and quick logging through keypad, voice, or receipt OCR with Google Gemini.",
+    problem:
+      "Most finance apps require an internet connection, lack dual USD/KHR currency support for Cambodia, and fail to calculate dynamic daily spending allowances that adjust throughout the month.",
+    solution:
+      "Engineered an offline-first PWA using Next.js 16, Supabase PostgreSQL, and Google Gemini AI that calculates dynamic daily allowances, handles real-time USD/KHR exchange rates, and allows instant expense logging via keypad, voice, or receipt OCR.",
+    architecture:
+      "Next.js App Router, React 19, TypeScript, Tailwind CSS v4, Supabase Auth & PostgreSQL with Row Level Security (RLS) and report RPC functions, service worker offline queue, and Google Gemini multimodal API.",
+    implementation:
+      "Real-time daily allowance formula, integer-based money math (cents/riel) to prevent float rounding errors, Recharts spending heatmaps, and background offline sync.",
+    challenges:
+      "Synchronizing offline transaction queues with Supabase without race conditions, and parsing multi-format receipt slips accurately using Google Gemini AI.",
+    tradeoffs:
+      "Used integer minor units (cents/riel) rather than decimals to eliminate precision errors; chose client-side queue with server validation over heavy CRDTs for simplicity and speed.",
+    results:
+      "Sub-5-second entry time, 100% offline logging reliability with background sync, zero floating-point arithmetic errors, and seamless dual-currency cash flow tracking.",
+    cover_image_url: "/projects/finora.svg",
+    github_url: "https://github.com/Immonkei/Finora",
+    live_url: null,
+    featured: true,
+    status: "PUBLISHED",
+    display_order: 1,
+    created_at: "2026-10-09T00:00:00Z",
+    updated_at: "2026-10-18T00:00:00Z",
+    technologies: [
+      getTech("Next.js"),
+      getTech("TypeScript"),
+      getTech("Tailwind CSS"),
+      getTech("PostgreSQL"),
+      getTech("React"),
+      getTech("Zod"),
+    ],
+  },
+  {
     id: "40000000-0000-0000-0000-000000000001",
     title: "EaseLife - Personal Productivity System",
     slug: "easelife",
@@ -43,7 +82,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: true,
     status: "PUBLISHED",
-    display_order: 1,
+    display_order: 2,
     created_at: "2026-09-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -81,7 +120,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: true,
     status: "PUBLISHED",
-    display_order: 2,
+    display_order: 3,
     created_at: "2026-08-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -119,7 +158,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: true,
     status: "PUBLISHED",
-    display_order: 3,
+    display_order: 4,
     created_at: "2026-07-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -158,7 +197,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: true,
     status: "PUBLISHED",
-    display_order: 4,
+    display_order: 5,
     created_at: "2026-06-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -197,7 +236,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: false,
     status: "PUBLISHED",
-    display_order: 5,
+    display_order: 6,
     created_at: "2026-05-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -236,7 +275,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: false,
     status: "PUBLISHED",
-    display_order: 6,
+    display_order: 7,
     created_at: "2026-04-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -273,7 +312,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: false,
     status: "PUBLISHED",
-    display_order: 7,
+    display_order: 8,
     created_at: "2026-03-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [
@@ -310,7 +349,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     live_url: null,
     featured: false,
     status: "PUBLISHED",
-    display_order: 8,
+    display_order: 9,
     created_at: "2026-02-01T00:00:00Z",
     updated_at: "2026-09-27T00:00:00Z",
     technologies: [

@@ -200,6 +200,25 @@ INSERT INTO public.projects (
   display_order
 ) VALUES
   (
+    'Finora - Personal Finance Tracker',
+    'finora',
+    'An offline-first personal finance PWA with dynamic daily spending allowance, dual USD/KHR currency conversion, and AI receipt OCR.',
+    'Finora helps you stay in control of daily expenses with real-time daily allowance calculations, dual currency support (USD and KHR), offline mode, and quick logging through keypad, voice, or receipt OCR with Google Gemini.',
+    'Most finance apps require an internet connection, lack dual USD/KHR currency support for Cambodia, and fail to calculate dynamic daily spending allowances that adjust throughout the month.',
+    'Engineered an offline-first PWA using Next.js 16, Supabase PostgreSQL, and Google Gemini AI that calculates dynamic daily allowances, handles real-time USD/KHR exchange rates, and allows instant expense logging via keypad, voice, or receipt OCR.',
+    'Next.js App Router, React 19, TypeScript, Tailwind CSS v4, Supabase Auth & PostgreSQL with Row Level Security (RLS) and report RPC functions, service worker offline queue, and Google Gemini multimodal API.',
+    'Real-time daily allowance formula, integer-based money math (cents/riel) to prevent float rounding errors, Recharts spending heatmaps, and background offline sync.',
+    'Synchronizing offline transaction queues with Supabase without race conditions, and parsing multi-format receipt slips accurately using Google Gemini AI.',
+    'Used integer minor units (cents/riel) rather than decimals to eliminate precision errors; chose client-side queue with server validation over heavy CRDTs for simplicity and speed.',
+    'Sub-5-second entry time, 100% offline logging reliability with background sync, zero floating-point arithmetic errors, and seamless dual-currency cash flow tracking.',
+    '/projects/finora.svg',
+    'https://github.com/Immonkei/Finora',
+    NULL,
+    TRUE,
+    'PUBLISHED',
+    1
+  ),
+  (
     'EaseLife - Personal Productivity System',
     'easelife',
     'A personal productivity web app built with Next.js, Tailwind CSS, and Supabase to organize goals, projects, and daily habits.',
@@ -216,7 +235,7 @@ INSERT INTO public.projects (
     NULL,
     TRUE,
     'PUBLISHED',
-    1
+    2
   ),
   (
     'Borejak - Blood Donation Platform',
@@ -235,7 +254,7 @@ INSERT INTO public.projects (
     NULL,
     TRUE,
     'PUBLISHED',
-    2
+    3
   ),
   (
     'UNSAID - Anonymous Expression Platform',
@@ -254,7 +273,7 @@ INSERT INTO public.projects (
     NULL,
     TRUE,
     'PUBLISHED',
-    3
+    4
   ),
   (
     'ReanHub - Academic LMS',
@@ -273,7 +292,7 @@ INSERT INTO public.projects (
     NULL,
     TRUE,
     'PUBLISHED',
-    4
+    5
   ),
   (
     'Tos-Nham - Restaurant Management API',
@@ -292,7 +311,7 @@ INSERT INTO public.projects (
     NULL,
     FALSE,
     'PUBLISHED',
-    5
+    6
   ),
   (
     'Daymark - Habit & Goal Tracker PWA',
@@ -311,7 +330,7 @@ INSERT INTO public.projects (
     NULL,
     FALSE,
     'PUBLISHED',
-    6
+    7
   ),
   (
     'Recipe Finder - Android App',
@@ -330,7 +349,7 @@ INSERT INTO public.projects (
     NULL,
     FALSE,
     'PUBLISHED',
-    7
+    8
   ),
   (
     'CipherVerse - Cryptography Explorer',
@@ -349,7 +368,7 @@ INSERT INTO public.projects (
     NULL,
     FALSE,
     'PUBLISHED',
-    8
+    9
   )
 ON CONFLICT (slug) DO UPDATE SET
   title = EXCLUDED.title,
@@ -374,6 +393,14 @@ ON CONFLICT (slug) DO UPDATE SET
 INSERT INTO public.project_technologies (project_id, technology_id)
 SELECT p.id, t.id
 FROM (VALUES
+  -- Finora
+  ('finora', 'Next.js'),
+  ('finora', 'TypeScript'),
+  ('finora', 'Tailwind CSS'),
+  ('finora', 'PostgreSQL'),
+  ('finora', 'React'),
+  ('finora', 'Zod'),
+
   -- EaseLife
   ('easelife', 'Next.js'),
   ('easelife', 'TypeScript'),
