@@ -1,6 +1,29 @@
 @import "tailwindcss";
 
 :root {
+  --background: #f8fafc;
+  --foreground: #090d16;
+  --card: #ffffff;
+  --card-foreground: #090d16;
+  --popover: #ffffff;
+  --popover-foreground: #090d16;
+  --primary: #0284c7;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0284c7;
+  --radius: 0.5rem;
+}
+
+.dark {
   --background: #090d16;
   --foreground: #f1f5f9;
   --card: #0f172a;
@@ -20,7 +43,6 @@
   --border: #1e293b;
   --input: #1e293b;
   --ring: #38bdf8;
-  --radius: 0.5rem;
 }
 
 @theme inline {
@@ -55,8 +77,12 @@ body {
 
 /* Custom technical styling */
 .tech-grid-bg {
-  background-image: radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(2, 132, 199, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+.dark .tech-grid-bg {
+  background-image: radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px);
 }
 
 .code-bracket::before {
@@ -85,16 +111,16 @@ select:focus-visible {
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--muted-foreground);
 }
 
 /* Technical animations for cyber telemetry and avatar radar */

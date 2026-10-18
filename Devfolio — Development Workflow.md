@@ -1,8 +1,8 @@
-# DevForge — Development Workflow
+# Devfolio — Development Workflow
 
 ## 1. Workflow Objective
 
-Build DevForge incrementally as a production-quality dynamic Software Engineer Portfolio Platform.
+Build Devfolio incrementally as a production-quality dynamic Software Engineer Portfolio Platform.
 
 The workflow must prioritize:
 

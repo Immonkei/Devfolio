@@ -4,7 +4,7 @@ export async function fetchGitHubRepositories(username: string): Promise<GitHubR
   try {
     const headers: Record<string, string> = {
       Accept: "application/vnd.github.v3+json",
-      "User-Agent": "DevForge-Portfolio-Platform",
+      "User-Agent": "Devfolio-Portfolio-Platform",
     };
 
     if (process.env.GITHUB_TOKEN) {

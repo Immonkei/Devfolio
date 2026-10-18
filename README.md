@@ -1,4 +1,4 @@
-# DevForge — Dynamic Full-Stack Software Engineer Portfolio & CMS
+# Devfolio — Dynamic Full-Stack Software Engineer Portfolio & CMS
 
 [![CI Pipeline](https://github.com/Immonkei/Devfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/Immonkei/Devfolio/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
@@ -8,7 +8,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![Vitest](https://img.shields.io/badge/Vitest-v5-FCC72B?style=flat-square&logo=vitest)](https://vitest.dev/)
 
-> **DevForge** is a dynamic, high-craft software engineering portfolio platform demonstrating full-stack engineering proficiency.
+> **Devfolio** is a dynamic, high-craft developer portfolio and content management platform built by **Min Phanith** (IT Engineering student at Royal University of Phnom Penh).
 > 
 > Core Principle: **"Portfolio content is data, not code."**
 > Zero hardcoded project cards, static work histories, or hardcoded skill lists. All portfolio content is modeled relationally in PostgreSQL, protected with Row-Level Security (RLS), and managed through an authenticated Admin CMS with instant live revalidation.
@@ -32,6 +32,7 @@
         |  - ISR / Statically Rendered|                     |  - Supabase Auth Cookies    |
         |  - React 19 Server Comps    |                     |  - Server Action Mutations  |
         |  - Tailwind CSS v4 Theme    |                     |  - Storage Upload Pipeline  |
+        |  - Dark / Light Mode System |                     |  - Split Live Preview CMS   |
         +--------------+--------------+                     +--------------+--------------+
                        |                                                   |
                        +-------------------------+-------------------------+
@@ -47,13 +48,22 @@
 ```
 
 ### Key Engineering Features
+
 - **Next.js 16 App Router & React 19**: Modern Server Components architecture, static generation for public pages, and authenticated dynamic server routes for the CMS.
 - **Relational PostgreSQL Schema (13 tables)**: Profiles, projects, technologies, project technologies junction, experiences, education, categories, posts, post categories junction, contact messages, media items, page views, and telemetry events.
 - **Strict Row-Level Security (RLS)**: Public read access for published records; write/mutate access strictly locked to authenticated admin users (`auth.uid() = id`).
-- **Authenticated Admin CMS**: Full CRUD interfaces for projects, experience history, education records, tech stacks, markdown engineering notes, message inbox, and media uploads.
-- **GitHub API Integration**: Live commit and repository telemetry with Next.js revalidation cache and graceful fallback.
+- **Clean Dark & Light Mode System**: Accessible, flicker-free theme switching with automatic system preference detection and local storage persistence.
+- **Reliable CV Download Route (`/api/resume/download`)**: Direct streaming route with proper `Content-Disposition: attachment` headers, local PDF fallback, and HTTP caching headers (`Cache-Control: public, max-age=3600`).
+- **Modern Technical Engineering Notes**:
+  - Full-featured Markdown renderer with GitHub alert callouts (`[!NOTE]`, `[!TIP]`, `[!WARNING]`, `[!IMPORTANT]`, `[!CAUTION]`), multi-image grids, zoom lightbox modals, 1-click code copying, and tables.
+  - Interactive Table of Contents (TOC) with scroll-aware anchor links and reading progress indicator.
+  - Searchable notes directory with instant client-side filtering.
+- **Authenticated Admin CMS**:
+  - Full CRUD interfaces for projects, experience history, education records, tech stacks, and engineering notes.
+  - Batch multi-image uploader directly to Supabase Storage with instant Markdown snippet insertion.
+  - Split-pane live Markdown preview editor and dynamic tag creation.
 - **Privacy-First Analytics Engine**: In-house page view and click telemetry tracking without third-party tracking cookies or external scripts.
-- **High-Craft UI/UX**: Dark developer terminal aesthetic with glowing accents, monospace typographic accents, fluid responsive layouts, keyboard accessibility, and micro-interactions.
+- **GitHub API Integration**: Live commit and repository telemetry with Next.js revalidation cache and graceful fallback.
 
 ---
 
@@ -63,7 +73,7 @@
 ├── .github/
 │   ├── workflows/ci.yml             # Automated CI pipeline (lint, typecheck, test, build)
 │   └── pull_request_template.md     # Standardized PR checklist
-├── public/                          # Static assets and favicons
+├── public/                          # Static assets, SVG diagrams, and resume.pdf
 ├── src/
 │   ├── actions/                     # Next.js Server Actions (CMS CRUD mutations)
 │   │   ├── projects.ts
@@ -75,22 +85,24 @@
 │   │   ├── media.ts
 │   │   └── settings.ts
 │   ├── app/
-│   │   ├── (public)/                # Public portfolio routes (Home, About, Projects, Notes, etc.)
+│   │   ├── (public)/                # Public portfolio routes (Home, About, Projects, Notes, Contact)
+│   │   │   ├── notes/[slug]/        # Detailed engineering note with TOC & reading progress
+│   │   │   └── notes/               # Searchable engineering notes directory
 │   │   ├── admin/                   # Admin CMS routes (Dashboard, Projects, Experience, Media, etc.)
-│   │   ├── api/                     # Server endpoints (/api/contact, /api/github)
-│   │   ├── layout.tsx               # Root application shell
+│   │   ├── api/                     # Server endpoints (/api/contact, /api/github, /api/resume/download)
+│   │   ├── layout.tsx               # Root application shell with ThemeProvider
 │   │   ├── sitemap.ts               # Automated dynamic XML sitemap
 │   │   └── robots.ts                # Crawler indexing directives
 │   ├── components/
 │   │   ├── admin/                   # CMS management components & forms
-│   │   ├── public/                  # Public cards, navigation, hero, and feeds
-│   │   └── ui/                      # Reusable UI primitives (Button, Card, Badge, etc.)
+│   │   ├── public/                  # Public cards, navigation, hero, TOC, and feeds
+│   │   └── ui/                      # Reusable UI primitives (Button, Card, Badge, Input, etc.)
 │   ├── lib/
 │   │   ├── supabase/                # SSR client, server client, and session proxy
 │   │   ├── validations/             # Zod schemas for all forms and actions
 │   │   ├── analytics.ts             # Privacy-first telemetry recorder
 │   │   ├── github/client.ts         # GitHub public repository fetcher
-│   │   └── utils.ts                 # Utility functions (slugify, readingTime, formatDate, cn)
+│   │   └── utils.ts                 # Utility functions (readingTime, formatDate, slugify, cn)
 │   └── types/                       # TypeScript relational definitions and database mapping
 ├── supabase/
 │   ├── migrations/                  # Versioned DDL migration scripts
@@ -121,7 +133,8 @@ Copy `.env.example` to `.env.local`:
 ```bash
 cp .env.example .env.local
 ```
-Fill in your Supabase credentials:
+
+Fill in your configuration:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-anon-key
@@ -130,12 +143,12 @@ GITHUB_ACCESS_TOKEN=your-optional-github-pat
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-### 4. Database Initialization
-Run the DDL migration in your Supabase SQL editor or via Supabase CLI:
+### 4. Database Setup
+Apply schema migrations and initial seed data via Supabase CLI or SQL Editor:
 ```bash
 # Apply schema
 supabase db push
-# Or run contents of supabase/migrations/20260926000000_devforge_schema.sql
+# Or run contents of supabase/migrations/20260926000000_devfolio_schema.sql
 
 # Seed data (optional)
 # Run contents of supabase/seed.sql
@@ -145,14 +158,15 @@ supabase db push
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to view the public portfolio.
-Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login) to log into the Admin CMS.
+
+- Public Portfolio: [http://localhost:3000](http://localhost:3000)
+- Admin CMS Dashboard: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 
 ---
 
 ## 🧪 Testing & Quality Gates
 
-DevForge enforces strict code quality and test coverage before any code is merged into `develop` or `main`.
+Devfolio enforces strict code quality and test coverage before any code is merged into `develop` or `main`.
 
 ```bash
 # Run TypeScript compilation check
@@ -175,7 +189,7 @@ npm run build
 
 ## 🔄 Git Branching Model & CI/CD
 
-This repository follows a strict Git Flow model:
+This repository follows a clean Git Flow model:
 - `main`: Production-ready releases only. Every commit represents a stable deployment.
 - `develop`: Integration branch where feature branches are merged after passing CI.
 - `feat/*`: Feature branches isolated for specific functional deliverables.
@@ -190,4 +204,4 @@ Every Pull Request automatically triggers the GitHub Actions CI pipeline:
 ---
 
 ## 📜 License
-MIT License. Built with craft and precision.
+MIT License. Built with craft and precision by [Min Phanith](https://github.com/Immonkei).
