@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { STANDARD_PROJECTS, getStandardProjectBySlug } from "@/lib/constants/projects";
 
 describe("STANDARD_PROJECTS authentic repository fixtures", () => {
-  it("contains all 8 authentic GitHub projects for Immonkei", () => {
-    expect(STANDARD_PROJECTS).toHaveLength(8);
+  it("contains all 9 authentic GitHub projects for Immonkei", () => {
+    expect(STANDARD_PROJECTS).toHaveLength(9);
   });
 
   it("ensures each project has valid attributes and Immonkei GitHub repository links", () => {
@@ -24,6 +24,11 @@ describe("STANDARD_PROJECTS authentic repository fixtures", () => {
   });
 
   it("correctly finds projects by slug case-insensitively", () => {
+    const finora = getStandardProjectBySlug("FINORA");
+    expect(finora).toBeDefined();
+    expect(finora?.slug).toBe("finora");
+    expect(finora?.title).toContain("Finora");
+
     const easelife = getStandardProjectBySlug("EASELIFE");
     expect(easelife).toBeDefined();
     expect(easelife?.slug).toBe("easelife");

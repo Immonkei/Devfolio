@@ -1,0 +1,143 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-finora" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <linearGradient id="card-finora" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="accent-emerald" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <pattern id="grid-finora" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10b981" stroke-opacity="0.05" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg-finora)" />
+  <rect width="1200" height="675" fill="url(#grid-finora)" />
+
+  <circle cx="240" cy="180" r="280" fill="#10b981" fill-opacity="0.12" filter="blur(80px)" />
+  <circle cx="960" cy="460" r="280" fill="#06b6d4" fill-opacity="0.1" filter="blur(80px)" />
+
+  <!-- Outer Frame -->
+  <rect x="24" y="24" width="1152" height="627" rx="20" stroke="#047857" stroke-width="1.5" stroke-opacity="0.6" />
+
+  <!-- Browser Window Container -->
+  <g transform="translate(60, 56)">
+    <rect width="1080" height="562" rx="14" fill="#021f18" stroke="#065f46" stroke-width="1.5" />
+
+    <!-- Browser Header Bar -->
+    <rect width="1080" height="48" rx="14" fill="#064e3b" fill-opacity="0.6" />
+    <path d="M0 48h1080" stroke="#047857" stroke-width="1" stroke-opacity="0.4" />
+
+    <!-- Window Dots -->
+    <circle cx="28" cy="24" r="6" fill="#ef4444" />
+    <circle cx="48" cy="24" r="6" fill="#f59e0b" />
+    <circle cx="68" cy="24" r="6" fill="#10b981" />
+
+    <!-- Address Bar -->
+    <rect x="96" y="10" width="380" height="28" rx="6" fill="#021f18" stroke="#047857" stroke-width="1" stroke-opacity="0.6" />
+    <text x="116" y="28" fill="#6ee7b7" font-family="monospace" font-size="12">https://finora.app/dashboard/allowance</text>
+
+    <!-- Project Badge -->
+    <rect x="850" y="12" width="206" height="24" rx="12" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4" stroke-width="1" />
+    <circle cx="866" cy="24" r="3.5" fill="#34d399" />
+    <text x="878" y="28" fill="#a7f3d0" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1">PERSONAL FINANCE PWA</text>
+
+    <!-- Main Content Area -->
+    <g transform="translate(36, 74)">
+      <!-- Left Column: Daily Allowance & Cash Flow -->
+      <g>
+        <rect width="490" height="230" rx="12" fill="url(#card-finora)" stroke="#047857" stroke-width="1" />
+        <text x="24" y="34" fill="#34d399" font-family="monospace" font-size="11" font-weight="700" letter-spacing="1">DAILY SPENDING ALLOWANCE</text>
+
+        <g transform="translate(24, 52)">
+          <text x="0" y="44" fill="#ffffff" font-family="system-ui, sans-serif" font-size="44" font-weight="800">$24.50</text>
+          <text x="175" y="44" fill="#6ee7b7" font-family="monospace" font-size="16" font-weight="600">/ day safe to spend</text>
+          <text x="0" y="74" fill="#a7f3d0" font-family="monospace" font-size="12">≈ 100,450 KHR · 13 days remaining in month</text>
+
+          <!-- Allowance Progress Bar -->
+          <rect x="0" y="95" width="442" height="10" rx="5" fill="#022c22" stroke="#047857" stroke-width="0.5" />
+          <rect x="0" y="95" width="310" height="10" rx="5" fill="url(#accent-emerald)" />
+
+          <g transform="translate(0, 126)">
+            <rect width="138" height="34" rx="6" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="12" y="22" fill="#34d399" font-family="monospace" font-size="11">Budget: $750</text>
+
+            <rect x="152" width="138" height="34" rx="6" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="164" y="22" fill="#6ee7b7" font-family="monospace" font-size="11">Spent: $431.50</text>
+
+            <rect x="304" width="138" height="34" rx="6" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="316" y="22" fill="#a7f3d0" font-family="monospace" font-size="11">Saved: $180</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- Right Column: Dual Currency & AI OCR -->
+      <g transform="translate(516, 0)">
+        <rect width="490" height="230" rx="12" fill="url(#card-finora)" stroke="#047857" stroke-width="1" />
+        <text x="24" y="34" fill="#34d399" font-family="monospace" font-size="11" font-weight="700" letter-spacing="1">DUAL CURRENCY (USD &amp; KHR)</text>
+
+        <g transform="translate(24, 52)">
+          <!-- Currency converter pill -->
+          <rect width="442" height="48" rx="8" fill="#022c22" stroke="#059669" stroke-width="0.8" />
+          <text x="18" y="30" fill="#ffffff" font-family="monospace" font-size="14" font-weight="700">$1.00 USD</text>
+          <text x="180" y="30" fill="#34d399" font-family="monospace" font-size="14">⇄</text>
+          <text x="230" y="30" fill="#6ee7b7" font-family="monospace" font-size="14" font-weight="700">4,100 KHR</text>
+          <text x="360" y="30" fill="#a7f3d0" font-family="monospace" font-size="11">Live Rate</text>
+
+          <g transform="translate(0, 68)">
+            <rect width="442" height="92" rx="8" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="16" y="24" fill="#34d399" font-family="monospace" font-size="11" font-weight="600">QUICK LOGGING CHANNELS</text>
+            <text x="16" y="46" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12">⚡ 5s Clean Keypad · 🎙️ Natural Voice · 📸 AI Receipt OCR</text>
+            <text x="16" y="70" fill="#6ee7b7" font-family="monospace" font-size="11">Powered by Google Gemini Vision &amp; Bakong KHQR Parser</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- Bottom Full-Width Strip: Offline Sync & Architecture Highlights -->
+      <g transform="translate(0, 252)">
+        <rect width="1006" height="196" rx="12" fill="#021f18" stroke="#047857" stroke-width="1" />
+        <text x="24" y="30" fill="#34d399" font-family="monospace" font-size="11" font-weight="700" letter-spacing="1">SYSTEM ARCHITECTURE &amp; OFFLINE CAPABILITY</text>
+
+        <g transform="translate(24, 48)">
+          <!-- Pillar 1: Offline PWA -->
+          <g>
+            <rect width="310" height="124" rx="8" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="16" y="28" fill="#34d399" font-family="monospace" font-size="12" font-weight="700">Offline-First PWA</text>
+            <text x="16" y="52" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11" leading="relaxed">Service Worker background queue.</text>
+            <text x="16" y="72" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">Transactions saved locally and</text>
+            <text x="16" y="92" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">synced to Postgres when online.</text>
+            <text x="16" y="112" fill="#10b981" font-family="monospace" font-size="10">STATUS: QUEUE READY</text>
+          </g>
+
+          <!-- Pillar 2: Money Math -->
+          <g transform="translate(328, 0)">
+            <rect width="310" height="124" rx="8" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="16" y="28" fill="#34d399" font-family="monospace" font-size="12" font-weight="700">Integer Money Math</text>
+            <text x="16" y="52" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">Amounts stored in minor units</text>
+            <text x="16" y="72" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">(cents &amp; riel) to eliminate float</text>
+            <text x="16" y="92" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">precision errors across reports.</text>
+            <text x="16" y="112" fill="#10b981" font-family="monospace" font-size="10">PRECISION: ZERO ROUNDING DRIFT</text>
+          </g>
+
+          <!-- Pillar 3: Security & Storage -->
+          <g transform="translate(656, 0)">
+            <rect width="326" height="124" rx="8" fill="#022c22" stroke="#047857" stroke-width="0.8" />
+            <text x="16" y="28" fill="#34d399" font-family="monospace" font-size="12" font-weight="700">PostgreSQL with RLS</text>
+            <text x="16" y="52" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">Supabase Row Level Security,</text>
+            <text x="16" y="72" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">custom aggregation RPCs, and</text>
+            <text x="16" y="92" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="11">automated anti-sleep heartbeat.</text>
+            <text x="16" y="112" fill="#10b981" font-family="monospace" font-size="10">SECURITY: STRICT USER ISOLATION</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

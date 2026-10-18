@@ -35,6 +35,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const PROJECT_COVER_PRESETS = [
   { label: "Default Blueprint", url: "/projects/default-project.svg" },
+  { label: "Finora Finance PWA", url: "/projects/finora.svg" },
   { label: "EaseLife OS", url: "/projects/easelife.svg" },
   { label: "Borejak Blood Donation", url: "/projects/borejak.svg" },
   { label: "UNSAID Platform", url: "/projects/unsaid.svg" },
