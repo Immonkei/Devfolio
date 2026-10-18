@@ -12,6 +12,7 @@ import { STANDARD_TECHNOLOGIES } from "@/lib/tech-icons";
 import { STANDARD_PROJECTS } from "@/lib/constants/projects";
 import { STANDARD_EXPERIENCES } from "@/lib/constants/experiences";
 import { Button } from "@/components/ui/button";
+import { DownloadCvButton } from "@/components/public/download-cv-button";
 import {
   FolderGit2,
   Briefcase,
@@ -19,7 +20,6 @@ import {
   FileText,
   Mail,
   ArrowRight,
-  Download,
 } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 import {
@@ -204,14 +204,7 @@ export default async function HomePage() {
                     <span>Get In Touch</span>
                   </Button>
                 </Link>
-                <a
-                  href="/api/resume/download"
-                  download="Min_Phanith_CV.pdf"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 font-mono text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  <span>Download CV</span>
-                </a>
+                <DownloadCvButton className="px-3.5 py-2 font-mono text-xs" />
               </div>
             </div>
 
