@@ -1,4 +1,4 @@
-# DevForge Repository Audit & Implementation Plan
+# Devfolio Repository Audit & Implementation Plan
 
 ## 1. Current Architecture
 - **State**: Greenfield Next.js application repository.
@@ -108,7 +108,7 @@ src/
 ## 7. Implementation Milestones & Status
 - [x] 1. Foundation & Scaffolding (`feat/supabase-foundation`)
 - [x] 2. Supabase Integration & Admin Auth (`feat/supabase-foundation`)
-- [x] 3. Database Schema & RLS Migration SQL (`supabase/migrations/20260926000000_devforge_schema.sql`)
+- [x] 3. Database Schema & RLS Migration SQL (`supabase/migrations/20260926000000_devfolio_schema.sql`)
 - [x] 4. Design System & Shared Primitives (`src/components/ui/`)
 - [x] 5. Projects CMS & Actions (`src/actions/projects.ts`, `src/components/admin/projects-cms.tsx`)
 - [x] 6. Experience & Education CMS (`src/actions/experience.ts`, `src/actions/education.ts`)

@@ -34,8 +34,8 @@ describe('Public UI Components', () => {
   describe('ProjectCard', () => {
     const mockProject: ProjectWithTechnologies = {
       id: 'proj-1',
-      title: 'DevForge Engine',
-      slug: 'devforge-engine',
+      title: 'Devfolio Engine',
+      slug: 'devfolio-engine',
       short_description: 'High performance event processor and telemetry pipeline',
       description: 'Distributed event processing system built in Rust.',
       problem: 'High memory usage in high-volume streaming',
@@ -46,8 +46,8 @@ describe('Public UI Components', () => {
       tradeoffs: 'Higher memory allocation overhead vs latency guarantees',
       results: 'P99 latency sub-1ms under 50k requests per second',
       cover_image_url: null,
-      live_url: 'https://devforge.example.com',
-      github_url: 'https://github.com/developer/devforge',
+      live_url: 'https://devfolio.example.com',
+      github_url: 'https://github.com/developer/devfolio',
       featured: true,
       status: 'PUBLISHED',
       display_order: 1,
@@ -61,7 +61,7 @@ describe('Public UI Components', () => {
 
     it('renders project title and short description', () => {
       render(<ProjectCard project={mockProject} />);
-      expect(screen.getByText('DevForge Engine')).toBeInTheDocument();
+      expect(screen.getByText('Devfolio Engine')).toBeInTheDocument();
       expect(screen.getByText('High performance event processor and telemetry pipeline')).toBeInTheDocument();
     });
 
@@ -74,14 +74,14 @@ describe('Public UI Components', () => {
     it('renders links with correct destinations', () => {
       render(<ProjectCard project={mockProject} />);
       const liveLink = screen.getByTitle('Launch Live Application');
-      expect(liveLink).toHaveAttribute('href', 'https://devforge.example.com');
+      expect(liveLink).toHaveAttribute('href', 'https://devfolio.example.com');
       const ghLink = screen.getByTitle('Inspect Repository Source');
-      expect(ghLink).toHaveAttribute('href', 'https://github.com/developer/devforge');
+      expect(ghLink).toHaveAttribute('href', 'https://github.com/developer/devfolio');
     });
 
     it('renders project cover image when cover_image_url is provided', () => {
       render(<ProjectCard project={{ ...mockProject, cover_image_url: '/projects/borejak.svg' }} />);
-      const img = screen.getByRole('img', { name: 'DevForge Engine' });
+      const img = screen.getByRole('img', { name: 'Devfolio Engine' });
       expect(img).toBeInTheDocument();
       expect(img).toHaveAttribute('src', expect.stringContaining('borejak.svg'));
     });

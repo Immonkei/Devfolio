@@ -5,7 +5,7 @@ import { Database } from "@/types/database";
 export async function createClient() {
   const cookieStore = await cookies();
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy-devforge.supabase.co";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy-devfolio.supabase.co";
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "dummy-anon-key";
 
   return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
@@ -31,7 +31,7 @@ export async function createClient() {
  * Public server client for static generation and public read queries (no cookie dependency)
  */
 export function createPublicClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy-devforge.supabase.co";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy-devfolio.supabase.co";
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "dummy-anon-key";
 
   return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
@@ -48,7 +48,7 @@ export function createPublicClient() {
  */
 export function createAdminClient() {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy-devforge.supabase.co";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy-devfolio.supabase.co";
 
   if (!serviceRoleKey) {
     throw new Error("SUPABASE_SERVICE_ROLE_KEY is not defined.");

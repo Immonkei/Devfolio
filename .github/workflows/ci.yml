@@ -1,4 +1,4 @@
-name: DevForge CI Pipeline
+name: Devfolio CI Pipeline
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NEXT_PUBLIC_SUPABASE_URL: "https://dummy-devforge.supabase.co"
+      NEXT_PUBLIC_SUPABASE_URL: "https://dummy-devfolio.supabase.co"
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "dummy-anon-key"
       SUPABASE_SERVICE_ROLE_KEY: "dummy-service-role-key"
 

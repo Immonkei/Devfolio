@@ -1,5 +1,5 @@
 -- ==============================================================================
--- DevForge: Complete PostgreSQL Schema, Indexes, and Row Level Security (RLS)
+-- Devfolio: Complete PostgreSQL Schema, Indexes, and Row Level Security (RLS)
 -- ==============================================================================
 
 -- 1. ENUMS

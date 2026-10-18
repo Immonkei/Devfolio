@@ -1,4 +1,4 @@
-# DevForge — Dynamic Full-Stack Software Engineer Portfolio & CMS
+# Devfolio — Dynamic Full-Stack Software Engineer Portfolio & CMS
 
 [![CI Pipeline](https://github.com/Immonkei/Devfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/Immonkei/Devfolio/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
@@ -8,7 +8,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![Vitest](https://img.shields.io/badge/Vitest-v5-FCC72B?style=flat-square&logo=vitest)](https://vitest.dev/)
 
-> **DevForge** is a dynamic, high-craft developer portfolio and content management platform built by **Min Phanith** (IT Engineering student at Royal University of Phnom Penh).
+> **Devfolio** is a dynamic, high-craft developer portfolio and content management platform built by **Min Phanith** (IT Engineering student at Royal University of Phnom Penh).
 > 
 > Core Principle: **"Portfolio content is data, not code."**
 > Zero hardcoded project cards, static work histories, or hardcoded skill lists. All portfolio content is modeled relationally in PostgreSQL, protected with Row-Level Security (RLS), and managed through an authenticated Admin CMS with instant live revalidation.
@@ -148,7 +148,7 @@ Apply schema migrations and initial seed data via Supabase CLI or SQL Editor:
 ```bash
 # Apply schema
 supabase db push
-# Or run contents of supabase/migrations/20260926000000_devforge_schema.sql
+# Or run contents of supabase/migrations/20260926000000_devfolio_schema.sql
 
 # Seed data (optional)
 # Run contents of supabase/seed.sql
@@ -166,7 +166,7 @@ npm run dev
 
 ## 🧪 Testing & Quality Gates
 
-DevForge enforces strict code quality and test coverage before any code is merged into `develop` or `main`.
+Devfolio enforces strict code quality and test coverage before any code is merged into `develop` or `main`.
 
 ```bash
 # Run TypeScript compilation check

@@ -18,7 +18,7 @@ describe('Utility Functions', () => {
 
   describe('slugify', () => {
     it('converts titles into clean url slugs', () => {
-      expect(slugify('DevForge Portfolio Platform')).toBe('devforge-portfolio-platform');
+      expect(slugify('Devfolio Portfolio Platform')).toBe('devfolio-portfolio-platform');
     });
 
     it('removes punctuation and special characters', () => {

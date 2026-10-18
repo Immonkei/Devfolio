@@ -1,5 +1,5 @@
 -- ==============================================================================
--- DevForge: Authentic Seed Data for Min Phanith (Immonkei)
+-- Devfolio: Authentic Seed Data for Min Phanith (Immonkei)
 -- Junior Full-Stack Developer & IT Engineering Student @ RUPP
 -- 100% Idempotent Upserts using natural UNIQUE constraints (name, slug)
 -- ==============================================================================

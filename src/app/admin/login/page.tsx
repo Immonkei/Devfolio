@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
             Root Authority Verification
           </span>
           <h1 className="mt-1 font-mono text-2xl font-bold tracking-tight text-foreground">
-            devforge<span className="text-primary">:auth</span>
+            devfolio<span className="text-primary">:auth</span>
           </h1>
           <p className="mt-2 text-xs text-muted-foreground">
             Restricted administrative gateway. Authorized personnel only.
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@devforge.local"
+              placeholder="admin@devfolio.local"
               className="w-full rounded-lg border border-input bg-secondary/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>

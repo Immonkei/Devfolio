@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://devforge.minphanith.dev"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://devfolio.minphanith.dev"),
   title: {
     default: "Min Phanith | Junior Full-Stack Developer · IT Engineering @ RUPP",
     template: "%s | Min Phanith",
