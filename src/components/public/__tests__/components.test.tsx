@@ -8,6 +8,7 @@ import { NoteCard } from '../note-card';
 import { GitHubActivityGraph } from '../github-activity-graph';
 import { MarkdownRenderer } from '../markdown-renderer';
 import { NotesDirectory } from '../notes-directory';
+import { DownloadCvButton } from '../download-cv-button';
 import { ProjectWithTechnologies, Experience, PostWithCategories, Technology, GitHubActivityData } from '@/types';
 
 describe('Public UI Components', () => {
@@ -283,6 +284,35 @@ describe('Public UI Components', () => {
 
       expect(screen.getByText('PostgreSQL Connection Pooling Guide')).toBeInTheDocument();
       expect(screen.getByText('Building Resilient Microservices')).toBeInTheDocument();
+    });
+  });
+
+  describe('DownloadCvButton', () => {
+    it('renders Download CV initially', () => {
+      render(<DownloadCvButton />);
+      expect(screen.getByRole('button', { name: /Download CV/i })).toBeInTheDocument();
+      expect(screen.getByText('Download CV')).toBeInTheDocument();
+    });
+
+    it('changes to Coming Soon and shows notification when clicked', () => {
+      render(<DownloadCvButton />);
+      const btn = screen.getByRole('button', { name: /Download CV/i });
+      fireEvent.click(btn);
+
+      expect(screen.getByText('Coming Soon')).toBeInTheDocument();
+      expect(screen.getByText('CV Coming Soon')).toBeInTheDocument();
+      expect(screen.getByText(/My updated CV is currently being refreshed/i)).toBeInTheDocument();
+    });
+
+    it('dismisses toast when close button is clicked', () => {
+      render(<DownloadCvButton />);
+      const btn = screen.getByRole('button', { name: /Download CV/i });
+      fireEvent.click(btn);
+
+      const closeBtn = screen.getByRole('button', { name: /Close notification/i });
+      fireEvent.click(closeBtn);
+
+      expect(screen.queryByText('CV Coming Soon')).not.toBeInTheDocument();
     });
   });
 });
