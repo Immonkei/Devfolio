@@ -7,12 +7,8 @@ import {
   ChevronRight,
   Maximize2,
   X,
-  LayoutGrid,
-  Film,
   ZoomIn,
   ZoomOut,
-  ImageIcon,
-  Sparkles,
 } from "lucide-react";
 import { ProjectImage } from "@/lib/project-images";
 
@@ -23,7 +19,6 @@ interface ProjectImageGalleryProps {
 
 export function ProjectImageGallery({ images, projectTitle }: ProjectImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<"slideshow" | "grid">("slideshow");
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
@@ -65,7 +60,7 @@ export function ProjectImageGallery({ images, projectTitle }: ProjectImageGaller
         } else if (e.key === "ArrowRight") {
           handleNext();
         }
-      } else if (hasMultiple && viewMode === "slideshow") {
+      } else if (hasMultiple) {
         if (e.key === "ArrowLeft") {
           handlePrev();
         } else if (e.key === "ArrowRight") {
@@ -76,7 +71,7 @@ export function ProjectImageGallery({ images, projectTitle }: ProjectImageGaller
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isLightboxOpen, hasMultiple, viewMode, handlePrev, handleNext, closeLightbox]);
+  }, [isLightboxOpen, hasMultiple, handlePrev, handleNext, closeLightbox]);
 
   // Scroll active thumbnail into view
   useEffect(() => {
@@ -89,216 +84,122 @@ export function ProjectImageGallery({ images, projectTitle }: ProjectImageGaller
   }, [activeIndex]);
 
   return (
-    <div className="space-y-4">
-      {/* Top Gallery Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <ImageIcon className="h-4 w-4 text-primary" />
-          <span className="font-semibold text-foreground">Project Showcase</span>
-          <span className="rounded-full bg-secondary/80 px-2 py-0.5 text-[11px] font-medium text-foreground border border-border/60">
-            {safeImages.length} {safeImages.length === 1 ? "visual asset" : "screenshots"}
-          </span>
-          {hasMultiple && (
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-muted-foreground/80">
-              <Sparkles className="h-3 w-3 text-amber-400" />
-              Use arrow keys or click to inspect
-            </span>
-          )}
-        </div>
+    <div className="space-y-3">
+      {/* Main Visual Showcase Frame (Single Slide Viewer) */}
+      <div className="group relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/80 bg-secondary/20 shadow-2xl shadow-primary/5 transition-all">
+        {/* Active Image */}
+        <Image
+          key={currentImage.url}
+          src={currentImage.url}
+          alt={currentImage.alt}
+          fill
+          priority={activeIndex === 0}
+          sizes="(max-width: 1024px) 100vw, 896px"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.01] cursor-zoom-in"
+          onClick={() => openLightboxAtIndex(activeIndex)}
+        />
 
-        {hasMultiple && (
-          <div className="inline-flex rounded-lg border border-border/80 bg-secondary/30 p-0.5 shadow-xs">
+        {/* Subtle Gradient Overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 opacity-70" />
+
+        {/* Top Badges on Slide */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-auto">
+          <div className="flex items-center gap-2">
+            {currentImage.isCover && (
+              <span className="rounded-md bg-emerald-500/90 backdrop-blur-xs px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white shadow-xs">
+                Cover
+              </span>
+            )}
+            {hasMultiple && (
+              <span className="rounded-md bg-black/60 backdrop-blur-xs px-2.5 py-1 font-mono text-[11px] font-medium text-white/90 border border-white/10 shadow-xs">
+                {activeIndex + 1} / {safeImages.length}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1.5">
             <button
               type="button"
-              onClick={() => setViewMode("slideshow")}
-              className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs transition-colors cursor-pointer ${
-                viewMode === "slideshow"
-                  ? "bg-primary text-primary-foreground font-bold shadow-xs"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              title="Showcase Slideshow view"
+              onClick={() => openLightboxAtIndex(activeIndex)}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-black/60 backdrop-blur-xs px-3 py-1.5 font-mono text-xs text-white hover:bg-black/80 hover:text-primary transition-all border border-white/10 shadow-lg cursor-pointer"
+              title="Expand to Fullscreen Lightbox"
             >
-              <Film className="h-3.5 w-3.5" />
-              <span>Slideshow</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("grid")}
-              className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs transition-colors cursor-pointer ${
-                viewMode === "grid"
-                  ? "bg-primary text-primary-foreground font-bold shadow-xs"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              title="Multi-Screenshot Grid view"
-            >
-              <LayoutGrid className="h-3.5 w-3.5" />
-              <span>Grid ({safeImages.length})</span>
+              <Maximize2 className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Enlarge</span>
             </button>
           </div>
+        </div>
+
+        {/* Bottom Caption Overlay */}
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
+          <div className="truncate rounded-md bg-black/65 backdrop-blur-xs px-3 py-1 font-mono text-xs text-white/95 border border-white/10 max-w-[85%]">
+            <span className="truncate">{currentImage.alt}</span>
+          </div>
+        </div>
+
+        {/* Navigation Arrows for Multiple Slides */}
+        {hasMultiple && (
+          <>
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 backdrop-blur-xs p-2 text-white hover:bg-black/90 hover:scale-110 hover:text-primary transition-all border border-white/10 shadow-xl cursor-pointer"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 backdrop-blur-xs p-2 text-white hover:bg-black/90 hover:scale-110 hover:text-primary transition-all border border-white/10 shadow-xl cursor-pointer"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </>
         )}
+
+        <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
       </div>
 
-      {/* Main View Mode: Slideshow vs Grid */}
-      {viewMode === "slideshow" ? (
-        <div className="space-y-3">
-          {/* Main Visual Showcase Frame */}
-          <div className="group relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/80 bg-secondary/20 shadow-2xl shadow-primary/5 transition-all">
-            {/* Image */}
-            <Image
-              key={currentImage.url}
-              src={currentImage.url}
-              alt={currentImage.alt}
-              fill
-              priority={activeIndex === 0}
-              sizes="(max-width: 1024px) 100vw, 896px"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.01] cursor-zoom-in"
-              onClick={() => openLightboxAtIndex(activeIndex)}
-            />
-
-            {/* Subtle Gradient Overlay for badge legibility */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 opacity-70" />
-
-            {/* Top Bar Badges on Image */}
-            <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-auto">
-              <div className="flex items-center gap-2">
-                {currentImage.isCover && (
-                  <span className="rounded-md bg-emerald-500/90 backdrop-blur-xs px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white shadow-xs">
-                    Cover Feature
-                  </span>
-                )}
-                {hasMultiple && (
-                  <span className="rounded-md bg-black/60 backdrop-blur-xs px-2.5 py-1 font-mono text-[11px] font-medium text-white/90 border border-white/10 shadow-xs">
-                    {activeIndex + 1} / {safeImages.length}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => openLightboxAtIndex(activeIndex)}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-black/60 backdrop-blur-xs px-3 py-1.5 font-mono text-xs text-white hover:bg-black/80 hover:text-primary transition-all border border-white/10 shadow-lg cursor-pointer"
-                  title="Expand to Fullscreen Lightbox"
-                >
-                  <Maximize2 className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Enlarge</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Bottom Caption Overlay */}
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
-              <div className="truncate rounded-md bg-black/65 backdrop-blur-xs px-3 py-1 font-mono text-xs text-white/95 border border-white/10 max-w-[85%]">
-                <span className="truncate">{currentImage.alt}</span>
-              </div>
-            </div>
-
-            {/* Navigation Arrows for Multi-image */}
-            {hasMultiple && (
-              <>
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 backdrop-blur-xs p-2 text-white hover:bg-black/90 hover:scale-110 hover:text-primary transition-all border border-white/10 shadow-xl cursor-pointer"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 backdrop-blur-xs p-2 text-white hover:bg-black/90 hover:scale-110 hover:text-primary transition-all border border-white/10 shadow-xl cursor-pointer"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </>
-            )}
-
-            <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
-          </div>
-
-          {/* Filmstrip / Thumbnails Bar */}
-          {hasMultiple && (
-            <div
-              ref={thumbnailsRef}
-              className="flex items-center gap-2.5 overflow-x-auto py-2 px-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent"
-            >
-              {safeImages.map((img, idx) => {
-                const isActive = idx === activeIndex;
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setActiveIndex(idx)}
-                    className={`group relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border transition-all cursor-pointer ${
-                      isActive
-                        ? "border-primary ring-2 ring-primary/60 ring-offset-2 ring-offset-background scale-[1.03] shadow-md"
-                        : "border-border/70 opacity-60 hover:opacity-100 hover:border-primary/50"
-                    }`}
-                    title={img.alt}
-                  >
-                    <Image
-                      src={img.url}
-                      alt={img.alt}
-                      fill
-                      sizes="96px"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {img.isCover && (
-                      <span className="absolute top-1 left-1 rounded bg-emerald-500/90 px-1 py-0.2 font-mono text-[9px] font-bold text-white shadow-xs">
-                        Cover
-                      </span>
-                    )}
-                    <span className="absolute bottom-1 right-1 rounded bg-black/70 px-1 py-0.2 font-mono text-[9px] text-white">
-                      {idx + 1}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      ) : (
-        /* Multi-Screenshot Grid View */
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-1">
-          {safeImages.map((img, idx) => (
-            <figure
-              key={idx}
-              className="group relative overflow-hidden rounded-xl border border-border/80 bg-card/60 shadow-sm hover:border-primary/50 transition-all cursor-pointer"
-              onClick={() => openLightboxAtIndex(idx)}
-            >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-secondary/30">
+      {/* Filmstrip / Thumbnails Bar */}
+      {hasMultiple && (
+        <div
+          ref={thumbnailsRef}
+          className="flex items-center gap-2.5 overflow-x-auto py-1 px-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent"
+        >
+          {safeImages.map((img, idx) => {
+            const isActive = idx === activeIndex;
+            return (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setActiveIndex(idx)}
+                className={`group relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border transition-all cursor-pointer ${
+                  isActive
+                    ? "border-primary ring-2 ring-primary/60 ring-offset-2 ring-offset-background scale-[1.03] shadow-md"
+                    : "border-border/70 opacity-60 hover:opacity-100 hover:border-primary/50"
+                }`}
+                title={img.alt}
+              >
                 <Image
                   src={img.url}
                   alt={img.alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="96px"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-                  {img.isCover && (
-                    <span className="rounded bg-emerald-500/90 px-1.5 py-0.5 font-mono text-[9px] font-bold text-white shadow-xs">
-                      Cover
-                    </span>
-                  )}
-                  <span className="rounded bg-black/60 backdrop-blur-xs px-1.5 py-0.5 font-mono text-[10px] text-white">
-                    #{idx + 1}
+                {img.isCover && (
+                  <span className="absolute top-1 left-1 rounded bg-emerald-500/90 px-1 py-0.2 font-mono text-[9px] font-bold text-white shadow-xs">
+                    Cover
                   </span>
-                </div>
-
-                <div className="absolute bottom-2.5 right-2.5 rounded-md bg-black/70 backdrop-blur-xs px-2 py-1 font-mono text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                  <Maximize2 className="h-3 w-3" />
-                  <span>Inspect</span>
-                </div>
-              </div>
-              <figcaption className="border-t border-border/60 bg-secondary/20 p-2.5 font-mono text-xs text-muted-foreground truncate">
-                {img.alt}
-              </figcaption>
-            </figure>
-          ))}
+                )}
+                <span className="absolute bottom-1 right-1 rounded bg-black/70 px-1 py-0.2 font-mono text-[9px] text-white">
+                  {idx + 1}
+                </span>
+              </button>
+            );
+          })}
         </div>
       )}
 
