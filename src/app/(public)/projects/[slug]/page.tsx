@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { getProjectBySlug } from "@/actions/projects";
-import { getStandardProjectBySlug } from "@/lib/constants/projects";
+import { getProjectBySlug, getProjects } from "@/actions/projects";
+import { getStandardProjectBySlug, STANDARD_PROJECTS } from "@/lib/constants/projects";
 import {
   ArrowLeft,
+  ArrowRight,
   ExternalLink,
   Layers,
   AlertCircle,
@@ -19,6 +19,8 @@ import { Badge } from "@/components/ui/badge";
 import { formatFullDate } from "@/lib/utils";
 import { Technology } from "@/types";
 import { MarkdownRenderer } from "@/components/public/markdown-renderer";
+import { ProjectImageGallery } from "@/components/public/project-image-gallery";
+import { extractProjectImages, cleanNarrativeContent } from "@/lib/project-images";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -38,6 +40,9 @@ export async function generateMetadata({
     };
   }
 
+  const images = extractProjectImages(project);
+  const primaryImageUrl = images[0]?.url;
+
   return {
     title: `${project.title} | Engineering Case Study`,
     description: project.short_description,
@@ -45,6 +50,7 @@ export async function generateMetadata({
       title: project.title,
       description: project.short_description,
       type: "article",
+      images: primaryImageUrl ? [{ url: primaryImageUrl }] : [],
     },
   };
 }
@@ -63,6 +69,23 @@ export default async function ProjectDetailPage({
   if (!project || project.status !== "PUBLISHED") {
     notFound();
   }
+
+  // Fetch adjacent projects for bottom navigation
+  let allProjects = await getProjects();
+  if (!allProjects || allProjects.length === 0) {
+    allProjects = STANDARD_PROJECTS;
+  }
+  const publishedProjects = allProjects.filter((p) => p.status === "PUBLISHED");
+  const currentIndex = publishedProjects.findIndex((p) => p.slug === slug);
+  const prevProject = currentIndex > 0 ? publishedProjects[currentIndex - 1] : null;
+  const nextProject =
+    currentIndex >= 0 && currentIndex < publishedProjects.length - 1
+      ? publishedProjects[currentIndex + 1]
+      : null;
+
+  // Extract all uploaded and linked visual assets
+  const projectImages = extractProjectImages(project);
+  const cleanDescription = cleanNarrativeContent(project.description || "");
 
   const sections = [
     {
@@ -104,13 +127,13 @@ export default async function ProjectDetailPage({
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-16 sm:px-6 space-y-12">
-      {/* Back button */}
+      {/* Return to Projects navigation */}
       <div>
         <Link
           href="/projects"
-          className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors group"
         >
-          <ArrowLeft className="h-3.5 w-3.5" />
+          <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
           <span>Return to Projects</span>
         </Link>
       </div>
@@ -176,24 +199,17 @@ export default async function ProjectDetailPage({
         </div>
       </header>
 
-      {/* Featured Cover Banner with Fallback */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border/70 bg-secondary/20 shadow-2xl shadow-primary/5">
-        <Image
-          src={project.cover_image_url || "/projects/default-project.svg"}
-          alt={project.title}
-          fill
-          preload={true}
-          sizes="(max-width: 1024px) 100vw, 896px"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
-      </div>
+      {/* Interactive Project Showcase Gallery (Displays all pictures uploaded for this project) */}
+      <ProjectImageGallery
+        images={projectImages}
+        projectTitle={project.title}
+      />
 
-      {/* Main Narrative Sections */}
+      {/* Main Narrative & Deep-Dive Sections */}
       <div className="space-y-10 border-t border-border pt-10">
-        {project.description && (
+        {cleanDescription && (
           <div className="space-y-4">
-            <MarkdownRenderer content={project.description} />
+            <MarkdownRenderer content={cleanDescription} />
           </div>
         )}
 
@@ -202,7 +218,7 @@ export default async function ProjectDetailPage({
           return (
             <section
               key={idx}
-              className="rounded-xl border border-border bg-card/60 p-6 sm:p-8 space-y-4"
+              className="rounded-xl border border-border bg-card/60 p-6 sm:p-8 space-y-4 shadow-xs"
             >
               <div className="flex items-center gap-2.5 border-b border-border/80 pb-3">
                 <Icon className="h-5 w-5 text-primary shrink-0" />
@@ -215,6 +231,51 @@ export default async function ProjectDetailPage({
           );
         })}
       </div>
+
+      {/* Bottom Adjacent Projects Navigation */}
+      {(prevProject || nextProject) && (
+        <div className="border-t border-border pt-10 space-y-4">
+          <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
+            <span>Explore More Engineering Work</span>
+            <Link href="/projects" className="text-primary hover:underline">
+              View All
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {prevProject ? (
+              <Link
+                href={`/projects/${prevProject.slug}`}
+                className="group flex flex-col justify-between rounded-xl border border-border bg-card/50 p-4 hover:border-primary/50 hover:bg-card transition-all"
+              >
+                <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                  <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
+                  <span>Previous Project</span>
+                </div>
+                <div className="mt-2 font-mono font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                  {prevProject.title}
+                </div>
+              </Link>
+            ) : (
+              <div />
+            )}
+
+            {nextProject && (
+              <Link
+                href={`/projects/${nextProject.slug}`}
+                className="group flex flex-col justify-between items-end text-right rounded-xl border border-border bg-card/50 p-4 hover:border-primary/50 hover:bg-card transition-all"
+              >
+                <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                  <span>Next Project</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </div>
+                <div className="mt-2 font-mono font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                  {nextProject.title}
+                </div>
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

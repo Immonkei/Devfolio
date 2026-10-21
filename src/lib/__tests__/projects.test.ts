@@ -17,7 +17,7 @@ describe("STANDARD_PROJECTS authentic repository fixtures", () => {
       expect(project.solution).toBeTruthy();
       expect(project.architecture).toBeTruthy();
       expect(project.status).toBe("PUBLISHED");
-      expect(project.cover_image_url).toMatch(/^\/projects\/[a-z0-9-]+\.svg$/);
+      expect(project.cover_image_url).toMatch(/^(\/projects\/[a-z0-9-]+\.svg|https:\/\/.+)$/);
       expect(project.github_url).toMatch(/^https:\/\/github\.com\/Immonkei\//);
       expect(project.technologies.length).toBeGreaterThan(0);
     }

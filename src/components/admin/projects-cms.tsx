@@ -16,6 +16,11 @@ import {
 import { MarkdownRenderer } from "@/components/public/markdown-renderer";
 import { ProjectWithTechnologies, Technology, ProjectStatus } from "@/types";
 import {
+  extractProjectImages,
+  cleanNarrativeContent,
+  serializeProjectGallery,
+} from "@/lib/project-images";
+import {
   Plus,
   Edit2,
   Trash2,
@@ -25,7 +30,6 @@ import {
   Upload,
   RefreshCw,
   Columns,
-  Copy,
   Check,
   Image as ImageIcon,
 } from "lucide-react";
@@ -67,7 +71,6 @@ export function ProjectsCMS({
   const [attachedImages, setAttachedImages] = useState<UploadedMediaResult[]>([]);
   const [uploadingMultiImages, setUploadingMultiImages] = useState(false);
   const [multiUploadStatus, setMultiUploadStatus] = useState<string | null>(null);
-  const [copiedTagUrl, setCopiedTagUrl] = useState<string | null>(null);
   const [descEditorMode, setDescEditorMode] = useState<"write" | "preview">("write");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -113,27 +116,6 @@ export function ProjectsCMS({
     technology_ids: [] as string[],
   });
 
-  const extractImagesFromMarkdown = (text: string): UploadedMediaResult[] => {
-    if (!text) return [];
-    const regex = /!\[(.*?)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\)/g;
-    const found: UploadedMediaResult[] = [];
-    const seen = new Set<string>();
-    let match;
-    while ((match = regex.exec(text)) !== null) {
-      const alt = match[1];
-      const url = match[2];
-      if (!seen.has(url)) {
-        seen.add(url);
-        found.push({
-          url,
-          fileName: alt || url.split("/").pop() || "project-image",
-          size: 0,
-        });
-      }
-    }
-    return found;
-  };
-
   const resetForm = () => {
     setForm({
       title: "",
@@ -163,7 +145,6 @@ export function ProjectsCMS({
     setAttachedImages([]);
     setUploadingMultiImages(false);
     setMultiUploadStatus(null);
-    setCopiedTagUrl(null);
     setDescEditorMode("write");
   };
 
@@ -173,7 +154,7 @@ export function ProjectsCMS({
       title: p.title,
       slug: p.slug,
       short_description: p.short_description,
-      description: p.description,
+      description: cleanNarrativeContent(p.description),
       problem: p.problem || "",
       solution: p.solution || "",
       architecture: p.architecture || "",
@@ -191,10 +172,22 @@ export function ProjectsCMS({
     });
     setDeviceFileName(null);
     setUploadingImage(false);
-    setAttachedImages(extractImagesFromMarkdown(p.description));
+
+    const existingImages = extractProjectImages({
+      cover_image_url: p.cover_image_url,
+      description: p.description,
+      title: p.title,
+    }).filter((img) => img.url !== "/projects/default-project.svg");
+
+    setAttachedImages(
+      existingImages.map((img) => ({
+        url: img.url,
+        fileName: img.alt || img.url.split("/").pop() || "project-screenshot",
+        size: 0,
+      }))
+    );
     setUploadingMultiImages(false);
     setMultiUploadStatus(null);
-    setCopiedTagUrl(null);
     setDescEditorMode("write");
     setIsEditing(true);
   };
@@ -250,7 +243,7 @@ export function ProjectsCMS({
       if (res.success && res.data && res.data.length > 0) {
         setAttachedImages((prev) => [...prev, ...res.data]);
         setMultiUploadStatus(
-          `Successfully uploaded ${res.data.length} image(s). Click 'Insert' to add to project narrative.`
+          `Successfully uploaded ${res.data.length} screenshot(s). They are attached to this project's gallery and will display on the public page upon saving.`
         );
 
         if (!form.cover_image_url || form.cover_image_url === "/projects/default-project.svg") {
@@ -294,20 +287,26 @@ export function ProjectsCMS({
     }));
   };
 
-  const handleCopyTag = async (img: UploadedMediaResult) => {
-    const cleanAlt = img.fileName.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
-    const tag = `![${cleanAlt}](${img.url})`;
-    try {
-      await navigator.clipboard.writeText(tag);
-      setCopiedTagUrl(img.url);
-      setTimeout(() => setCopiedTagUrl(null), 2000);
-    } catch {
-      // ignore
-    }
+  const handleMoveImage = (fromIndex: number, toIndex: number) => {
+    if (toIndex < 0 || toIndex >= attachedImages.length) return;
+    setAttachedImages((prev) => {
+      const updated = [...prev];
+      const [moved] = updated.splice(fromIndex, 1);
+      updated.splice(toIndex, 0, moved);
+      return updated;
+    });
   };
 
   const handleRemoveAttachedImage = (index: number) => {
-    setAttachedImages((prev) => prev.filter((_, i) => i !== index));
+    const removedImg = attachedImages[index];
+    const remaining = attachedImages.filter((_, i) => i !== index);
+    setAttachedImages(remaining);
+    if (form.cover_image_url === removedImg?.url) {
+      setForm((prev) => ({
+        ...prev,
+        cover_image_url: remaining[0]?.url || "/projects/default-project.svg",
+      }));
+    }
   };
 
   const handleDeviceImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -330,7 +329,12 @@ export function ProjectsCMS({
       const res = await uploadMediaFile(formData);
 
       if (res.success && res.data?.url) {
-        setForm((prev) => ({ ...prev, cover_image_url: res.data.url }));
+        const newUrl = res.data.url;
+        setForm((prev) => ({ ...prev, cover_image_url: newUrl }));
+        setAttachedImages((prev) => {
+          if (prev.some((img) => img.url === newUrl)) return prev;
+          return [{ url: newUrl, fileName: file.name, size: file.size }, ...prev];
+        });
       } else {
         setError(res.error || "Failed to upload file to storage bucket. Please check Supabase storage configuration.");
         setDeviceFileName(null);
@@ -379,8 +383,21 @@ export function ProjectsCMS({
     setError(null);
 
     try {
+      const finalCover =
+        form.cover_image_url && form.cover_image_url.trim().length > 0
+          ? form.cover_image_url.trim()
+          : attachedImages[0]?.url || "/projects/default-project.svg";
+
+      const serializedDescription = serializeProjectGallery(form.description, attachedImages);
+
+      const submissionPayload = {
+        ...form,
+        cover_image_url: finalCover,
+        description: serializedDescription,
+      };
+
       if (editingId) {
-        const res = await updateProject(editingId, form);
+        const res = await updateProject(editingId, submissionPayload);
         if (!res.success) {
           setError(res.error || "Update failed.");
         } else {
@@ -390,7 +407,7 @@ export function ProjectsCMS({
               p.id === editingId
                 ? {
                     ...p,
-                    ...(updatedRecord || form),
+                    ...(updatedRecord || submissionPayload),
                     technologies: allTechnologies.filter((t) =>
                       form.technology_ids.includes(t.id)
                     ),
@@ -401,7 +418,7 @@ export function ProjectsCMS({
           resetForm();
         }
       } else {
-        const res = await createProject(form);
+        const res = await createProject(submissionPayload);
         if (!res.success) {
           setError(res.error || "Creation failed.");
         } else if (res.data) {
@@ -761,14 +778,22 @@ export function ProjectsCMS({
               {attachedImages.length > 0 && (
                 <div className="space-y-2 pt-1">
                   <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
-                    <span>Uploaded Assets ({attachedImages.length}):</span>
-                    <span>Click &apos;Insert&apos; to add into Full Narrative</span>
+                    <span className="font-semibold text-foreground">
+                      Attached Project Screenshots ({attachedImages.length}):
+                    </span>
+                    <span className="text-[11px] text-emerald-400">
+                      ✓ Auto-saved into public gallery
+                    </span>
                   </div>
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
                     {attachedImages.map((img, iIdx) => (
                       <div
                         key={iIdx}
-                        className="group flex items-center gap-2.5 rounded-lg border border-border bg-card p-2 shadow-xs hover:border-primary/50 transition-colors"
+                        className={`group flex items-center gap-2.5 rounded-lg border p-2 shadow-xs transition-colors ${
+                          form.cover_image_url === img.url
+                            ? "border-emerald-500/50 bg-emerald-500/5 ring-1 ring-emerald-500/20"
+                            : "border-border bg-card hover:border-primary/50"
+                        }`}
                       >
                         <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded border border-border/70 bg-secondary/40">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -779,47 +804,65 @@ export function ProjectsCMS({
                           />
                         </div>
                         <div className="min-w-0 flex-1 space-y-1">
-                          <p className="truncate font-mono text-[11px] text-foreground font-medium">
-                            {img.fileName}
-                          </p>
-                          <div className="flex items-center gap-2 flex-wrap">
+                          <div className="flex items-center justify-between gap-1">
+                            <p className="truncate font-mono text-[11px] text-foreground font-medium">
+                              {img.fileName}
+                            </p>
+                            {form.cover_image_url === img.url && (
+                              <span className="rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-1 py-0.2 font-mono text-[9px] font-bold shrink-0">
+                                Cover
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1.5 flex-wrap text-[10px] font-mono">
+                            {form.cover_image_url !== img.url && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => setForm((prev) => ({ ...prev, cover_image_url: img.url }))}
+                                  className="text-primary hover:underline cursor-pointer font-medium"
+                                  title="Set as project cover thumbnail"
+                                >
+                                  Make Cover
+                                </button>
+                                <span className="text-muted-foreground/30">•</span>
+                              </>
+                            )}
+                            {iIdx > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => handleMoveImage(iIdx, iIdx - 1)}
+                                className="text-muted-foreground hover:text-foreground cursor-pointer px-1 rounded bg-secondary/50"
+                                title="Move earlier in gallery order"
+                              >
+                                ←
+                              </button>
+                            )}
+                            {iIdx < attachedImages.length - 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleMoveImage(iIdx, iIdx + 1)}
+                                className="text-muted-foreground hover:text-foreground cursor-pointer px-1 rounded bg-secondary/50"
+                                title="Move later in gallery order"
+                              >
+                                →
+                              </button>
+                            )}
+                            <span className="text-muted-foreground/30">•</span>
                             <button
                               type="button"
                               onClick={() => handleInsertImageTag(img)}
-                              className="text-[10px] text-primary hover:underline font-mono flex items-center gap-0.5 cursor-pointer font-bold"
-                              title="Insert markdown tag into Full Narrative"
+                              className="text-muted-foreground hover:text-primary cursor-pointer"
+                              title="Also insert markdown tag into Full Narrative body"
                             >
-                              <Plus className="h-3 w-3" />
-                              <span>Insert</span>
+                              Insert
                             </button>
-                            <span className="text-muted-foreground/40">•</span>
-                            <button
-                              type="button"
-                              onClick={() => setForm((prev) => ({ ...prev, cover_image_url: img.url }))}
-                              className="text-[10px] text-muted-foreground hover:text-primary font-mono cursor-pointer"
-                              title="Set as project cover thumbnail"
-                            >
-                              Cover
-                            </button>
-                            <span className="text-muted-foreground/40">•</span>
-                            <button
-                              type="button"
-                              onClick={() => handleCopyTag(img)}
-                              className="text-[10px] text-muted-foreground hover:text-foreground font-mono flex items-center gap-0.5 cursor-pointer"
-                            >
-                              {copiedTagUrl === img.url ? (
-                                <Check className="h-3 w-3 text-emerald-400" />
-                              ) : (
-                                <Copy className="h-3 w-3" />
-                              )}
-                              <span>{copiedTagUrl === img.url ? "Copied" : "Copy"}</span>
-                            </button>
-                            <span className="text-muted-foreground/40">•</span>
+                            <span className="text-muted-foreground/30">•</span>
                             <button
                               type="button"
                               onClick={() => handleRemoveAttachedImage(iIdx)}
-                              className="text-[10px] text-muted-foreground hover:text-destructive font-mono cursor-pointer"
-                              title="Remove from list"
+                              className="text-muted-foreground hover:text-destructive cursor-pointer"
+                              title="Remove from project gallery"
                             >
                               <X className="h-3 w-3" />
                             </button>
