@@ -332,9 +332,8 @@ describe('Public UI Components', () => {
         />
       );
 
-      expect(screen.getByText('1 visual asset')).toBeInTheDocument();
-      expect(screen.getByText('Cover Feature')).toBeInTheDocument();
-      expect(screen.queryByLabelText('Next image')).not.toBeInTheDocument();
+      expect(screen.getByText('Cover')).toBeInTheDocument();
+      expect(screen.queryByLabelText('Next slide')).not.toBeInTheDocument();
     });
 
     it('renders multiple images with screenshot counter and navigation controls', () => {
@@ -345,13 +344,12 @@ describe('Public UI Components', () => {
         />
       );
 
-      expect(screen.getByText('3 screenshots')).toBeInTheDocument();
       expect(screen.getByText('1 / 3')).toBeInTheDocument();
-      expect(screen.getByLabelText('Next image')).toBeInTheDocument();
-      expect(screen.getByLabelText('Previous image')).toBeInTheDocument();
+      expect(screen.getByLabelText('Next slide')).toBeInTheDocument();
+      expect(screen.getByLabelText('Previous slide')).toBeInTheDocument();
     });
 
-    it('cycles through images on next button click', () => {
+    it('cycles through images on next button click and thumbnail click', () => {
       render(
         <ProjectImageGallery
           images={mockImages}
@@ -359,27 +357,17 @@ describe('Public UI Components', () => {
         />
       );
 
-      const nextBtn = screen.getByLabelText('Next image');
+      const nextBtn = screen.getByLabelText('Next slide');
       fireEvent.click(nextBtn);
 
       expect(screen.getByText('2 / 3')).toBeInTheDocument();
       expect(screen.getByText('Finora Expense Flow')).toBeInTheDocument();
-    });
 
-    it('toggles to multi-screenshot grid view', () => {
-      render(
-        <ProjectImageGallery
-          images={mockImages}
-          projectTitle="Finora"
-        />
-      );
+      const thirdThumb = screen.getByTitle('Finora Receipt OCR');
+      fireEvent.click(thirdThumb);
 
-      const gridBtn = screen.getByTitle('Multi-Screenshot Grid view');
-      fireEvent.click(gridBtn);
-
-      expect(screen.getByText('#1')).toBeInTheDocument();
-      expect(screen.getByText('#2')).toBeInTheDocument();
-      expect(screen.getByText('#3')).toBeInTheDocument();
+      expect(screen.getByText('3 / 3')).toBeInTheDocument();
+      expect(screen.getByText('Finora Receipt OCR')).toBeInTheDocument();
     });
 
     it('opens and closes fullscreen lightbox', () => {
