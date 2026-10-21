@@ -203,7 +203,13 @@ INSERT INTO public.projects (
     'Finora - Personal Finance Tracker',
     'finora',
     'An offline-first personal finance PWA with dynamic daily spending allowance, dual USD/KHR currency conversion, and AI receipt OCR.',
-    'Finora helps you stay in control of daily expenses with real-time daily allowance calculations, dual currency support (USD and KHR), offline mode, and quick logging through keypad, voice, or receipt OCR with Google Gemini.',
+    'Finora helps you stay in control of daily expenses with real-time daily allowance calculations, dual currency support (USD and KHR), offline mode, and quick logging through keypad, voice, or receipt OCR with Google Gemini.
+
+<!-- project-gallery -->
+![Finora Dashboard & Expense Log](https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333814877-m9jyz-Finora-demo-2.webp)
+![Finora Daily Spending Allowance](https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333837754-cvhzs-Finora-demo-3.webp)
+![Finora AI Receipt OCR & Analytics](https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333847712-gpzxu-Finora-demo-4.webp)
+<!-- /project-gallery -->',
     'Most finance apps require an internet connection, lack dual USD/KHR currency support for Cambodia, and fail to calculate dynamic daily spending allowances that adjust throughout the month.',
     'Engineered an offline-first PWA using Next.js 16, Supabase PostgreSQL, and Google Gemini AI that calculates dynamic daily allowances, handles real-time USD/KHR exchange rates, and allows instant expense logging via keypad, voice, or receipt OCR.',
     'Next.js App Router, React 19, TypeScript, Tailwind CSS v4, Supabase Auth & PostgreSQL with Row Level Security (RLS) and report RPC functions, service worker offline queue, and Google Gemini multimodal API.',
@@ -211,7 +217,7 @@ INSERT INTO public.projects (
     'Synchronizing offline transaction queues with Supabase without race conditions, and parsing multi-format receipt slips accurately using Google Gemini AI.',
     'Used integer minor units (cents/riel) rather than decimals to eliminate precision errors; chose client-side queue with server validation over heavy CRDTs for simplicity and speed.',
     'Sub-5-second entry time, 100% offline logging reliability with background sync, zero floating-point arithmetic errors, and seamless dual-currency cash flow tracking.',
-    '/projects/finora.svg',
+    'https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333814877-m9jyz-Finora-demo-2.webp',
     'https://github.com/Immonkei/Finora',
     NULL,
     TRUE,

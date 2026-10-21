@@ -23,7 +23,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
     short_description:
       "An offline-first personal finance PWA with dynamic daily spending allowance, dual USD/KHR currency conversion, and AI receipt OCR.",
     description:
-      "Finora helps you stay in control of daily expenses with real-time daily allowance calculations, dual currency support (USD and KHR), offline mode, and quick logging through keypad, voice, or receipt OCR with Google Gemini.",
+      "Finora helps you stay in control of daily expenses with real-time daily allowance calculations, dual currency support (USD and KHR), offline mode, and quick logging through keypad, voice, or receipt OCR with Google Gemini.\n\n<!-- project-gallery -->\n![Finora Dashboard & Expense Log](https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333814877-m9jyz-Finora-demo-2.webp)\n![Finora Daily Spending Allowance](https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333837754-cvhzs-Finora-demo-3.webp)\n![Finora AI Receipt OCR & Analytics](https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333847712-gpzxu-Finora-demo-4.webp)\n<!-- /project-gallery -->",
     problem:
       "Most finance apps require an internet connection, lack dual USD/KHR currency support for Cambodia, and fail to calculate dynamic daily spending allowances that adjust throughout the month.",
     solution:
@@ -38,7 +38,7 @@ export const STANDARD_PROJECTS: ProjectWithTechnologies[] = [
       "Used integer minor units (cents/riel) rather than decimals to eliminate precision errors; chose client-side queue with server validation over heavy CRDTs for simplicity and speed.",
     results:
       "Sub-5-second entry time, 100% offline logging reliability with background sync, zero floating-point arithmetic errors, and seamless dual-currency cash flow tracking.",
-    cover_image_url: "/projects/finora.svg",
+    cover_image_url: "https://dkjlpkkfasuhskgzevfc.supabase.co/storage/v1/object/public/portfolio/uploads/1792333814877-m9jyz-Finora-demo-2.webp",
     github_url: "https://github.com/Immonkei/Finora",
     live_url: null,
     featured: true,

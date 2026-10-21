@@ -9,6 +9,7 @@ import { GitHubActivityGraph } from '../github-activity-graph';
 import { MarkdownRenderer } from '../markdown-renderer';
 import { NotesDirectory } from '../notes-directory';
 import { DownloadCvButton } from '../download-cv-button';
+import { ProjectImageGallery } from '../project-image-gallery';
 import { ProjectWithTechnologies, Experience, PostWithCategories, Technology, GitHubActivityData } from '@/types';
 
 describe('Public UI Components', () => {
@@ -313,6 +314,92 @@ describe('Public UI Components', () => {
       fireEvent.click(closeBtn);
 
       expect(screen.queryByText('CV Coming Soon')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('ProjectImageGallery', () => {
+    const mockImages = [
+      { url: 'https://example.com/shot-1.webp', alt: 'Finora Dashboard', isCover: true },
+      { url: 'https://example.com/shot-2.webp', alt: 'Finora Expense Flow', isCover: false },
+      { url: 'https://example.com/shot-3.webp', alt: 'Finora Receipt OCR', isCover: false },
+    ];
+
+    it('renders single image properly without navigation arrows', () => {
+      render(
+        <ProjectImageGallery
+          images={[{ url: 'https://example.com/shot-1.webp', alt: 'Finora Dashboard', isCover: true }]}
+          projectTitle="Finora"
+        />
+      );
+
+      expect(screen.getByText('1 visual asset')).toBeInTheDocument();
+      expect(screen.getByText('Cover Feature')).toBeInTheDocument();
+      expect(screen.queryByLabelText('Next image')).not.toBeInTheDocument();
+    });
+
+    it('renders multiple images with screenshot counter and navigation controls', () => {
+      render(
+        <ProjectImageGallery
+          images={mockImages}
+          projectTitle="Finora"
+        />
+      );
+
+      expect(screen.getByText('3 screenshots')).toBeInTheDocument();
+      expect(screen.getByText('1 / 3')).toBeInTheDocument();
+      expect(screen.getByLabelText('Next image')).toBeInTheDocument();
+      expect(screen.getByLabelText('Previous image')).toBeInTheDocument();
+    });
+
+    it('cycles through images on next button click', () => {
+      render(
+        <ProjectImageGallery
+          images={mockImages}
+          projectTitle="Finora"
+        />
+      );
+
+      const nextBtn = screen.getByLabelText('Next image');
+      fireEvent.click(nextBtn);
+
+      expect(screen.getByText('2 / 3')).toBeInTheDocument();
+      expect(screen.getByText('Finora Expense Flow')).toBeInTheDocument();
+    });
+
+    it('toggles to multi-screenshot grid view', () => {
+      render(
+        <ProjectImageGallery
+          images={mockImages}
+          projectTitle="Finora"
+        />
+      );
+
+      const gridBtn = screen.getByTitle('Multi-Screenshot Grid view');
+      fireEvent.click(gridBtn);
+
+      expect(screen.getByText('#1')).toBeInTheDocument();
+      expect(screen.getByText('#2')).toBeInTheDocument();
+      expect(screen.getByText('#3')).toBeInTheDocument();
+    });
+
+    it('opens and closes fullscreen lightbox', () => {
+      render(
+        <ProjectImageGallery
+          images={mockImages}
+          projectTitle="Finora"
+        />
+      );
+
+      const enlargeBtn = screen.getByTitle('Expand to Fullscreen Lightbox');
+      fireEvent.click(enlargeBtn);
+
+      const dialog = screen.getByRole('dialog');
+      expect(dialog).toBeInTheDocument();
+
+      const closeBtn = screen.getByTitle(/Close Lightbox/i);
+      fireEvent.click(closeBtn);
+
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 });
